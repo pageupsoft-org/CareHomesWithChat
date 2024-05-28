@@ -1,0 +1,41 @@
+.table-wd-18 {
+    width: 1800px !important;
+}
+
+.innerwhite-table .table td,
+.innerwhite-table .table th {
+    border: 1px solid #dee2e6;
+    line-height: 30px;
+    padding: 4px 12px;
+}
+
+.audit-margin-main {
+    margin-top: -20px;
+    margin-left: -15px;
+}
+
+.close {
+    float: left !important;
+    position: relative;
+    height: 25px;
+    line-height: 25px;
+    right: 0px;
+    width: 25px;
+    font-size: 16px;
+    text-align: CENTER;
+    border-radius: 50%;
+    color: #ecf4fa;
+    background-color: #b9727a;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.med_chec_rec {
+    padding: 15px 30px 15px 0px;
+}
+
+@media (max-width: 1599px) and (min-width: 1200px) {
+    .ml-0 {
+      margin-left: 0px !important;
+    }
+  }

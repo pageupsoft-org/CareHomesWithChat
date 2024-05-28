@@ -1,0 +1,87 @@
+<div class="horizontal-tabs my-3">
+    <div class="sv-tab-panel info_tab_container px-0 pt-0">
+        <ng-container *ngIf="showNotification">
+            <div class="container">
+                <div class="col-sm-12 text-center">
+                    <label class="alert alert-danger mt-3 w-100"> Please complete registration first</label>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="isBusy">
+            <div class="col-sm-12 text-center">
+                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline-block"></mat-spinner>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!isBusy && showRecoveryList && !showNotification">
+            <div class="d-inline-block bg-white p-2 w-100 mb-2">
+                <h3>Recovery Star <span>
+                        <button class="btn btn-sm btn-info rounded-pill mr-4 pull-right my-2"
+                            (click)="createRecoveryStar()"><i class="mdi mdi-plus mr-1"></i>Add Recovery Star</button>
+                    </span></h3>
+            </div>
+            <ng-container *ngIf="!isBusy && recoveryStarList.length > 0">
+                <div class="d-inline-block bg-white p-3 w-100">
+                    <table class="table table-bordered table-hover bg-white mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>S.no</th>
+                                <th>Completed By</th>
+                                <th>Completed Date</th>
+                                <th>Next Review Date</th>
+
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <ng-container *ngFor="let pathway of recoveryStarList; let i = index">
+                                <tr>
+                                    <td>{{i+1}}</td>
+                                    <td>{{pathway.userName}}</td>
+                                    <td>{{pathway.completedDate|date:'dd-MM-yyyy h:m a'}}</td>
+                                    <td>{{pathway.nextReviewDate|date:'dd-MM-yyyy'}}</td>
+                                    <td>
+                                        <div class="actionbox">
+                                            <ng-container *ngIf="!pathway.isSignOff">
+                                                <i class="mdi text-primary mdi-pencil mr-2"
+                                                    *ngIf="currentUserRole != userType.Auditor"
+                                                    (click)="editRecoveryStar(pathway.id)" title="Edit"></i>
+                                            </ng-container>
+                                            <i class="mdi text-info mdi-eye-circle mr-2"
+                                                *ngIf="currentUserRole != userType.Auditor"
+                                                (click)="showRecoveryStar(pathway.id)" title="View"></i>
+                                            <i class="mdi text-danger mdi-delete mr-2"
+                                                (click)="removeRecoveryStar(pathway.id)" title="Remove"></i>
+                                            <a class="mdi text-warning mdi-download mr-2"
+                                                href="{{baseUrl}}/{{pathway.id}}" title="download"></a>
+                                            <!-- <a (click)="comingSoon()" title="Download" class="mdi text-warning mdi-download mr-2"></a> -->
+
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isBusy && recoveryStarList.length <= 0">
+
+                <div class="text-center px-3 py-3">
+                    <div class="alert alert-danger" role="alert">
+                        <p class="mb-0"> No Record Found</p>
+                    </div>
+                </div>
+
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="!isBusy && !showRecoveryList && showRecoveryStart && !showNotification">
+            <app-show-recovery-star [userData]="userData" [recoveryStarId]="recoveryStarId" (showAllRecoveryStar)="showAllRecoveryStar()"></app-show-recovery-star>
+        </ng-container>
+        <ng-container *ngIf="!isBusy && !showRecoveryList && !showRecoveryStart && !showNotification">
+            <app-recovery-star [userData]="userData" [recoveryStarId]="recoveryStarId"
+                (showAllRecoveryStar)="showAllRecoveryStar()"></app-recovery-star>
+        </ng-container>
+
+    </div>
+</div>

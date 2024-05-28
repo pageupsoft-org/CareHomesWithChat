@@ -1,0 +1,921 @@
+<div class="container-fluid">
+
+    <ng-container *ngIf="currentUserRole == userType.SuperUser || currentUserRole == userType.Admin">
+        <div class="row mt-4 px-4">
+            <div class="col-lg-12 no-pad scroller">
+                <div class="box_nav_tab" id="scroll-div">
+                    <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                        <li class="nav-item">
+                            <div class="nav-link menu-barbox menu-barbox1 " (click)="tabChange(1)"
+                                [ngClass]="{'active': activeTab == 1}" data-toggle="tab" href="#overview-status"
+                                role="tab" aria-controls="overview-status">
+                                <img src="assets/images/overview-stats.png">
+                                <h4 class="mb-0">Overview Stats</h4>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-link menu-barbox menu-barbox2" (click)="tabChange(2)"
+                                [ngClass]="{'active': activeTab == 2}" data-toggle="tab" href="#service-user-stats"
+                                role="tab" aria-controls="service-user-stats">
+                                <img src="assets/images/service-user-stats.png">
+                                <h4 class="mb-0">Service User Stats</h4>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-link menu-barbox menu-barbox3" (click)="tabChange(3)"
+                                [ngClass]="{'active': activeTab == 3}" data-toggle="tab" href="#system-users" role="tab"
+                                aria-controls="system-users">
+                                <img src="assets/images/system-user.png">
+                                <h4 class="mb-0">System Users</h4>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row my-4 px-4">
+            <div class="col-lg-12">
+                <div class="tab-content bg-white shadow">
+                    <ng-container *ngIf="activeTab == 1">
+
+                        <div class="tab-pane show" [ngClass]="{'active': activeTab == 1}" id="overview-status"
+                            role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <!-- <div class="row justify-content-between"> -->
+                                    <!-- <div class="col-sm-4 col-10"> -->
+                                        <div class="num_user d-inline-block w-100 mb-4 bg-light px-2 shadow">
+                                            <h4 class="d-inline-block pl-0"><i
+                                                    class="mdi mdi-account-outline mr-2"></i>No.of User</h4>
+                                            <span>{{(userCount)?userCount:'0'}}</span>
+                                        </div>
+                                    <!-- </div> -->
+                                    <!-- <div class="col-2 text-end">
+                                        <button class="btn btn-next btn-frm" type="button" (click)="routeToAuditForm()">Incident Audit Form</button>
+                                    </div>
+                                </div> -->
+                                <div class="bg-white mt-2 p-2 pt-3 mb-2">
+                                    <div class="row">
+                                        <div class="col-sm-12 pl-2">
+                                            <div class="usermessagebox" *ngFor="let userCourse of userCourses">
+                                                <div class="shadow bg-light">
+                                                    <div class="alert alert-danger exp-msg alert-dismissible fade show"
+                                                        role="alert">
+                                                        <h3><strong>User Course Expire</strong></h3>
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <table class="table mb-0">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th class="border-top-0">User Name</th>
+                                                                            <td class="border-top-0">
+                                                                                <div class="form-group mb-0 input-txtbox">{{userCourse.userName}}</div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <table class="table mb-0">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th class="border-top-0">Course Name</th>
+                                                                            <td class="border-top-0">
+                                                                                <div class="form-group mb-0 input-txtbox">{{userCourse.courseName}}</div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <table class="table mb-0">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th class="border-top-0">
+                                                                                Expiry Date</th>
+                                                                            <td class="border-top-0">
+                                                                                <div class="form-group mb-0 input-txtbox">{{userCourse.expiryDate|date:'dd-MM-yyyy'}}</div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" class="close" data-dismiss="alert"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <!-- <table class="table mb-0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="border-top-0" style="background: #f1f2f3;">
+                                                                    User Name</th>
+                                                                <td class="border-top-0" style="background: #f1f2f3;">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        {{userCourse.userName}}
+                                                                    </div>
+                                                                </td>
+                                                                <th class="border-top-0">Course Name</th>
+                                                                <td class="border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        {{userCourse.courseName}}
+                                                                    </div>
+                                                                </td>
+                                                                <th class="border-top-0" style="background: #f1f2f3;">
+                                                                    Expiry Date</th>
+                                                                <td class="border-top-0" style="background: #f1f2f3;">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        {{userCourse.expiryDate|date:'dd-MM-yyyy'}}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="box_user_active">
+                                            <h4 class="p-2 bg-wine text-white mb-0">Service User Per Location</h4>
+                                            <table class="table table-bordered table-stripped serviceuser-table">
+                                                <thead class="bg-light">
+                                                    <th>
+                                                        Location Name
+                                                    </th>
+                                                    <th>
+                                                        Active
+                                                    </th>
+                                                    <th>
+                                                        In Progress
+                                                    </th>
+                                                    <th>
+                                                        Closed
+                                                    </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let statusCount of patientsCounts">
+                                                        <td>{{statusCount.locationName}}</td>
+                                                        <td>{{statusCount.active}}</td>
+                                                        <td>{{statusCount.progress}}</td>
+                                                        <td>{{statusCount.closed}}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total</th>
+                                                        <th>{{patientStatusCounts.activeStatusCount}}</th>
+                                                        <th>{{patientStatusCounts.progressStatusCount}}</th>
+                                                        <th>{{patientStatusCounts.closedStatusCount}}</th>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="box_zonal_location">
+                                            <h4 class="p-2 bg-wine text-white mb-0">No. of zonals for all locations</h4>
+                                            <table class="table table-bordered table-stripped serviceuser-table">
+                                                <thead class="bg-light">
+                                                    <th class="red text-white">
+                                                        Red
+                                                    </th>
+                                                    <th class="amber">
+                                                        Amber
+                                                    </th>
+                                                    <th class="green_zone_headrbg">
+                                                        Green
+                                                    </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{(patientZonalCount)?patientZonalCount.zoneR:'0'}}</td>
+                                                        <td>{{(patientZonalCount)?patientZonalCount.zoneA:'0'}}</td>
+                                                        <td>{{(patientZonalCount)?patientZonalCount.zoneG:'0'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row px-5" id="sigoffForm" #sigoffForm>
+                                <h3 class="zoning-head-com">Form To SignOff</h3>
+                            </div>
+                            <div class="row my-4 px-4">
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Patient)">
+                                    <div class="box_brics_head mb-3">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/patient-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.patient}}</span>
+                                            <p>Registration</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.RiskAssessment)">
+                                    <div class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/alert-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.riskAssessment}}</span>
+                                            <p>Risk-Assessments</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.SharedPathway)">
+                                    <div class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/cordinator-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.sharedPathway}}</span>
+                                            <p>Shared Pathway</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.RecoveryStar)">
+                                    <div class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/recovery-star.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.recoveryStar}}</span>
+                                            <p>Recovery Star</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.ProgressNote)">
+                                    <div class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/diary-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.progressNote}}</span>
+                                            <p>Daily Occurrence</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.MoveOnFunctional)">
+                                    <div class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.moveOnFunctional}}</span>
+                                            <p>Move-On Assessment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- servive user audit Form signoff -->
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form13)">
+                                    <div title="Service User Medication Audit Tool" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form13}}</span>
+                                            <p>Form 13</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form15)">
+                                    <div title="Medication Spot Check" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form15}}</span>
+                                            <p>Form 15</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form17)">
+                                    <div title="Weekly Medication Stock Check Record" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form17}}</span>
+                                            <p>Form 17</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Location Forms Sign off-->
+                            <div class="row px-5">
+                                <h3 class="zoning-head-com">Location Form To Signoff</h3>
+                            </div>
+                            <div class="row my-4 px-4">
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form2)">
+                                    <div title="Incident audit form" class="box_brics_head mb-3">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/patient-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form2}}</span>
+                                            <p title="Incident audit form">Form 2</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form7)">
+                                    <div title="Fire Safety and Emergency Response" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/alert-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form7}}</span>
+                                            <p>Form 7</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form8)">
+                                    <div title="FIRST AID KIT AUDIT CHECKLIST" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/cordinator-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form8}}</span>
+                                            <p>Form 8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form9)">
+                                    <div title="INTERNAL FOOD SAFETY INSPECTION RECORD" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/recovery-star.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form9}}</span>
+                                            <p>Form 9</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form10)">
+                                    <div title="Monthly Hot Water Temperature Record" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/diary-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form10}}</span>
+                                            <p>Form 10</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form11)">
+                                    <div title="Infection Control Audit Tool" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/diary-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form11}}</span>
+                                            <p>Form 11</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form12)">
+                                    <div title="Window Restrictor Audit (Weekly)" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/diary-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form12}}</span>
+                                            <p>Form 12</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form14)">
+                                    <div title="General Medication Audit Tool" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form14}}</span>
+                                            <p>Form 14</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- servive user audit Form signoff -->
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form16)">
+                                    <div title="Monthly Environmental Safety Audit Form" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form16}}</span>
+                                            <p>Form 16</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form19)">
+                                    <div title="Weekly Environmental Tool" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form19}}</span>
+                                            <p>Form 19</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form20)">
+                                    <div title="Window Safety Risk Assessment" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form20}}</span>
+                                            <p>Form 20</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="signOffList(FormsName.Form21)">
+                                    <div title="Service inspection" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{signoffFormCounts.form21}}</span>
+                                            <p>Form 21</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row px-5" id="completeForm" #completeForm>
+                                <h3 class="zoning-head-com">Location Form To Complete</h3>
+                            </div>
+                            <div class="row my-4 px-4">
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form2)">
+                                    <div title="Incident audit form" class="box_brics_head mb-3">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/patient-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form2}}</span>
+                                            <p>Form 2</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form7)">
+                                    <div title="Fire Safety and Emergency Response" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/alert-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form7}}</span>
+                                            <p>Form 7</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form8)">
+                                    <div title="FIRST AID KIT AUDIT CHECKLIST" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/cordinator-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form8}}</span>
+                                            <p>Form 8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form9)">
+                                    <div title="INTERNAL FOOD SAFETY INSPECTION RECORD" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/recovery-star.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form9}}</span>
+                                            <p>Form 9</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form10)">
+                                    <div title="Monthly Hot Water Temperature Record" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/diary-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form10}}</span>
+                                            <p>Form 10</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form11)">
+                                    <div title="Infection Control Audit Tool" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/diary-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form11}}</span>
+                                            <p>Form 11</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form12)">
+                                    <div title="Window Restrictor Audit (Weekly)" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/diary-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form12}}</span>
+                                            <p>Form 12</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form13)">
+                                    <div title="Service User Medication Audit Tool" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/diary-black.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form13}}</span>
+                                            <p>Form 13</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form14)">
+                                    <div title="General Medication Audit Tool" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form14}}</span>
+                                            <p>Form 14</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form15)">
+                                    <div title="Medication Spot Check" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form15}}</span>
+                                            <p>Form 15</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form16)">
+                                    <div title="Monthly Environmental Safety Audit Form" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form16}}</span>
+                                            <p> Form 16</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4  cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form17)">
+                                    <div title="Weekly Medication Stock Check Record" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form17}}</span>
+                                            <p> Form 17</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form19)">
+                                    <div title="Weekly Environmental Tool" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form19}}</span>
+                                            <p>Form 19</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form20)">
+                                    <div title="Window Safety Risk Assessment" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form20}}</span>
+                                            <p>Form 20</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov"
+                                    (click)="auditFormsList(FormsName.Form21)">
+                                    <div title="Service inspection" class="box_brics_head mb-4">
+                                        <div class="left_brics_icon">
+                                            <img src="assets/images/move-on-assessment.svg">
+                                        </div>
+                                        <div class="right_text_brics">
+                                            <span>{{completeFormCounts.form21}}</span>
+                                            <p>Form 21</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row mx-4 mb-3" id="dairyComponent" #dairyComponent>
+                                <div class="col-sm-12 content bg-white table_dash_diary mb-3">
+                                    <app-dairy-master [loginId]="currentUserId"></app-dairy-master>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="activeTab == 2">
+
+                        <div class="tab-pane" [ngClass]="{'active': activeTab == 2}" id="service-user-stats"
+                            role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <h3 class="zoning-head-com">Service User Stats </h3>
+                            </div>
+                            <div>
+                                <app-service-user-stats></app-service-user-stats>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="activeTab == 3">
+
+                        <div class="tab-pane" [ngClass]="{'active': activeTab == 3}" id="system-users" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <h3 class="zoning-head-com">System Users</h3>
+                            </div>
+                            <div>
+                                <app-users-stats></app-users-stats>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="currentUserRole == userType.User || currentUserRole == userType.Auditor">
+        <div class="row my-4 px-4">
+            <div class="col-sm-12">
+                <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                    <h1>
+                        Dashboard
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="row my-4 px-4">
+            <div class="col-sm-12">
+                <h2 class="ml-2">Welcome to Digital Recovery System</h2>
+            </div>
+        </div>
+
+        <div class="row px-5" id="completeForm" #completeForm *ngIf="currentUserRole == userType.User">
+            <h3 class="zoning-head-com">Location Form To Complete</h3>
+        </div>
+        <div class="row my-4 px-4" *ngIf="currentUserRole == userType.User">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form2)">
+                <div title="Incident audit form" class="box_brics_head mb-3">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/patient-black.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form2}}</span>
+                        <p>Form 2</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form7)">
+                <div title="Fire Safety and Emergency Response" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/alert-black.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form7}}</span>
+                        <p>Form 7</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form8)">
+                <div title="FIRST AID KIT AUDIT CHECKLIST" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/cordinator-black.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form8}}</span>
+                        <p>Form 8</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form9)">
+                <div title="INTERNAL FOOD SAFETY INSPECTION RECORD" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/recovery-star.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form9}}</span>
+                        <p>Form 9</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form10)">
+                <div title="Monthly Hot Water Temperature Record" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/diary-black.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form10}}</span>
+                        <p>Form 10</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4  cursor_ptr_hov" (click)="auditFormsList(FormsName.Form11)">
+                <div title="Infection Control Audit Tool" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/diary-black.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form11}}</span>
+                        <p>Form 11</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form12)">
+                <div title="Window Restrictor Audit (Weekly)" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/diary-black.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form12}}</span>
+                        <p>Form 12</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form13)">
+                <div title="Service User Medication Audit Tool" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/diary-black.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form13}}</span>
+                        <p>Form 13</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form14)">
+                <div title="General Medication Audit Tool" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/move-on-assessment.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form14}}</span>
+                        <p>Form 14</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form15)">
+                <div title="Medication Spot Check" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/move-on-assessment.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form15}}</span>
+                        <p>Form 15</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form16)">
+                <div title="Monthly Environmental Safety Audit Form" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/move-on-assessment.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form16}}</span>
+                        <p> Form 16</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form17)">
+                <div title="Weekly Medication Stock Check Record" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/move-on-assessment.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form17}}</span>
+                        <p> Form 17</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form19)">
+                <div title="Weekly Environmental Tool" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/move-on-assessment.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form19}}</span>
+                        <p>Form 19 </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form20)">
+                <div title="Window Safety Risk Assessment" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/move-on-assessment.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form20}}</span>
+                        <p>Form 20</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 cursor_ptr_hov" (click)="auditFormsList(FormsName.Form21)">
+                <div title="Service inspection" class="box_brics_head mb-4">
+                    <div class="left_brics_icon">
+                        <img src="assets/images/move-on-assessment.svg">
+                    </div>
+                    <div class="right_text_brics">
+                        <span>{{completeFormCounts.form21}}</span>
+                        <p>Form 21</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mx-4 mb-3" id="dairyComponent" #dairyComponent *ngIf="currentUserRole == userType.User">
+            <div class="col-sm-12 content bg-white table_dash_diary">
+                <app-dairy-master [loginId]="currentUserId"></app-dairy-master>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <!-- <div class="row my-3 px-4 mt-4">
+        <div class="col-sm-6">
+            <div class="graphbox">
+                <div class="graph_header">
+                    <h3 class="">Performance Chart</h3>
+                </div>
+                <div id="chartdiv"></div>
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            <div class="graphbox">
+                <div class="graph_header">
+                    <h3 class="">Patients by Gender</h3>
+                </div>
+                <div id="chartdiv2"></div>
+            </div>
+
+        </div>
+    </div> -->
+    <ng-container *ngIf="currentUserRole == userType.WECAdmin">
+
+        <app-admin-stats></app-admin-stats>
+    </ng-container>
+
+</div>

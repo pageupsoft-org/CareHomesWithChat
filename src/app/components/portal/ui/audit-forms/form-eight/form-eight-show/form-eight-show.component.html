@@ -1,0 +1,665 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        FIRST AID KIT AUDIT CHECKLIST
+                    </span>
+                    <span class="usr_headname"></span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mt-1 mb-3 bg-white shadow-sm  mr-lft-10">
+                <ng-container *ngIf="isBusy">
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <div class="sv-tab-panel info_tab_container">
+                        <div class="care-infotable w-96 mb-3 d-flex">
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.auditor)?((auditForm.auditor.firstName == null || auditForm.auditor.lastName == null)? auditForm.auditor.email:(auditForm.auditor.firstName+" "+auditForm.auditor.lastName) ):'-'}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.locationName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Date of Audit</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <!-- <input type="date" class="form-control" /> -->
+                                                <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">SignOff By</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <label>{{auditForm.signoffByName}}</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="care-infotable w-96 mb-3 d-flex">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="w-25">Item</th>
+                                        <th class="w-25">Use</th>
+                                        <th class="w-25">Quantity</th>
+                                        <th class="w-25">Checked By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="border-top-0">Blanket accident thermal</td>
+                                        <td>For hypothermia or shock</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.blanketAccidentQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.blanketAccidentCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Cotton balls sterilises</td>
+                                        <td class="border-top-0">Bathing wounds</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.cottonBallsQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.cottonBallsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Disposable latex gloves large and medium</td>
+                                        <td class="border-top-0">Protection against transmisslon of blood borne
+                                            disease</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.disposableGlovesQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.disposableGlovesCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Drink bottle or hard plastic cups</td>
+                                        <td class="border-top-0">Not to be shared, for fluid replacement</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.bottleHardPlasticQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.bottleHardPlasticCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Crepe bandage fabric strips (box 20)</td>
+                                        <td class="border-top-0">Cover small wounds</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.crepeBandageQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.crepeBandageCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Eye pad sterile</td>
+                                        <td class="border-top-0">For protecting the eye after trauma or foreign
+                                            body
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.eyePadSterileQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.eyePadSterileCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Freezer bags (pack)</td>
+                                        <td class="border-top-0">For ice and disposal of rubbish</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.freezerBagsQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.freezerBagsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Instant cold pack</td>
+                                        <td class="border-top-0">When ice is unavailable. Recommend crushed ice
+                                            in
+                                            eskys or
+                                            prepared ice bags in the freezer if possible</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.instantColdPackQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.instantColdPackCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Jelly beans</td>
+                                        <td class="border-top-0">Diabetics</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.jellyBeansQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.jellyBeansCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">List of medical conditions/allergies/etc</td>
+                                        <td class="border-top-0">To ensure appropriate care of medical
+                                            conditions including allergies or asthma, collected pre season</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.listOfMedicalQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.listOfMedicalCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Medical emergency plan</td>
+                                        <td class="border-top-0">An emergency plan may include script of details
+                                            for an emergency (999) call (quickest access io the unit where
+                                            medical emergency is
+                                            etc), chain of command, (IocaI out of hours clinic etc), who is
+                                            responsible for medical/first aid supplies etc.</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.medicalEmergencyQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.medicalEmergencyCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Non adhesive dressings 50mmx50mm & 77x75mm</td>
+                                        <td class="border-top-0">Wound desifectant</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.nonAdhesiveDressingsQuantity)}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.nonAdhesiveDressingsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Resuscitation mask -packet or pocket mask </td>
+                                        <td class="border-top-0">Used for CPR</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.resuscitationMarkQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.resuscitationMarkCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Safety pins assorted</td>
+                                        <td class="border-top-0">To secure slings or bandages</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.safetyPinsAssortedQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.safetyPinsAssortedCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Sod Chloride 10ml </td>
+                                        <td class="border-top-0">Saline for washing wounds or eyes after trauma
+                                            or foreign body </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.sodChlorideQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.sodChlorideCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Accident Book pen, paper, clip board </td>
+                                        <td class="border-top-0">Record injuries, treatments and actions</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.accidentBookPenQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.accidentBookPenCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Tape scissors 14cm</td>
+                                        <td class="border-top-0">Cut tape and bandages</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.tapeScissorsQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.tapeScissorsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Telephone or access to one</td>
+                                        <td class="border-top-0">For emergency calls</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.telephoneQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.telephoneCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Triangular bandage</td>
+                                        <td class="border-top-0">For arm slings and compression</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.triangularBandageQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.triangularBandageCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Wound closure strips</td>
+                                        <td class="border-top-0">Closed, bring wound edges together</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.woundClousreStripsQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.woundClousreStripsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Gauze swabs 10cmx10cm </td>
+                                        <td class="border-top-0">Bathing wounds</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.guzeSwabsQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.guzeSwabsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Plain scissors </td>
+                                        <td class="border-top-0">To cut foam, adhesives</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.plainScissorsQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.plainScissorsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Crepe bandage - small </td>
+                                        <td class="border-top-0">Secure wound dressings or ice</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.crepeBandageSmallQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.crepeBandageSmallCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Crepe bandage - large </td>
+                                        <td class="border-top-0">Secure wound dressings or ice</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.crepeBandageLargeQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.crepeBandageLargeCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Vaseline 50g </td>
+                                        <td class="border-top-0">For prevention of chaffing and rubbing</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.veseline50gQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.veseline50gCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Micropore tape</td>
+                                        <td class="border-top-0">For strapping of sensitive skin</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.microporeTapeQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.microporeTapeCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Defribulator </td>
+                                        <td class="border-top-0">Tt requires a qualified person to use it</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.defribulatorQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.defribulatorCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Scissors </td>
+                                        <td class="border-top-0">Cutclothng</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.scissorsQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.scissorsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Tissues </td>
+                                        <td class="border-top-0">Clearing spillages / vomit</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.tissuesQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.tissuesCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Resuscitation flash </td>
+                                        <td class="border-top-0">CPR</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.resuscitationFlashQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.resuscitationFlashCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Shaver </td>
+                                        <td class="border-top-0">Removal chest hair</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.shaverQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.shaverCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Cleansing wipes </td>
+                                        <td class="border-top-0">Cleansing</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.cleansingWipesQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.cleansingWipesCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Heat Retaining Wrap </td>
+                                        <td class="border-top-0">Hypothermia or shock</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.heatRetainingWrapQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.heatRetainingWrapCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">NitrileGIovas </td>
+                                        <td class="border-top-0">Protection</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.nitrileGlovasQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.nitrileGlovasCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Sterile adhesive dressings </td>
+                                        <td class="border-top-0">Cuts / wounds</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.sterileAdhesiveDressingsQuantity)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.sterileAdhesiveDressingsCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Washproof plasters</td>
+                                        <td class="border-top-0">Cuts</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.washproofPlastersQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.washproofPlastersCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Blue plasters</td>
+                                        <td class="border-top-0">If personnel is in the kitchen</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.bluePlastersQuantity}}
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.bluePlastersCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">Burn gel</td>
+                                        <td class="border-top-0">Burns</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.burngelQuantity}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.burngelCheckBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                            <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back"
+                                (click)="goBack()">Go Back</button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

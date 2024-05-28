@@ -1,0 +1,152 @@
+.box_patientinfo ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.box_patientinfo ul li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 10px;
+    border-right: 5px solid #fff;
+    background-color: #ecf4fa;
+    border-radius: 50px;
+    border: solid thin #ecf4fa;
+}
+
+.my_outcome ul {
+    list-style: none;
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.my_outcome ul li {
+    padding: 6px 12px;
+    display: inline-block;
+    float: left;
+}
+
+.info_tab_container {
+    padding: 20px 0px;
+}
+
+.whitetable {
+    background-color: #fff;
+    box-shadow: 1px 3px 9px #a4c4dc8a;
+    margin-bottom: 20px !important;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.bg_lightblue {
+    background-color: #ecf4fa;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.headr_myshare {
+    background-color: #bf838a;
+    margin-left: 2%;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+}
+
+.jumbotron {
+    background-color: transparent;
+}
+
+.jumbotron h1 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.jumbotron p {
+    font-size: 13px;
+    color: #000000;
+}
+
+.colapse-head {
+    margin-left: 2%;
+    padding-left: 1%;
+    line-height: 40px;
+    padding-right: 2%;
+    cursor: pointer;
+}
+
+.colapse-head {
+    border-bottom: solid thin #eaeaea;
+}
+
+@media (max-width:992px) and (min-width:768px) {
+    .bg_lightblue {
+        width: 98%;
+    }
+    .prof_info_tabs {
+        width: 1020px;
+    }
+    .riskbox-secction {
+        overflow-x: auto !important;
+    }
+    .riskbox-secction ul li {
+        width: 100px;
+        height: 40px;
+    }
+    .headr_myshare {
+        width: 96%;
+    }
+    .care-infotable {
+        width: 96% !important;
+        margin-bottom: 0px;
+    }
+    .tab-w-100 {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .care-infotable {
+        width: 96% !important;
+    }
+}
+
+:root {
+    --footer-color: #ff4545;
+}
+
+footer {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    background-color: var(--footer-color)
+}
+
+.closebtn {
+    position: relative;
+    float: right;
+    top: 6px;
+    height: 20px;
+    line-height: 20px;
+    width: 20px;
+    font-size: 13px;
+    text-align: center;
+    background-color: #8c555c;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+}
+
+.disable_tab {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.addmore-btn {
+    height: 35px;
+    padding: 0px 10px;
+}

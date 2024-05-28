@@ -1,0 +1,239 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Monthly Environmental Safety Audit Form
+                    </span>
+                    <span class="usr_headname"></span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mt-1 mb-3 bg-white shadow-sm">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!isBusy && auditForm">
+
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr
+                                            *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        {{(auditForm.auditor)?((auditForm.auditor.firstName == null || auditForm.auditor.lastName == null)? auditForm.auditor.email:(auditForm.auditor.firstName+" "+auditForm.auditor.lastName) ):'-'}}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{auditForm.locationName}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <!-- <input type="date" class="form-control" /> -->
+                                                    <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{auditForm.signoffByName}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                                <div class="care-infotable w-96 mb-3 d-flex">
+                                    <table class="table w-50 mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">Doors, Handles & Locks</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    This means that the doors. Handles and locks are in place and
+                                                    working
+                                                    properly.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="border-top-0">Furniture, Toilet & Fittings</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    This means that all furniture that should be in the room is present
+                                                    and
+                                                    in good order. Also check: - Windows, Curtains, Radiators, Shelving,
+                                                    Bedding, Power Points all pose no danger to clients or staffs
+                                                    safety.
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <table class="table w-50 mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">Hazardous items</th>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    List everything that is considered to be unsafe, and that you have
+                                                    removed to a place of safety.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="border-top-0">Hazards identified</th>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    List anything that you consider could pose a realistic probable
+                                                    threat
+                                                    that you cannot rectify as you undertaking the audit e.a. light bulb
+                                                    blown or sink blocked etc.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Whenever 'NO' is ticked please fill comments column in and fill in a
+                                                    maintenance form. </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="care-infotable w-96 mb-3 d-flex overflow-auto limitheight-form">
+                                    <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">#</th>
+                                                <th class="border-top-0">Location </th>
+                                                <th class="border-top-0">Doors, Handles & Locks</th>
+                                                <th class="border-top-0">Furniture, Toilet & Fittings</th>
+                                                <th class="border-top-0">Harzardous items</th>
+                                                <th class="border-top-0">Action required</th>
+                                                <th class="border-top-0">Target date</th>
+                                                <th class="border-top-0">Actioned by</th>
+                                                <th class="border-top-0">Completed by</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let record of auditForm.form16Records;let i= index ">
+                                                <tr>
+                                                    <!-- <td class="border-top-0">Staff Office Ground floor - Window 1</td> -->
+                                                    <td class="border-top-0">
+                                                       {{i+1}}
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                            {{record.location}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                            {{satisfactory[record.doorlocks]}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                             {{satisfactory[record.furnitureFittings]}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                             {{record.harzardousItem}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                             {{record.actionRequired}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{(record.targetDate)?(record.targetDate|date:'dd-MM-yyyy'):'-'}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{getUserName(record.actionedBy)}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{getUserName(record.completedBy)}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="care-infotable w-96 mb-3 d-flex ">
+                                    <table class="table w-100 mb-0 ">
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">General comments</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                       {{auditForm.generalComment}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <span>
+                                    <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                                        (click)="goBack()">Go Back</button>
+                                </span>
+                            </div>
+                        </div>
+                    
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

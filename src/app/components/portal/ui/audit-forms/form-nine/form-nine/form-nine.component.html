@@ -1,0 +1,1438 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1 class="">
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        INTERNAL FOOD SAFETY INSPECTION RECORD
+                    </span>
+                    <span class="usr_headname"></span>
+                    <span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+            <div class="horizontal-tabs mt-2 mb-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <form [formGroup]="auditForm">
+
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control"
+                                                    (change)="getUsers($event.target.value)"
+                                                    formControlName="locationId">
+                                                    <ng-container
+                                                        *ngFor="let location of locationList">
+                                                        <option [value]="location.id">
+                                                            {{location.name}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control"
+                                                    (change)="completeForm($event)" name="auditedBy"
+                                                    formControlName="auditedBy">
+                                                    <ng-container *ngFor="let user of userList">
+                                                        <option [ngValue]="user.id"
+                                                            *ngIf="user.userType != userType.Admin">
+                                                            {{ (user.firstName ==null ||
+                                                            user.lastName == null)?
+                                                            user.email: user.firstName+"
+                                                            "+user.lastName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{(auditForm.get('auditDate').value)?(auditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy"
+                                                        (change)="changeSignoff()">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-container *ngIf="isFilling">
+                                <div class="care-infotable w-96 mb-3 d-flex">
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">SUBJECT</th>
+                                                <th class="w-25">STANDARD</th>
+                                                <th class="w-25">Yes / No</th>
+                                                <th class="w-25">COMMENTS / ACTION</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="border-top-0">Deliveries</td>
+                                                <td>Deliveries put away quickly</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="true"
+                                                            formControlName="deliveriesPutAwayAction"
+                                                            id="deliveriesPutAwayYes" class="form-check-input">
+                                                        <label for="deliveriesPutAwayYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" formControlName="deliveriesPutAwayAction" [value]="false"
+                                                            id="deliveriesPutAwayNo" class="form-check-input">
+                                                        <label for="deliveriesPutAwayNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="deliveriesPutAwayComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="8" class="border-top-0">Storage</td>
+                                                <td class="border-top-0">Raw and other foods stored apart</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="true"
+                                                            formControlName="rawOtherFoodsStoredAction"
+                                                            id="rawOtherFoodsStoredYes" class="form-check-input ">
+                                                        <label for="rawOtherFoodsStoredYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" formControlName="rawOtherFoodsStoredAction"
+                                                            [value]="false" id="rawOtherFoodsStoredNo"
+                                                            class="form-check-input ">
+                                                        <label for="rawOtherFoodsStoredNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="rawOtherFoodsStoredComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">All food suitably covered or wrapped</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="true"
+                                                            id="foodSuitablyCoveredYes"
+                                                            formControlName="foodSuitablyCoveredAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodSuitablyCoveredYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="false"
+                                                            id="foodSuitablyCoveredNo"
+                                                            formControlName="foodSuitablyCoveredAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodSuitablyCoveredNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodSuitablyCoveredComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Food-grade material only in use</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="true"
+                                                            id="foodGradeMaterialYes"
+                                                            formControlName="foodGradeMaterialAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodGradeMaterialYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="false"
+                                                            id="foodGradeMaterialNo"
+                                                            formControlName="foodGradeMaterialAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodGradeMaterialNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodGradeMaterialComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">No food in opened cans</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="true"
+                                                            id="noFoodOpenedYes" formControlName="noFoodOpenedAction"
+                                                            class="form-check-input ">
+                                                        <label for="noFoodOpenedYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="false" id="noFoodOpenedNo"
+                                                            formControlName="noFoodOpenedAction"
+                                                            class="form-check-input ">
+                                                        <label for="noFoodOpenedNo" class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noFoodOpenedComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">All food clear of floor level</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="true" id="foodClearYes"
+                                                            formControlName="foodClearAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodClearYes" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" [value]="false" id="foodClearNo"
+                                                            formControlName="foodClearAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodClearNo" class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodClearComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">No unnecessary glass</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noUnnecessaryGlassAction"
+                                                            id="noUnnecessaryGlassYes" [value]="true"
+                                                            formControlName="noUnnecessaryGlassAction"
+                                                            class="form-check-input ">
+                                                        <label for="noUnnecessaryGlassYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noUnnecessaryGlassAction"
+                                                            [value]="false" id="noUnnecessaryGlassNo"
+                                                            formControlName="noUnnecessaryGlassAction"
+                                                            class="form-check-input ">
+                                                        <label for="noUnnecessaryGlassNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noUnnecessaryGlassComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">No dirty packaging</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noDirtyPackagingAction"
+                                                            [value]="true" id="noDirtyPackagingYes"
+                                                            formControlName="noDirtyPackagingAction"
+                                                            class="form-check-input ">
+                                                        <label for="noDirtyPackagingYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noDirtyPackagingAction"
+                                                            [value]="false" id="noDirtyPackagingNo"
+                                                            formControlName="noDirtyPackagingAction"
+                                                            class="form-check-input ">
+                                                        <label for="noDirtyPackagingNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noDirtyPackagingComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">No over-stocking</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noOverStockingAction"
+                                                            id="noOverStockingYes" [value]="true"
+                                                            formControlName="noOverStockingAction"
+                                                            class="form-check-input ">
+                                                        <label for="noOverStockingYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noOverStockingAction"
+                                                            [value]="false" id="noOverStockingNo"
+                                                            formControlName="noOverStockingAction"
+                                                            class="form-check-input ">
+                                                        <label for="noOverStockingNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noOverStockingComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="6" class="border-top-0">Preparation</td>
+                                                <td class="border-top-0">Only food in process of preparation or service
+                                                    uncovered</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodInProcessAction"
+                                                            [value]="true" id="foodInProcessYes"
+                                                            formControlName="foodInProcessAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodInProcessYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodInProcessAction"
+                                                            [value]="false" id="foodInProcessNo"
+                                                            formControlName="foodInProcessAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodInProcessNo" class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodInProcessComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">No excessive handling of open food</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noExcessiveHandlingAction"
+                                                            [value]="true" id="noExcessiveHandlingYes"
+                                                            formControlName="noExcessiveHandlingAction"
+                                                            class="form-check-input ">
+                                                        <label for="noExcessiveHandlingYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noExcessiveHandlingAction"
+                                                            [value]="false" id="noExcessiveHandlingNo"
+                                                            formControlName="noExcessiveHandlingAction"
+                                                            class="form-check-input ">
+                                                        <label for="noExcessiveHandlingNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noExcessiveHandlingComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">No high risk use of raw eggs</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noHighRiskUseRawEggsAction"
+                                                            [value]="true" id="noHighRiskUseRawEggsYes"
+                                                            formControlName="noHighRiskUseRawEggsAction"
+                                                            class="form-check-input ">
+                                                        <label for="noHighRiskUseRawEggsYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noHighRiskUseRawEggsAction"
+                                                            [value]="false" id="noHighRiskUseRawEggsNo"
+                                                            formControlName="noHighRiskUseRawEggsAction"
+                                                            class="form-check-input ">
+                                                        <label for="noHighRiskUseRawEggsNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noHighRiskUseRawEggsComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Adequate separation of clean and dirty
+                                                    activities
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="adequateSeparationActivitiesAction"
+                                                            [value]="true"
+                                                            id="adequateSeparationActivitiesYes"
+                                                            formControlName="adequateSeparationActivitiesAction"
+                                                            class="form-check-input ">
+                                                        <label for="adequateSeparationActivitiesYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="adequateSeparationActivitiesAction"
+                                                            [value]="false" id="adequateSeparationActivitiesNo"
+                                                            formControlName="adequateSeparationActivitiesAction"
+                                                            class="form-check-input ">
+                                                        <label for="adequateSeparationActivitiesNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="adequateSeparationActivitiesComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Only reasonable quantities of
+                                                    temperature-sensitive
+                                                    food out of refrigeration</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="quantitiesOfTemperatureAction"
+                                                            [value]="true" id="quantitiesOfTemperatureYes"
+                                                            formControlName="quantitiesOfTemperatureAction"
+                                                            class="form-check-input ">
+                                                        <label for="quantitiesOfTemperatureYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="quantitiesOfTemperatureAction"
+                                                            [value]="false" id="quantitiesOfTemperatureNo"
+                                                            formControlName="quantitiesOfTemperatureAction"
+                                                            class="form-check-input ">
+                                                        <label for="quantitiesOfTemperatureNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="quantitiesOfTemperatureComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Sufficient knives, chopping boards, tables,
+                                                    etc.
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="sufficientkitchenEquipmentAction"
+                                                            [value]="true" id="sufficientkitchenEquipmentYes"
+                                                            formControlName="sufficientkitchenEquipmentAction"
+                                                            class="form-check-input ">
+                                                        <label for="sufficientkitchenEquipmentYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="sufficientkitchenEquipmentAction"
+                                                            [value]="false" id="sufficientkitchenEquipmentNo"
+                                                            formControlName="sufficientkitchenEquipmentAction"
+                                                            class="form-check-input ">
+                                                        <label for="sufficientkitchenEquipmentNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control" formControlName="sufficientkitchenEquipmentComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="8" class="border-top-0">Personal Hygiene</td>
+                                                <td class="border-top-0">Staff facilities clean and tidy</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="staffFacilitiesCleanAction"
+                                                            [value]="true" id="staffFacilitiesCleanYes"
+                                                            formControlName="staffFacilitiesCleanAction"
+                                                            class="form-check-input ">
+                                                        <label for="staffFacilitiesCleanYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="staffFacilitiesCleanAction"
+                                                            [value]="false" id="staffFacilitiesCleanNo"
+                                                            formControlName="staffFacilitiesCleanAction"
+                                                            class="form-check-input ">
+                                                        <label for="staffFacilitiesCleanNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="staffFacilitiesCleanComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Staff appearance satisfactory</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="staffAppearanceSatisfactoryAction"
+                                                            [value]="true" id="staffAppearanceSatisfactoryYes"
+                                                            formControlName="staffAppearanceSatisfactoryAction"
+                                                            class="form-check-input ">
+                                                        <label for="staffAppearanceSatisfactoryYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="staffAppearanceSatisfactoryAction"
+                                                            [value]="false" id="staffAppearanceSatisfactoryNo"
+                                                            formControlName="staffAppearanceSatisfactoryAction"
+                                                            class="form-check-input ">
+                                                        <label for="staffAppearanceSatisfactoryNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="staffAppearanceSatisfactoryComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Adequate protective clothing</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="adequateProtectiveClothingAction"
+                                                            [value]="true" id="adequateProtectiveClothingYes"
+                                                            formControlName="adequateProtectiveClothingAction"
+                                                            class="form-check-input ">
+                                                        <label for="adequateProtectiveClothingYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="adequateProtectiveClothingAction"
+                                                            [value]="false" id="adequateProtectiveClothingNo"
+                                                            formControlName="adequateProtectiveClothingAction"
+                                                            class="form-check-input ">
+                                                        <label for="adequateProtectiveClothingNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="adequateProtectiveClothingComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">No bad habits or practices</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noBadHabitsPracticesAction"
+                                                            [value]="true" id="noBadHabitsPracticesYes"
+                                                            formControlName="noBadHabitsPracticesAction"
+                                                            class="form-check-input ">
+                                                        <label for="noBadHabitsPracticesYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noBadHabitsPracticesAction"
+                                                            [value]="false" id="noBadHabitsPracticesNo"
+                                                            formControlName="noBadHabitsPracticesAction"
+                                                            class="form-check-input ">
+                                                        <label for="noBadHabitsPracticesNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noBadHabitsPracticesComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Hand wash disciplines followed</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="handWashDisciplinesAction"
+                                                            [value]="true" id="handWashDisciplinesYes"
+                                                            formControlName="handWashDisciplinesAction"
+                                                            class="form-check-input ">
+                                                        <label for="handWashDisciplinesYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="handWashDisciplinesAction"
+                                                            [value]="false" id="handWashDisciplinesNo"
+                                                            formControlName="handWashDisciplinesAction"
+                                                            class="form-check-input ">
+                                                        <label for="handWashDisciplinesNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="handWashDisciplinesComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Wash hand basins fully stocked</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="handWashBasinsStockedAction"
+                                                            [value]="true" id="handWashBasinsStockedYes"
+                                                            formControlName="handWashBasinsStockedAction"
+                                                            class="form-check-input ">
+                                                        <label for="handWashBasinsStockedYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="handWashBasinsStockedAction"
+                                                            [value]="false" id="handWashBasinsStockedNo"
+                                                            formControlName="handWashBasinsStockedAction"
+                                                            class="form-check-input ">
+                                                        <label for="handWashBasinsStockedNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="handWashBasinsStockedComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">"Now wash hands" notice in staff toilets</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noticeInStaffToiletAction"
+                                                            [value]="true" id="noticeInStaffToiletYes"
+                                                            formControlName="noticeInStaffToiletAction"
+                                                            class="form-check-input ">
+                                                        <label for="noticeInStaffToiletYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noticeInStaffToiletAction"
+                                                            [value]="false" id="noticeInStaffToiletNo"
+                                                            formControlName="noticeInStaffToiletAction"
+                                                            class="form-check-input ">
+                                                        <label for="noticeInStaffToiletNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noticeInStaffToiletComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">"First-Aid kit available in kitchen, fully
+                                                    stocked
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="firstAidAvailableInKitchenAction"
+                                                            [value]="true" id="firstAidAvailableInKitchenYes"
+                                                            formControlName="firstAidAvailableInKitchenAction"
+                                                            class="form-check-input ">
+                                                        <label for="firstAidAvailableInKitchenYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="firstAidAvailableInKitchenAction"
+                                                            [value]="false" id="firstAidAvailableInKitchenNo"
+                                                            formControlName="firstAidAvailableInKitchenAction"
+                                                            class="form-check-input ">
+                                                        <label for="firstAidAvailableInKitchenNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="firstAidAvailableInKitchenComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="13" class="border-top-0">Temperature Control</td>
+                                                <td class="border-top-0">Fridges at 0 - 5°C</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="fridgesAtZeroToFiveCAction"
+                                                            [value]="true" id="fridgesAtZeroToFiveCYes"
+                                                            formControlName="fridgesAtZeroToFiveCAction"
+                                                            class="form-check-input ">
+                                                        <label for="fridgesAtZeroToFiveCYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="fridgesAtZeroToFiveCAction"
+                                                            [value]="false" id="fridgesAtZeroToFiveCNo"
+                                                            formControlName="fridgesAtZeroToFiveCAction"
+                                                            class="form-check-input ">
+                                                        <label for="fridgesAtZeroToFiveCNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="fridgesAtZeroToFiveCComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Freezers at -18°C or below</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="fridgesBelow18Action"
+                                                            [value]="true" id="fridgesBelow18Yes"
+                                                            formControlName="fridgesBelow18Action"
+                                                            class="form-check-input ">
+                                                        <label for="fridgesBelow18Yes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="fridgesBelow18Action"
+                                                            [value]="false" id="fridgesBelow18No"
+                                                            formControlName="fridgesBelow18Action"
+                                                            class="form-check-input ">
+                                                        <label for="fridgesBelow18No"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="fridgesBelow18Comment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">All refrigeration equipment has internal
+                                                    thermometer or casing display</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="thermometerOrCasingDisplayAction"
+                                                            [value]="true" id="thermometerOrCasingDisplayYes"
+                                                            formControlName="thermometerOrCasingDisplayAction"
+                                                            class="form-check-input ">
+                                                        <label for="thermometerOrCasingDisplayYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="thermometerOrCasingDisplayAction"
+                                                            [value]="false" id="thermometerOrCasingDisplayNo"
+                                                            formControlName="thermometerOrCasingDisplayAction"
+                                                            class="form-check-input ">
+                                                        <label for="thermometerOrCasingDisplayNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="thermometerOrCasingDisplayComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Probe thermometer and disinfectant wipes
+                                                    available
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="thermometerDisinfectantWipesAction"
+                                                            [value]="true"
+                                                            id="thermometerDisinfectantWipesYes"
+                                                            formControlName="thermometerDisinfectantWipesAction"
+                                                            class="form-check-input ">
+                                                        <label for="thermometerDisinfectantWipesYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="thermometerDisinfectantWipesAction"
+                                                            [value]="false" id="thermometerDisinfectantWipesNo"
+                                                            formControlName="thermometerDisinfectantWipesAction"
+                                                            class="form-check-input ">
+                                                        <label for="thermometerDisinfectantWipesNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="thermometerDisinfectantWipesComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Only food in process of preparation or service
+                                                    out
+                                                    of temperature control</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodInProcessOfPreparationAction"
+                                                            [value]="true" id="foodInProcessOfPreparationYes"
+                                                            formControlName="foodInProcessOfPreparationAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodInProcessOfPreparationYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodInProcessOfPreparationAction"
+                                                            [value]="false" id="foodInProcessOfPreparationNo"
+                                                            formControlName="foodInProcessOfPreparationAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodInProcessOfPreparationNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodInProcessOfPreparationComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">All food stored correctly</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodStoredCorrectlyAction"
+                                                            [value]="true" id="foodStoredCorrectlyYes"
+                                                            formControlName="foodStoredCorrectlyAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodStoredCorrectlyYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodStoredCorrectlyAction"
+                                                            [value]="false" id="foodStoredCorrectlyNo"
+                                                            formControlName="foodStoredCorrectlyAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodStoredCorrectlyNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodStoredCorrectlyComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Frozen food suitably thawed</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="frozenFoodSuitablyAction"
+                                                            [value]="true" id="frozenFoodSuitablyYes"
+                                                            formControlName="frozenFoodSuitablyAction"
+                                                            class="form-check-input ">
+                                                        <label for="frozenFoodSuitablyYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="frozenFoodSuitablyAction"
+                                                            [value]="false" id="frozenFoodSuitablyNo"
+                                                            formControlName="frozenFoodSuitablyAction"
+                                                            class="form-check-input ">
+                                                        <label for="frozenFoodSuitablyNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="frozenFoodSuitablyComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Food cooked/reheated to a minimum 75°C</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodCookedReheatedAction"
+                                                            [value]="true" id="foodCookedReheatedYes"
+                                                            formControlName="foodCookedReheatedAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodCookedReheatedYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodCookedReheatedAction"
+                                                            [value]="false" id="foodCookedReheatedNo"
+                                                            formControlName="foodCookedReheatedAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodCookedReheatedNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodCookedReheatedComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Probe thermometer in use to verify food
+                                                    temperatures</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="thermometerUseVerifyFoodTempAction"
+                                                            [value]="true"
+                                                            id="thermometerUseVerifyFoodTempYes"
+                                                            formControlName="thermometerUseVerifyFoodTempAction"
+                                                            class="form-check-input ">
+                                                        <label for="thermometerUseVerifyFoodTempYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="thermometerUseVerifyFoodTempAction"
+                                                            [value]="false" id="thermometerUseVerifyFoodTempNo"
+                                                            formControlName="thermometerUseVerifyFoodTempAction"
+                                                            class="form-check-input ">
+                                                        <label for="thermometerUseVerifyFoodTempNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="thermometerUseVerifyFoodTempComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">No misuse of equipment (e.g. reheating in
+                                                    bain-marie)</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noMisuseEquipmentAction"
+                                                            [value]="true" id="noMisuseEquipmentYes"
+                                                            formControlName="noMisuseEquipmentAction"
+                                                            class="form-check-input ">
+                                                        <label for="noMisuseEquipmentYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="noMisuseEquipmentAction"
+                                                            [value]="false" id="noMisuseEquipmentNo"
+                                                            formControlName="noMisuseEquipmentAction"
+                                                            class="form-check-input ">
+                                                        <label for="noMisuseEquipmentNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="noMisuseEquipmentComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Max. 90 minute hot food cooling period</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="hotFoodCoolingPeriodAction"
+                                                            [value]="true" id="hotFoodCoolingPeriodYes"
+                                                            formControlName="hotFoodCoolingPeriodAction"
+                                                            class="form-check-input ">
+                                                        <label for="hotFoodCoolingPeriodYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="hotFoodCoolingPeriodAction"
+                                                            [value]="false" id="hotFoodCoolingPeriodNo"
+                                                            formControlName="hotFoodCoolingPeriodAction"
+                                                            class="form-check-input ">
+                                                        <label for="hotFoodCoolingPeriodNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="hotFoodCoolingPeriodComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    Food displayed <br>
+                                                    - Hot minimum 63°C<br>
+                                                    - Cold 0 - 5°C</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodDisplayedAction"
+                                                            [value]="true" id="foodDisplayedYes"
+                                                            formControlName="foodDisplayedAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodDisplayedYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodDisplayedAction"
+                                                            [value]="false" id="foodDisplayedNo"
+                                                            formControlName="foodDisplayedAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodDisplayedNo" class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodDisplayedComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Food displayed temperature control subject to 2
+                                                    and
+                                                    4-hour rules</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodDisplayedTempControlAction"
+                                                            [value]="true" id="foodDisplayedTempControlYes"
+                                                            formControlName="foodDisplayedTempControlAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodDisplayedTempControlYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="foodDisplayedTempControlAction"
+                                                            [value]="false" id="foodDisplayedTempControlNo"
+                                                            formControlName="foodDisplayedTempControlAction"
+                                                            class="form-check-input ">
+                                                        <label for="foodDisplayedTempControlNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="foodDisplayedTempControlComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="3" class="border-top-0">Cleaning and Disinfection</td>
+                                                <td class="border-top-0">Clean and dirty equipment kept separate</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="separateDirtyEquipmentAction"
+                                                            [value]="true" id="separateDirtyEquipmentYes"
+                                                            formControlName="separateDirtyEquipmentAction"
+                                                            class="form-check-input ">
+                                                        <label for="separateDirtyEquipmentYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="separateDirtyEquipmentAction"
+                                                            [value]="false" id="separateDirtyEquipmentNo"
+                                                            formControlName="separateDirtyEquipmentAction"
+                                                            class="form-check-input ">
+                                                        <label for="separateDirtyEquipmentNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="separateDirtyEquipmentComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+                                                <td class="border-top-0">Good visual standards of housekeeping.</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="visualStandardsOfHousekeepingAction"
+                                                            [value]="true"
+                                                            id="visualStandardsOfHousekeepingActionYes"
+                                                            formControlName="visualStandardsOfHousekeepingAction"
+                                                            class="form-check-input ">
+                                                        <label for="visualStandardsOfHousekeepingActionYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="visualStandardsOfHousekeepingAction"
+                                                            [value]="false"
+                                                            id="visualStandardsOfHousekeepingActionNo"
+                                                            formControlName="visualStandardsOfHousekeepingAction"
+                                                            class="form-check-input ">
+                                                        <label for="visualStandardsOfHousekeepingActionNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="visualStandardsOfHousekeepingComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">‘Clean as you go" apparent</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="apparentAction"
+                                                            [value]="true" id="apparentYes"
+                                                            formControlName="apparentAction"
+                                                            class="form-check-input ">
+                                                        <label for="apparentYes" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="apparentAction"
+                                                            [value]="false" id="apparentNo"
+                                                            formControlName="apparentAction"
+                                                            class="form-check-input ">
+                                                        <label for="apparentNo" class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="apparentComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="3" class="border-top-0">Cleaning and Disinfection</td>
+                                                <td class="border-top-0">Cleaning schedule on display, in use, complete
+                                                    and
+                                                    compatible with chemicals available</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="cleaningScheduleAction"
+                                                            [value]="true" id="cleaningScheduleYes"
+                                                            formControlName="cleaningScheduleAction"
+                                                            class="form-check-input ">
+                                                        <label for="cleaningScheduleYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="cleaningScheduleAction"
+                                                            [value]="false" id="cleaningScheduleNo"
+                                                            formControlName="cleaningScheduleAction"
+                                                            class="form-check-input ">
+                                                        <label for="cleaningScheduleNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="cleaningScheduleComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Full range of cleaning chemicals available —
+                                                    oven
+                                                    cleaner, degreasers, sanitiser, wash-up, etc.</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="cleaningChemicalsAvailableAction"
+                                                            [value]="true" id="cleaningChemicalsAvailableYes"
+                                                            formControlName="cleaningChemicalsAvailableAction"
+                                                            class="form-check-input ">
+                                                        <label for="cleaningChemicalsAvailableYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="cleaningChemicalsAvailableAction"
+                                                            [value]="false" id="cleaningChemicalsAvailableNo"
+                                                            formControlName="cleaningChemicalsAvailableAction"
+                                                            class="form-check-input ">
+                                                        <label for="cleaningChemicalsAvailableNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="cleaningChemicalsAvailableComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Sufficient cleaning equipment, including
+                                                    disposable
+                                                    cloths or good laundry arrangements</td>
+                                                <td class="border-top-0">
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="sufficientCleaningEquipmentAction"
+                                                            [value]="true" id="sufficientCleaningEquipmentYes"
+                                                            formControlName="sufficientCleaningEquipmentAction"
+                                                            class="form-check-input ">
+                                                        <label for="sufficientCleaningEquipmentYes"
+                                                            class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" name="sufficientCleaningEquipmentAction"
+                                                            [value]="false" id="sufficientCleaningEquipmentNo"
+                                                            formControlName="sufficientCleaningEquipmentAction"
+                                                            class="form-check-input ">
+                                                        <label for="sufficientCleaningEquipmentNo"
+                                                            class="form-check-label">No</label>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="1" cols="1" class="form-control"
+                                                            formControlName="sufficientCleaningEquipmentComment">
+                                        </textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3"
+                                *ngIf="auditForm.get('signoffBy').value == currentUserId ">
+                                <p class="mr-2"><strong> Do you want to create form for next review date</strong></p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes14"
+                                        [value]="true" class="form-check-input  ng-untouched ng-pristine ng-valid">
+                                    <label for="yes14" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false"
+                                        id="No14" [value]="false"
+                                        class="form-check-input  ng-untouched ng-pristine ng-valid">
+                                    <label for="No14" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container
+                                    *ngIf="auditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" (click)="onSubmit()" [disabled]="!auditForm.valid"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+
+                </ng-container>
+            </div>
+</div>

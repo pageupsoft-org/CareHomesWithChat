@@ -1,0 +1,2225 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm">
+                <ng-container *ngIf="isBusy">
+                    <div class="col-sm-12 text-center">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline-block">
+                        </mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && recoveryStar && !showLogDetail">
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12 no-pad scroller">
+                                <div class="left-btn-scroller left-scroll">
+                                    <i class="mdi mdi-chevron-left"></i>
+                                </div>
+                                <div class="right-btn-scroller right-scroll">
+                                    <i class="mdi mdi-chevron-right"></i>
+                                </div>
+                                <div class="box_nav_tab riskbox-secction" id="scroll-div">
+                                    <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" (click)="onClickNext(1)"
+                                                [ngClass]="{ 'active':active ==1}" href="#part1" role="tab"
+                                                aria-controls="part1">
+                                                <span>Part 1</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(2)"
+                                                [ngClass]="{ 'active':active ==2}" href="#part2" role="tab"
+                                                aria-controls="part2">
+                                                <span>Part 2</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(3)"
+                                                [ngClass]="{ 'active':active ==3}" href="#part3" role="tab"
+                                                aria-controls="part3">
+                                                <span>Part 3</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(4)"
+                                                [ngClass]="{ 'active':active ==4}" href="#part4" role="tab"
+                                                aria-controls="part4">
+                                                <span>Part 4</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(5)"
+                                                [ngClass]="{ 'active':active ==5}" href="#part5" role="tab"
+                                                aria-controls="part5">
+                                                <span>Part 5</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(6)"
+                                                [ngClass]="{ 'active':active ==6}" href="#part6" role="tab"
+                                                aria-controls="part6">
+                                                <span>Part 6</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(7)"
+                                                [ngClass]="{ 'active':active ==7}" href="#part7" role="tab"
+                                                aria-controls="part7">
+                                                <span>Part 7</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(8)"
+                                                [ngClass]="{ 'active':active ==8}" href="#part8" role="tab"
+                                                aria-controls="part8">
+                                                <span>Part 8</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(9)"
+                                                [ngClass]="{ 'active':active ==9}" href="#part9" role="tab"
+                                                aria-controls="part9">
+                                                <span>Part 9</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link  " data-toggle="tab" (click)="onClickNext(10)"
+                                                [ngClass]="{ 'active':active ==10}" href="#part10" role="tab"
+                                                aria-controls="part10">
+                                                <span>Part 10</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" (click)="onClickNext(11)"
+                                                [ngClass]="{ 'active':active ==11}" href="#part11" role="tab"
+                                                aria-controls="part11">
+                                                <span>Part 11</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" (click)="onClickNext(12)"
+                                                [ngClass]="{ 'active':active ==12}" href="#part12" role="tab"
+                                                aria-controls="part12">
+                                                <span>Part 12</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" (click)="onClickNext(13)"
+                                                [ngClass]="{ 'active':active ==13}" href="#part13" role="tab"
+                                                aria-controls="part13">
+                                                <span>Part 13</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" [ngClass]="{ 'active':active ==1}" id="part1" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    1. Managing mental health ladder
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-100">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.managingMentalHealthScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.managingMentalHealthScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore1Client"
+                                                            id="reasonsForChoosingScore1Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore1Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore1Staff"
+                                                            id="reasonsForChoosingScore1Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore1Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement1" id="reasonsForDisagreement1"
+                                                            readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement1"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(2)" type="button"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==2}" id="part2" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    2. Self-care
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.selfCareScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.selfCareScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore2Client"
+                                                            id="reasonsForChoosingScore2Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore2Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore2Staff"
+                                                            id="reasonsForChoosingScore2Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore2Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement2" id="reasonsForDisagreement2"
+                                                            readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement2"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(1)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button (click)="onClickNext(3)" type="button"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==3}" id="part3" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    3. Living skills
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.livingSkillsScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.livingSkillsScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore3Client"
+                                                            id="reasonsForChoosingScore3Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore3Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore3Staff"
+                                                            id="reasonsForChoosingScore3Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore3Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement3" id="reasonsForDisagreement3"
+                                                            readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement3"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(2)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button (click)="onClickNext(4)" type="button"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==4}" id="part4" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    4. Social networks
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.socialNetworksScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.socialNetworksScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name=" reasonsForChoosingScore4Client"
+                                                            id=" reasonsForChoosingScore4Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore4Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name=" reasonsForChoosingScore4Staff"
+                                                            id=" reasonsForChoosingScore4Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore4Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name=" reasonsForDisagreement4"
+                                                            id=" reasonsForDisagreement4" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement4"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(3)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button (click)="onClickNext(5)" type="button"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==5}" id="part5" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    5. Work
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.workScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.workScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore5Client"
+                                                            id="reasonsForChoosingScore5Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore5Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore5Staff"
+                                                            id="reasonsForChoosingScore5Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore5Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement5" id="reasonsForDisagreement5"
+                                                            readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement5"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(4)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" (click)="onClickNext(6)"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==6}" id="part6" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    6. Relationships
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.relationshipsScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.relationshipsScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore6Client"
+                                                            id="reasonsForChoosingScore6Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore6Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore6Staff"
+                                                            id="reasonsForChoosingScore6Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore6Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement6" id="reasonsForDisagreement6"
+                                                            readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement6"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(5)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" (click)="onClickNext(7)"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==7}" id="part7" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    7. Addictive Behaviour
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.addictiveBehaviourScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.addictiveBehaviourScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore7Client"
+                                                            id="reasonsForChoosingScore7Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore7Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore7Staff"
+                                                            id="reasonsForChoosingScore7Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore7Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement7" id="reasonsForDisagreement7"
+                                                            readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement7"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(6)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" (click)="onClickNext(8)"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==8}" id="part8" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    8. Responsibilities
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.responsibilitiesScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.responsibilitiesScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore8Client"
+                                                            id="reasonsForChoosingScore8Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore8Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore8Staff"
+                                                            id="reasonsForChoosingScore8Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore8Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement8" id="reasonsForDisagreement8"
+                                                            readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement8"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(7)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" (click)="onClickNext(9)"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==9}" id="part9" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    9. Identity and self-esteem
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.identityAndSelfEsteemScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.identityAndSelfEsteemScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore9Client"
+                                                            id="reasonsForChoosingScore9Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore9Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore9Staff"
+                                                            id="reasonsForChoosingScore9Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore9Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement9" id="reasonsForDisagreement9"
+                                                            readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement9"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(8)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" (click)="onClickNext(10)"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==10}" id="part10" role="tabpanel">
+                            <div class="sv-tab-panel info_tab_container">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">
+                                    10. Trust and Hope
+                                </h4>
+                                <div class="care-infotable w-96 mb-2 p-5">
+                                    <p>
+                                        This ladder is about how you manage your mental health issues. This is not
+                                        necessarily about not having any more symptoms or medication, though this may
+                                        happen. It is about learning how to manage yourself and your symptoms and
+                                        building a satisfying and
+                                        meaningful life, which is not defined or limited by them.
+                                    </p>
+                                </div>
+                                <div class="care-infotable w-96 mb-0">
+                                    <div class="health-laddr">
+                                        <ul>
+                                            <li class="bg-health-laddr1">
+                                                <a href="" data-toggle="modal" data-target="#stuck"><i
+                                                        class="mdi mdi-information mr-2"></i>Stuck</a>
+                                            </li>
+                                            <li class="bg-health-laddr2">
+                                                <a href="" data-toggle="modal" data-target="#acceptinghelp"><i
+                                                        class="mdi mdi-information mr-2"></i>Accepting
+                                                    Help</a>
+                                            </li>
+                                            <li class="bg-health-laddr3">
+                                                <a href="" data-toggle="modal" data-target="#believing"><i
+                                                        class="mdi mdi-information mr-2"></i>Believing</a>
+                                            </li>
+                                            <li class="bg-health-laddr4">
+                                                <a href="" data-toggle="modal" data-target="#learning"><i
+                                                        class="mdi mdi-information mr-2"></i>Learning</a>
+                                            </li>
+                                            <li class="bg-health-laddr5">
+                                                <a href="" data-toggle="modal" data-target="#selfreliance"><i
+                                                        class="mdi mdi-information mr-2"></i>Self-Reliance</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50">
+                                        <tbody>
+                                            <tr>
+                                                <th>Patient SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.trustAndHopeScorePatient}}</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Staff SCORE:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul class="pl-0">
+                                                            <li class="bg-health-laddr1">
+                                                                <div class="patient-radio-score">
+                                                                </div> <label
+                                                                    for="patient1_1">{{recoveryStar.trustAndHopeScoreStaff}}</label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable w-96 mb-3">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Client</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore10Client"
+                                                            id="reasonsForChoosingScore10Client" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore10Client"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for choosing the score - Staff</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForChoosingScore10Staff"
+                                                            id="reasonsForChoosingScore10Staff" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForChoosingScore10Staff"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reasons for disagreement</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" cols="4" rows="4"
+                                                            name="reasonsForDisagreement10"
+                                                            id="reasonsForDisagreement10" readonly
+                                                            [(ngModel)]="recoveryStar.reasonsForDisagreement10"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(9)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button type="button" (click)="onClickNext(11)"
+                                        class="btn btn-sm btn-info btn-next rounded-pill">
+                                        Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==11}" id="part11" role="tabpanel">
+
+                            <div class="sv-tab-panel info_tab_container">
+                                <span class="pull-right"><button (click)="getRecoverystars()"
+                                        class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                    <ul class="d-flex mb-0">
+                                        <li class="mr-2 ">
+                                            <span class="mr-2"><b>Service User name: </b></span>
+                                            <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                        </li>
+                                        <li class="mr-2 ">
+                                            <span class="mr-2"><b>Service User no.: </b></span>
+                                            <span>{{userData.serviceUserNumber}}</span>
+                                        </li>
+                                        <li class="mr-2">
+                                            <span class="mr-2"><b>DOB: </b></span>
+                                            <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare">Summary</h4>
+
+                                <h4 class="mt-3 tab-w-100">
+                                    Other agencies involved (tick as appropriate and detail below)
+                                </h4>
+                                <div class="care-infotable w-75 mb-3 tab-w-100">
+                                    <div class="col-sm-12">
+                                        <span>{{getOtherAgencyString(recoveryStar.areasToWorkOn)}}</span>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <h4 class="mt-3 tab-w-100"></h4>
+                                <h4>
+                                    What are you aiming to do between now and the next review meeting
+                                </h4>
+                                <div class="care-infotable mb-3 tab-w-100">
+                                    <div class="form-group">
+                                        <textarea rows="4" cols="4" class="form-control" name="nextReviewMeetingTodo"
+                                            id="nextReviewMeetingTodo" readonly
+                                            [(ngModel)]="recoveryStar.nextReviewMeetingTodo"> </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="care-infotable d-inline-block w-96 mt-3">
+                                    <table class="table w-50 tab-w-100">
+                                        <tbody>
+                                            <tr>
+                                                <th>Total score patient:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul>
+                                                            <li class="bg-health-laddr1">{{getPatientTotal()}}</li>
+
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total score user:</th>
+                                                <td>
+                                                    <div class="info-score">
+                                                        <ul>
+
+                                                            <li class="bg-health-laddr1 ">{{getUserTotal()}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="care-infotable d-inline-block float-left">
+                                    <table class="table mb-0 tab-w-100">
+                                        <tbody>
+                                            <tr>
+                                                <th>Date done</th>
+                                                <td>
+                                                    <span class="d-none"></span>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <div class="input-group">
+                                                            <input type="date" readonly class="form-control"
+                                                                name="completedDate" id="completedDate"
+                                                                [ngModel]="recoveryStar.completedDate|date:'yyyy-MM-dd'"
+                                                                (ngModelChange)="recoveryStar.completedDate = $event" />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Next review date</th>
+                                                <td>
+                                                    <span class="d-none"></span>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <div class="input-group">
+                                                            <input type="date" class="form-control" readonly
+                                                                name="nextReviewDate" id="nextReviewDate"
+                                                                [ngModel]="recoveryStar.nextReviewDate |date:'yyyy-MM-dd'"
+                                                                (ngModelChange)="recoveryStar.nextReviewDate = $event" />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Completed by</th>
+                                                <td>
+                                                    <span class="d-none"></span>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <div class="input-group">
+                                                            <select class="form-control" disabled
+                                                                [(ngModel)]="recoveryStar.completedBy" id="completedBy"
+                                                                name="compeletedBy">
+                                                                <ng-container *ngFor="let user of usersList">
+                                                                    <option [ngValue]="user.id">
+                                                                        {{ (user.firstName ==null || user.lastName ==
+                                                                        null)? user.email: user.firstName+"
+                                                                        "+user.lastName}}
+                                                                    </option>
+                                                                </ng-container>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Circulated to</th>
+                                                <td>
+                                                    <span
+                                                        class="">{{getCirculateToString(recoveryStar.circulatedTo)}}</span>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                    <button (click)="onClickNext(10)" type="button"
+                                        class="btn btn-sm btn-dark rounded-pill">
+                                        <i class="mdi mdi-arrow-left mr-2"></i> Back
+                                    </button>
+                                    <button (click)="onClickNext(12)" type="button"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==12}" id="part12" role="tabpanel">
+                            <div class="sv-tab-panel mn-ht650">
+                                <div class="col-sm-12">
+                                    <span class="pull-right"><button (click)="getRecoverystars()"
+                                            class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                </div>
+                                <div class="centeralignedbox">
+                                    <app-recovery-start-test [patientScores]="patientScores" [userScores]="userScores">
+                                    </app-recovery-start-test>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" [ngClass]="{ 'active':active ==13}" id="part13" role="tabpanel">
+
+                            <div class="sv-tab-panel info_tab_container">
+                                <span class="pull-right"><button (click)="getRecoverystars()"
+                                        class="btn btn-sm btn-dark rounded-pill mb-2">Go Back</button></span>
+                                <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                    <ul class="d-flex mb-0">
+                                        <li class="mr-2 ">
+                                            <span class="mr-2"><b>Service User name: </b></span>
+                                            <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                        </li>
+                                        <li class="mr-2 ">
+                                            <span class="mr-2"><b>Service User no.: </b></span>
+                                            <span>{{userData.serviceUserNumber}}</span>
+                                        </li>
+                                        <li class="mr-2">
+                                            <span class="mr-2"><b>DOB: </b></span>
+                                            <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare min-desk-w-100 tab-w-100">J - Audit log
+                                </h4>
+                                <div class="care-infotable w-96 mb-0">
+                                    <table class="table w-50 tab-w-100">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">
+                                                    SNo.
+                                                </th>
+                                                <th class="w-25">
+                                                    Date
+                                                </th>
+
+                                                <th class="w-25">
+                                                    Changed by
+                                                </th>
+                                                <th class="w-25">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngIf="logList.length > 0">
+                                                <ng-container *ngFor="let log of logList; let i = index">
+                                                    <tr>
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{log.updatedTime|date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{(log.userName)?log.userName:'-'}}</td>
+                                                        <td>
+                                                            <div class="actionbox">
+                                                                <i class="mdi text-info mdi-eye-circle mr-2"
+                                                                    title="Show Details"
+                                                                    (click)="showLogDetails(log.previousValue)"></i>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-container *ngIf="logList.length <= 0">
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <div class="text-center w-100 d-inline-block px-3 py-3">
+                                                            <div class="alert alert-danger" role="alert">
+                                                                <p class="mb-0"> No Record Found</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </ng-container>
+                <ng-container *ngIf="showLogDetail">
+                    <app-update-recoverylog [previousValues]="previousValues" (showAllLogs)="showAllLogs()">
+                    </app-update-recoverylog>
+
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="stuck" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="stuck"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-health-laddr1">
+                <h5 class="modal-title" id="staticBackdropLabel">Stuck</h5>
+                <button type="button" class="close closemodal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr1 score-laddr">1</span>
+                    <h5>
+                        Stuck. Feeling the full force of symptoms. No sense of control
+                    </h5>
+                    <ul>
+                        <li>
+                            May spend most the day in bed and/or self-harm. May be in manic phase.
+                        </li>
+                        <li>
+                            See no possibility of change and no hope and are unlikely to really get involved in the
+                            project.
+                        </li>
+                        <li>MLikely to be withdrawn, maybe as a self-defence mechanism.</li>
+                    </ul>
+                </div>
+                <hr />
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr1 score-laddr">2</span>
+                    <h5>
+                        Feeling full force of symptoms but I have moments of awareness
+                    </h5>
+                    <ul>
+                        <li>
+                            As 1 but with moments of awareness, e.g. it hasn’t always been like this. Moments not
+                            sustained enough to be helpful in changing things
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="acceptinghelp" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="acceptinghelp" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-health-laddr2">
+                <h5 class="modal-title" id="staticBackdropLabel">Accepting Help</h5>
+                <button type="button" class="close closemodal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr2 score-laddr">3</span>
+                    <h5>
+                        Reaching out for help – sustained awareness that things are not okay
+                    </h5>
+                    <ul>
+                        <li>
+                            Moments of awareness that things are not okay are now sustained.
+                        </li>
+                        <li>
+                            Some sense that it might be possible for things to be different.
+                        </li>
+                        <li>
+                            You seek or accept help to feel less bad or, if manic, to address manic behaviour.
+                        </li>
+                        <li>
+                            Courage is needed to embrace and fully acknowledge that things are not okay.
+                        </li>
+                    </ul>
+                </div>
+                <hr />
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr2 score-laddr">4</span>
+                    <h5>
+                        I am engaging with treatment and support to help me manage
+                    </h5>
+                    <ul>
+                        <li>
+                            Engaged in services and setting and achieving small goals but initiative comes from workers.
+                        </li>
+                        <li>
+                            No sense of what fosters inner well-being or the power to recover.
+                        </li>
+                        <li>
+                            May be at the point of consciously becoming a mental health service user.
+                        </li>
+                        <li>
+                            Can become stuck at this point, with a danger of dependency, becoming institutionalised or
+                            disempowered
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="believing" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="believing" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-health-laddr3">
+                <h5 class="modal-title" id="staticBackdropLabel">Believing</h5>
+                <button type="button" class="close closemodal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr3 score-laddr">5</span>
+                    <h5>
+                        I believe a different future is possible for me – it’s scary but I want to make it happen
+                    </h5>
+                    <ul>
+                        <li>
+                            Key turning point of looking ahead with vision and hope; not constant but sustained enough
+                            to effect behaviour.
+                        </li>
+                        <li>
+                            Actively buying-in to recovery (responsibility awakening). May be actively learning more
+                            about the mental illness and rights of a mental health service user.
+                        </li>
+                        <li>
+                            A big and difficult step. May experience excitement and fear or resistance.
+                        </li>
+                        <li>May feel vulnerable, with low resilience.</li>
+                    </ul>
+                </div>
+                <hr />
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr3 score-laddr">6</span>
+                    <h5>I am feeling the fear and doing it anyway</h5>
+                    <ul>
+                        <li>
+                            Taking significant action – doing things differently, trying new things – including learning
+                            about what can be helpful in recovering from your particular mental illness.
+                        </li>
+                        <li>
+                            Taking risks which can be scary and probably need lots of support.
+                        </li>
+                        <li>
+                            May become more assertive in relationship with service as you become aware of your rights.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="learning" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="learning" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-health-laddr4">
+                <h5 class="modal-title" id="staticBackdropLabel">Learning</h5>
+                <button type="button" class="close closemodal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr4 score-laddr">7</span>
+                    <h5>
+                        I am re-building my life – learning to effectively manage my mental health
+                    </h5>
+                    <ul>
+                        <li>
+                            Have awareness of your mental health issue and how to manage it to stay well.
+                        </li>
+                        <li>
+                            Achieving some goals and thus have more belief in your ability to recover and a sense of
+                            what recovery means.
+                        </li>
+                        <li>
+                            Able to effectively advocate for yourself within the service.
+                        </li>
+                        <li>
+                            Understand your triggers and symptoms and how to manage them.
+                        </li>
+                        <li>
+                            This brings a sense of efficacy and control which feeds motivation and confidence and helps
+                            with taking further risks.
+                        </li>
+                    </ul>
+                </div>
+                <hr />
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr4 score-laddr">8</span>
+                    <h5>
+                        I am feeling reasonably robust. Learning to effectively manage life’s ups and downs
+                    </h5>
+                    <ul>
+                        <li>
+                            Similar to 7 but more so. Increasing resilience and coping skills.
+                        </li>
+                        <li>
+                            More able to deal with small difficulties without being knocked right back.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="selfreliance" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="selfreliance" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-health-laddr5">
+                <h5 class="modal-title" id="staticBackdropLabel">Self-Reliance</h5>
+                <button type="button" class="close closemodal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr5 score-laddr">9</span>
+                    <h5>
+                        I am self-reliant – I know how to use support if I need it
+                    </h5>
+                    <ul>
+                        <li>
+                            Good awareness and tools for coping with what life throws up, including setbacks in mental
+                            health.
+                        </li>
+                        <li>
+                            Mainly recognise early warning signs of deteriorating mental health and take appropriate
+                            action.
+                        </li>
+                        <li>
+                            Still need low level of mental health service support for more difficult issues.
+                        </li>
+                    </ul>
+                </div>
+                <hr />
+                <div class="info_modal_box">
+                    <span class="bg-health-laddr5 score-laddr">10</span>
+                    <h5>
+                        I am self-reliant and I don’t need services from specialist mental health organisation
+                    </h5>
+                    <ul>
+                        <li>
+                            As 9 but you no longer need services provided by specialist mental health organisation; have
+                            networks in the community for on-going support and in case of mental health need.
+                        </li>
+                        <li>
+                            May still have check-ups with GP or psychiatrist if on medication/with symptoms.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

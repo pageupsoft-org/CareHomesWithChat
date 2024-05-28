@@ -1,0 +1,47 @@
+<div class="tab-pane" id="trainingcourse" role="tabpanel">
+
+    <div class="sv-tab-panel info_tab_container">
+        <h3>Training course <span>
+        <button class="btn btn-sm btn-info rounded-pill mb-2 mr-4 pull-right" *ngIf="currentUserRole == userType.Admin" (click)="addCourse()"><i class="mdi mdi-golf mr-1"></i>Create Course</button>
+      </span></h3>
+        <ng-container *ngIf="isBusy">
+            <div class="col-sm-12 text-center">
+                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!isBusy">
+            <ng-container *ngIf="courses.length > 0">
+                <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block">
+                    <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="w-10">S.no</th>
+                                <th class="w-10">Name of Course</th>
+                                <th class="w-10">Mandatory</th>
+                                <th class="w-10">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let course of courses; let i=index">
+                                <td class="w-10">{{i+1}}</td>
+                                <td class="w-10">{{course.name}}</td>
+                                <td class="w-10">{{course.isMandatory?'Y':'N'}}</td>
+                                <td class="w-10">
+                                    <div class="actionbox" *ngIf="currentUserRole == userType.Admin">
+                                        <i class="mdi text-primary mdi-pencil mr-2" (click)="editCourse(course)" data-toggle="modal" data-target="#edit-course"></i>
+                                        <i class="mdi text-danger mdi-delete mr-2" (click)="remove(course.id)"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<app-add-course-modal #courseModal></app-add-course-modal>

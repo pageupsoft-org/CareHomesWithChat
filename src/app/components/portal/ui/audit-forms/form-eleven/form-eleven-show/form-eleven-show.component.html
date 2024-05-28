@@ -1,0 +1,822 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Infection Control Audit Tool
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <form>
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{(auditForm.auditor)?((auditForm.auditor.firstName == null ||
+                                                    auditForm.auditor.lastName == null)?
+                                                    auditForm.auditor.email:(auditForm.auditor.firstName+"
+                                                    "+auditForm.auditor.lastName) ):'-'}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{auditForm.locationName}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <!-- <input type="date" class="form-control" /> -->
+                                                    <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+            
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{auditForm.signoffByName}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class="accordion" id="accordionExample">
+
+                                <!--kitchen-->
+                                <div id="headingOne">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Kitchen
+                                    </h4>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">Kitchen: Standard: Kitchens will be
+                                                            maintained to negate the risk of cross contamination.
+                                                        </th>
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'A'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Clinical Room-->
+                                <div id="headingtwo">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Clinical Room
+                                    </h4>
+                                    <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">Clinical Room</th>
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'B'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!--Residents Room-->
+                                <div id="headingthree">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapsethree" aria-expanded="true" aria-controls="collapsethree">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Residents Room
+                                    </h4>
+                                    <div id="collapsethree" class="collapse" aria-labelledby="headingthree"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">Residents' Room</th>
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'C'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Toilets-->
+                                <div id="headingfour">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapsefour" aria-expanded="true" aria-controls="collapsefour">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Toilets
+                                    </h4>
+                                    <div id="collapsefour" class="collapse" aria-labelledby="headingfour"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">Toilets</th>
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'D'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Baths-->
+                                <div id="headingfive">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapsefive" aria-expanded="true" aria-controls="collapsefive">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Baths
+                                    </h4>
+                                    <div id="collapsefive" class="collapse" aria-labelledby="headingfive"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">Baths </th>
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'E'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!--Showers-->
+                                <div id="headingsix">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapsesix" aria-expanded="true" aria-controls="collapsesix">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Showers
+                                    </h4>
+                                    <div id="collapsesix" class="collapse" aria-labelledby="headingsix"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">Showers </th>
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'F'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Waste Disposal Standard-->
+                                <div id="headingseven">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapseseven" aria-expanded="true" aria-controls="collapseseven">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Waste Disposal Standard
+                                    </h4>
+                                    <div id="collapseseven" class="collapse" aria-labelledby="headingseven"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">Waste Disposal Standard: Waste is disposed
+                                                            of safely without risk of contamination or injury. </th>
+
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'G'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!--Laundry Room-->
+                                <div id="headingeight">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapseeight" aria-expanded="true" aria-controls="collapseeight">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Laundry Room
+                                    </h4>
+                                    <div id="collapseeight" class="collapse" aria-labelledby="headingeight"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">Laundry Room</th>
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'H'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--UNIT ENVIRONMENT-->
+                                <div id="headingnine">
+                                    <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse"
+                                        data-target="#collapsenine" aria-expanded="true" aria-controls="collapsenine">
+                                        <i class="mdi mdi-chevron-down float-right"></i>UNIT ENVIRONMENT
+                                    </h4>
+                                    <div id="collapsenine" class="collapse" aria-labelledby="headingnine"
+                                        data-parent="#accordionExample">
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th class="w-25">UNIT ENVIRONMENT: Standard: The Home
+                                                            environment will be maintained appropriately to negate
+                                                            the
+                                                            risk of cross infection.</th>
+                                                        <th>Action</th>
+                                                        <th>Action Required(Y/N)If Y, please state</th>
+                                                        <th>Action Required</th>
+                                                        <th>Target date</th>
+                                                        <th>Actioned by</th>
+                                                        <th>Completed date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let stock of auditForm.form11Records;let i= index ">
+
+                                                        <ng-container *ngIf="stock.section == 'I'">
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.infectionControlTitle}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.yesNo)?'Yes':'No'}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.actionRequiredState}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="p-0">
+
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{(stock.actionRequired)?'Yes':'No'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.targetDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{getUserName(stock.actionedBy)}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td class="border-left-0 border-right-0 border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <span>{{stock.completedDate|date:'dd-MM-yyyy'}}</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="care-infotable w-96 mt-2 mb-3 d-none d-flex">
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>General comments</th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="4" cols="4" class="form-control"> </textarea>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div> -->
+
+
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back"
+                                    (click)="goBack()">Go Back</button>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

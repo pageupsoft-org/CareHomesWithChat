@@ -1,0 +1,84 @@
+<div class="sv-tab-panel info_tab_container">
+    <h3 class="zoning-head-com">Patient Log</h3>
+    <ng-container *ngIf="isBusy">
+        <div class="loader">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+        </div>
+    </ng-container>
+    <div class="col-sm-12 mb-2 mt-2 d-inline-flex">
+        <div class="form-group mb-0">
+            <label class="form-check-label mr-2 ln-35 float-left ln-40"> Selelct Patient: </label>
+            <div class="form-check mr-2 d-inline-block">
+                <select class="form-control d-inline-block bg-wine" [(ngModel)]="patientId" (ngModelChange)="getPatientLog(patientId)" id="location">
+                    <option [value]="0" selected>Select Patient</option>
+                    <ng-container *ngIf="patientList">
+                        <ng-container *ngFor="let patient of patientList">
+                            <option [value]="patient.id">
+                                {{ patient.firstName + " " + patient.lastName}}
+                            </option>
+                        </ng-container>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="!isBusy">
+
+        <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+
+            <thead class="thead-light">
+                <tr>
+                    <th class="w-10">#</th>
+                    <th class="w-10">Staff Name</th>
+                    <th class="w-10">Time</th>
+                    <th class="w-10">From Zone</th>
+                    <th class="w-10">To Zone</th>
+                    <th class="w-10">Criterias</th>
+                    <th class="w-10">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="patienLog.length >0">
+                    <ng-container *ngFor="let log of patienLog; let i=index">
+                        <tr>
+                            <td class="w-10">Alert000{{i+1}}</td>
+                            <!-- <td>{{patient.firstName}} {{patient.lastName}}</td> -->
+                            <td class="w-10">{{movedBy(log.createdBy)}}</td>
+                            <td class="w-10">{{log.createdAt | date:'dd-MM-yyyy'}}</td>
+                            <td class="w-10">
+                                {{(log.fromZone == "R")?"Red":((log.fromZone == "A")?"Amber":"Green")}}
+                            </td>
+
+                            <td class="w-10">
+                                {{(log.toZone == "R")?"Red":((log.toZone == "A")?"Amber":"Green")}}
+                            </td>
+                            <td class="w-10">{{getCriterias(log.locationCriterias)}}</td>
+                            <td class="w-10">{{getActions(log.locationActions)}}</td>
+
+                            <!-- <td>
+                                <div class="actionbox">
+                                    <i class="mdi text-primary mdi-pencil mr-2" title="Edit"
+                                        (click)="editAlert(alert)"></i>
+                                    <i class="mdi text-danger mdi-delete mr-2" title="Remove"
+                                        (click)="remove(alert.id)"></i>
+                                </div>
+                            </td> -->
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="patienLog.length <=0">
+                    <tr>
+                        <td colspan="7" class="w-10">
+                            <div class="error_Box">
+                                <h4 class="alert alert-danger text-center mb-0">No Record Found</h4>
+                            </div>
+                        </td>
+                    </tr>
+
+                </ng-container>
+
+            </tbody>
+        </table>
+    </ng-container>
+
+</div>

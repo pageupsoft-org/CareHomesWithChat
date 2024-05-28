@@ -1,0 +1,32 @@
+  /*mobile responsive*/
+  
+  @media (max-width: 575.98px) {
+      .padding-align {
+          padding: 0 !important;
+      }
+      .top-adjust {
+          top: 3%;
+      }
+      .left-btn-scroller {
+          display: none;
+      }
+      .right-btn-scroller {
+          display: none;
+      }
+  }
+  
+  @media (max-width:991px) and (min-width:768px) {
+      .left-btn-scroller,
+      .right-btn-scroller {
+          height: 100px;
+      }
+      .table_user_infotabs li a {
+          margin: 12px 4px;
+      }
+  }
+
+  @media (max-width: 1599px) and (min-width: 1200px) {
+    .ml-0 {
+      margin-left: 0px !important;
+    }
+  }

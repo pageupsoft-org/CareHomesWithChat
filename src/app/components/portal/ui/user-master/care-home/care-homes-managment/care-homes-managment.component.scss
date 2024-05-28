@@ -1,0 +1,12 @@
+.mat-progress-spinner {
+  display: inline-block !important;
+  margin-top: auto;
+}
+@media (max-width: 1023px) and (min-width: 768px) {
+  .parentcontianer {
+    overflow: auto;
+  }
+  .traing-course-table {
+    overflow: hidden;
+  }
+}

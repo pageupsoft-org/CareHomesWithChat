@@ -1,0 +1,347 @@
+<div class="">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 mb-2 mt-1 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Weekly Medication Stock Check Record <button
+                            class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Back</button>
+                    </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mb-3 bg-white shadow-sm med_chec_rec">
+                <div class="sv-tab-panel">
+                    <ng-container *ngIf="!isBusy && auditForm; else elseTemplate">
+
+                        <form [formGroup]="auditForm">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                       
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="locationId" readonly disabled>
+                                                        <ng-container *ngFor="let location of locationList">
+                                                            <option [ngValue]="location.id">{{location.name}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="auditedBy" (change)="completeForm($event)">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id" *ngIf="user.userType == userType.SuperUser || user.userType == userType.User">
+                                                                {{ (user.firstName == null || user.lastName ==
+                                                                null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <!-- <input type="date" class="form-control" (keydown)="false"
+                                                        formControlName="auditDate" /> -->
+                                                    <label>{{(auditForm.get('auditDate').value)?(auditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr [ngClass]="{'d-none': currentUserId != auditForm.get('auditedBy').value}"> -->
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy" (change)="changeSignoff()">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <ng-container *ngIf="isFilling">
+                                <div class="care-infotable w-96 overflow-auto scrollthin">
+                                    <div class="innerwhite-table p-3 d-flex" style="width: 1700px;">
+                                        <table class="table mb-0 bg-white shadow-sm table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-8">#</th>
+                                                    <th class="w-8">Date-Time</th>
+                                                    <th class="w-8">Medication & Strength</th>
+                                                    <th class="w-8">Expiry Date</th>
+                                                    <th class="p-0 w-36">
+                                                        <table class="table mb-0 bg-transparent">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th colspan="4" class="text-center border-left-0 border-right-0">
+                                                                        Monthly Stock
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="border-left-0 border-right-0">
+                                                                        Tablet
+                                                                    </th>
+                                                                    <th class="border-left-0 border-right-0">
+                                                                        Inhale
+                                                                    </th>
+                                                                    <th class="border-left-0 border-right-0">
+                                                                        Liquid
+                                                                    </th>
+                                                                    <th class="border-left-0 border-right-0">
+                                                                        Depot
+                                                                    </th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </th>
+                                                    <th class="w-8">Total Amount</th>
+                                                    <th class="w-8">Sign</th>
+                                                    <th class="w-8">Counter sign</th>
+                                                    <th class="w-8">Comments</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <ng-container formArrayName="medicationStockRecords" *ngFor="let stock of auditForm.get('medicationStockRecords')['controls'];let i= index ">
+                                                    <tr [formGroupName]="i">
+                                                        <td>
+                                                            <div class="close" (click)="remove(i)">
+                                                                <i class="mdi mdi-close"></i>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <input type="datetime-local" formControlName="recordDateTime" class="form-control" />
+                                                            </div>
+                                                            <ng-container *ngIf="!stock.controls.recordDateTime.valid && (stock.controls.recordDateTime.dirty )">
+                                                                <small *ngIf="stock.controls.recordDateTime.errors?.required" class="errorText">This field is required</small>
+                                                            </ng-container>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <input type="text" formControlName="medicationAndStrength" class="form-control" />
+                                                                <ng-container *ngIf="!stock.controls.medicationAndStrength.valid && (stock.controls.medicationAndStrength.dirty )">
+                                                                    <small *ngIf="stock.controls.medicationAndStrength.errors?.required" class="errorText">This field is required</small>
+                                                                    <small *ngIf="stock.controls.medicationAndStrength.errors?.pattern" class="errorText">Please provide valid
+                                                                        input</small>
+                                                                </ng-container>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <input type="date" formControlName="expiryDate" class="form-control" />
+                                                                <ng-container *ngIf="!stock.controls.expiryDate.valid && (stock.controls.expiryDate.dirty )">
+                                                                    <small *ngIf="stock.controls.expiryDate.errors?.required" class="errorText">This field is required</small>
+                                                                </ng-container>
+                                                            </div>
+                                                        </td>
+                                                        <td class="p-0">
+
+                                                            <table class="table mb-0 bg-transparent">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="border-left-0 border-right-0 border-top-0">
+                                                                            <div class="form-group mb-0 input-txtbox">
+                                                                                <input type="number" formControlName="tablets" class="form-control" min="0" />
+                                                                            </div>
+                                                                            <ng-container *ngIf="!stock.controls.tablets.valid && (stock.controls.tablets.dirty )">
+                                                                                <small *ngIf="stock.controls.tablets.errors?.required" class="errorText">This field is
+                                                                                    required
+                                                                                </small>
+                                                                                <small *ngIf="stock.controls.tablets.errors?.maxlength" class="errorText"> Maximum 5
+                                                                                    character
+                                                                                    allowed
+                                                                                </small>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                        <td class="border-left-0 border-right-0 border-top-0">
+                                                                            <div class="form-group mb-0 input-txtbox">
+                                                                                <input type="number" formControlName="inhaler" class="form-control" min="0" />
+                                                                            </div>
+                                                                            <ng-container *ngIf="!stock.controls.inhaler.valid && (stock.controls.inhaler.dirty )">
+                                                                                <small *ngIf="stock.controls.inhaler.errors?.required" class="errorText">This field is
+                                                                                    required
+                                                                                </small>
+                                                                                <small *ngIf="stock.controls.inhaler.errors?.maxlength" class="errorText"> Maximum 5
+                                                                                    character
+                                                                                    allowed
+                                                                                </small>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                        <td class="border-left-0 border-right-0 border-top-0">
+                                                                            <div class="form-group mb-0 input-txtbox">
+                                                                                <input type="number" formControlName="liquid" class="form-control" min="0" />
+                                                                            </div>
+                                                                            <ng-container *ngIf="!stock.controls.liquid.valid && (stock.controls.liquid.dirty )">
+                                                                                <!-- <p *ngIf="stock.controls.liquid.errors?.maxlength"
+                                                                                class="errorText">Provide valid input
+                                                                            </p> -->
+                                                                                <small *ngIf="stock.controls.liquid.errors?.required" class="errorText">This field is
+                                                                                    required
+                                                                                </small>
+                                                                                <small *ngIf="stock.controls.liquid.errors?.maxlength" class="errorText"> Maximum 5
+                                                                                    character
+                                                                                    allowed
+                                                                                </small>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                        <td class="border-left-0 border-right-0 border-top-0">
+                                                                            <div class="form-group mb-0 input-txtbox">
+                                                                                <input type="number" formControlName="depot" class="form-control" min="0" />
+                                                                            </div>
+                                                                            <ng-container *ngIf="!stock.controls.depot.valid && (stock.controls.depot.dirty )">
+                                                                                <!-- <p *ngIf="stock.controls.depot.errors?.maxlength"
+                                                                                class="errorText">Provide valid input
+                                                                            </p> -->
+                                                                                <small *ngIf="stock.controls.depot.errors?.required" class="errorText">This field is
+                                                                                    required
+                                                                                </small>
+                                                                                <small *ngIf="stock.controls.depot.errors?.maxlength" class="errorText"> Maximum 5
+                                                                                    character
+                                                                                    allowed
+                                                                                </small>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <input type="text" formControlName="totalAmount" class="form-control" />
+                                                            </div>
+                                                            <ng-container *ngIf="!stock.controls.totalAmount.valid && (stock.controls.totalAmount.dirty )">
+                                                                <small *ngIf="stock.controls.totalAmount.errors?.pattern" class="errorText">Provide valid input</small>
+                                                                <small *ngIf="stock.controls.totalAmount.errors?.required" class="errorText">This field is required</small>
+                                                                <small *ngIf="stock.controls.totalAmount.errors?.maxlength" class="errorText"> Maximum 8 character allowed
+                                                                </small>
+                                                            </ng-container>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <select class="form-control" formControlName="sign">
+                                                                    <ng-container *ngFor="let user of allUserList">
+                                                                        <option [ngValue]="user.id">
+                                                                            {{ (user.firstName ==null || user.lastName
+                                                                            ==
+                                                                            null)?
+                                                                            user.email: user.firstName+"
+                                                                            "+user.lastName}}
+                                                                        </option>
+                                                                    </ng-container>
+                                                                </select>
+                                                            </div>
+                                                            <ng-container *ngIf="!stock.controls.sign.valid && (stock.controls.sign.dirty )">
+                                                                <small *ngIf="stock.controls.sign.errors?.required" class="errorText">This fields required</small>
+                                                            </ng-container>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <select class="form-control" formControlName="counterSign">
+                                                                    <ng-container *ngFor="let user of allUserList">
+                                                                        <option [ngValue]="user.id">
+                                                                            {{ (user.firstName ==null || user.lastName
+                                                                            ==
+                                                                            null)?
+                                                                            user.email: user.firstName+"
+                                                                            "+user.lastName}}
+                                                                        </option>
+                                                                    </ng-container>
+                                                                </select>
+                                                                <ng-container *ngIf="!stock.controls.counterSign.valid && (stock.controls.counterSign.dirty )">
+                                                                    <small *ngIf="stock.controls.counterSign.errors?.required" class="errorText">This fields required</small>
+                                                                </ng-container>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <input type="text" maxlength="250" formControlName="comments" class="form-control" />
+                                                            </div>
+                                                            <ng-container *ngIf="!stock.controls.comments.valid && (stock.controls.comments.dirty )">
+                                                                <small *ngIf="stock.controls.comments.errors?.pattern" class="errorText">Provide valid input</small>
+                                                                <small *ngIf="stock.controls.comments.errors?.maxlength" class="errorText">Maximum 300 character
+                                                                    allowed</small>
+                                                            </ng-container>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="care-infotable w-96 p-3 d-flex bg-white">
+                                    <button type="button" class="btn btn-sm rounded-pill btn-primary" (click)="addStockButtonClick()"><i class="mdi mdi-plus mr-2"></i>Add
+                                        more</button>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3" *ngIf="auditForm.get('signoffBy').value == currentUserId ">
+                                <p class="mr-2"><strong> Do you want to create form for next review date</strong></p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes14" [value]="true" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="yes14" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false" id="No14" [value]="false" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="No14" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container *ngIf="isEdit && auditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()" class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()" class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </form>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <ng-container *ngIf="isBusy">
+                            <div class="loader">
+                                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                                </mat-spinner>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

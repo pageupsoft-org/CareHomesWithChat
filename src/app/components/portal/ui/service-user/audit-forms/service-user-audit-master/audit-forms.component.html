@@ -1,0 +1,31 @@
+<ng-container *ngIf="isBusy">
+    <div class="loader">
+        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+    </div>
+</ng-container>
+<!-- Audit Forms for Service user -->
+<div class="my-3">
+    <div class="sv-tab-panel">
+        <ng-container *ngIf="!isBusy && !showForm">
+            <div class="d-inline-block w-98 bg-white p-2">
+                <ul class="mb-0">
+                    <li (click)="openForm(13)">Service User Medication Audit Tool</li>
+                    <li (click)="openForm(15)">Medication Spot Check</li>
+                    <li (click)="openForm(17)">Weekly Medication Stock Check Record</li>
+                </ul>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="formNo == 13">
+            <app-form-thirteen-overview [serviceUserData]="serviceUserData" (hideForms)="hideForms()"></app-form-thirteen-overview>
+        </ng-container>
+
+        <ng-container *ngIf="formNo == 15">
+            <app-form-fifteen-overview [serviceUserData]="serviceUserData" (hideForms)="hideForms()"></app-form-fifteen-overview>
+        </ng-container>
+
+        <ng-container *ngIf="formNo == 17">
+            <app-form-seventeen-overview [serviceUserData]="serviceUserData" (hideForms)="hideForms()"></app-form-seventeen-overview>
+        </ng-container>
+    </div>
+</div>

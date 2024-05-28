@@ -1,0 +1,499 @@
+<div class="container-fluid audit-margin-main">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0 mt-3 mb-2">
+                <h1 class="d-inline-block">
+                    <span class="usr_headleft">
+            <i class="mdi mdi-account-multiple mx-2"></i>
+            Monthly Care Plan Audit
+          </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="horizontal-tabs mb-3 bg-white shadow-sm">
+        <div class="sv-tab-panel info_tab_container">
+            <div class="care-infotable w-96 mb-3 d-flex">
+                <table class="table w-50 mb-0">
+                    <tbody>
+                        <tr>
+                            <th class="border-top-0">Audited by</th>
+                            <td class="border-top-0">
+                                <div class="form-group mb-0 input-txtbox">
+                                    <select class="form-control">
+                        <option>Select Auditor </option>
+                        <ng-container *ngFor="let auditor of auditorList">
+                          <option [ngValue]="auditor.id"> 
+                            {{ (auditor.firstName ==null || auditor.lastName == null)? auditor.email: auditor.firstName+" "+auditor.lastName}}
+                          </option>
+                        </ng-container>
+                      </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="border-top-0">Location</th>
+                            <td class="border-top-0">
+                                <div class="form-group mb-0 input-txtbox">
+                                    <select class="form-control">
+                        <ng-container *ngFor="let location of locationList">
+                          <option [ngValue]="location.id">{{location.name}}
+                          </option>
+                        </ng-container>
+                      </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                  <th class="border-top-0">Service User</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <select class="form-control">
+                        <option>Service User one</option>
+                        <option>Service User two</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-top-0">DOB</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="date" class="form-control" />
+                    </div>
+                  </td>
+                </tr> -->
+                    </tbody>
+                </table>
+                <table class="table w-50 mb-0">
+                    <tbody>
+                        <tr>
+                            <th class="border-top-0">Date of Audit</th>
+                            <td class="border-top-0">
+                                <div class="form-group mb-0 input-txtbox">
+                                    <input type="date" class="form-control" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="care-infotable w-96 mb-3 d-flex">
+                <table class="table w-75 mb-0">
+                    <tbody>
+                        <tr>
+                            <th>S.no</th>
+                            <th>
+                                Care Plan audit
+                            </th>
+                            <th colspan="3">
+                                Yes/No/NA)
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">1</td>
+                            <td class="border-top-0">Service user is offered a choice of suitable menus, which reflects individual preferences?
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="offered" id="yes1" />
+                                    <label class="form-check-label" for="yes1">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="offered" id="No1" />
+                                    <label class="form-check-label" for="No1">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="offered" id="Na1" />
+                                    <label class="form-check-label" for="Na1">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">2</td>
+                            <td class="border-top-0">Service user privacy, dignity and independence are respected?</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="privacy" id="yes2" />
+                                    <label class="form-check-label" for="yes2">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="privacy" id="No2" />
+                                    <label class="form-check-label" for="No2">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="privacy" id="Na2" />
+                                    <label class="form-check-label" for="Na2">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">3</td>
+                            <td class="border-top-0">Service user is aware of the complaints procedure?</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="isAware" id="yes3" />
+                                    <label class="form-check-label" for="yes3">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="isAware" id="No3" />
+                                    <label class="form-check-label" for="No3">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="isAware" id="Na3" />
+                                    <label class="form-check-label" for="Na3">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">4</td>
+                            <td class="border-top-0">Does the person have an up to date care plan?</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="carePlan" id="yes4" />
+                                    <label class="form-check-label" for="yes4">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="carePlan" id="No4" />
+                                    <label class="form-check-label" for="No4">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="carePlan" id="Na4" />
+                                    <label class="form-check-label" for="Na4">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">5</td>
+                            <td class="border-top-0">Does the person have an up to date OT Assessment?</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="otAssessment" id="yes5" />
+                                    <label class="form-check-label" for="yes5">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="otAssessment" id="No5" />
+                                    <label class="form-check-label" for="No5">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="otAssessment" id="Na5" />
+                                    <label class="form-check-label" for="Na5">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">6</td>
+                            <td class="border-top-0">Does the person have active family or advocate support?</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="advocateSupport" id="yes6" />
+                                    <label class="form-check-label" for="yes6">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="advocateSupport" id="No6" />
+                                    <label class="form-check-label" for="No6">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="advocateSupport" id="Na6" />
+                                    <label class="form-check-label" for="Na6">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">7</td>
+                            <td class="border-top-0">Does the person have involvement with the MDT (Multi disciplinary team)</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="involvedMDT" id="yes7" />
+                                    <label class="form-check-label" for="yes7">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="involvedMDT" id="No7" />
+                                    <label class="form-check-label" for="No7">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="involvedMDT" id="Na7" />
+                                    <label class="form-check-label" for="Na7">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="8" class="border-top-0 text-center">8</td>
+                            <td class="border-top-0" colspan="4">Physical checks including:</td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0">Dental</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="dental" id="yes8" />
+                                    <label class="form-check-label" for="yes8">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="dental" id="No8" />
+                                    <label class="form-check-label" for="No8">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="dental" id="Na8" />
+                                    <label class="form-check-label" for="Na8">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0">Eyes</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="eyes" id="yes82" />
+                                    <label class="form-check-label" for="yes82">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="eyes" id="No82" />
+                                    <label class="form-check-label" for="No82">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="eyes" id="Na82" />
+                                    <label class="form-check-label" for="Na82">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0">BP</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="bp" id="yes83" />
+                                    <label class="form-check-label" for="yes83">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="bp" id="No83" />
+                                    <label class="form-check-label" for="No83">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="bp" id="Na83" />
+                                    <label class="form-check-label" for="Na83">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0">Blood</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="blood" id="yes84" />
+                                    <label class="form-check-label" for="yes84">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="blood" id="No84" />
+                                    <label class="form-check-label" for="No84">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="blood" id="Na84" />
+                                    <label class="form-check-label" for="Na84">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0">Last CPA</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="lastCPA" id="yes85" />
+                                    <label class="form-check-label" for="yes85">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="lastCPA" id="No85" />
+                                    <label class="form-check-label" for="No85">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="lastCPA" id="Na85" />
+                                    <label class="form-check-label" for="Na85">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0">Weekly One-to-one session</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="weeklySession" id="yes86" />
+                                    <label class="form-check-label" for="yes86">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="weeklySession" id="No86" />
+                                    <label class="form-check-label" for="No86">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="weeklySession" id="Na86" />
+                                    <label class="form-check-label" for="Na86">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0">General welfare</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="generalWelfare" id="yes87" />
+                                    <label class="form-check-label" for="yes87">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="generalWelfare" id="No87" />
+                                    <label class="form-check-label" for="No87">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="generalWelfare" id="Na87" />
+                                    <label class="form-check-label" for="Na87">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">9</td>
+                            <td class="border-top-0">Does the person have an up to date drug screen</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="drugScreen" id="yes9" />
+                                    <label class="form-check-label" for="yes9">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="drugScreen" id="No9" />
+                                    <label class="form-check-label" for="No9">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="drugScreen" id="Na9" />
+                                    <label class="form-check-label" for="Na9">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">10</td>
+                            <td class="border-top-0">Does the person have an up to risk assessment</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="riskAssessment" id="yes10" />
+                                    <label class="form-check-label" for="yes10">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="riskAssessment" id="No10" />
+                                    <label class="form-check-label" for="No10">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="riskAssessment" id="Na10" />
+                                    <label class="form-check-label" for="Na10">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">11</td>
+                            <td class="border-top-0">Does each care plan reflect the problems (mental state, medication, etc)</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="carePlanProblem" id="yes11" />
+                                    <label class="form-check-label" for="yes11">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="carePlanProblem" id="No11" />
+                                    <label class="form-check-label" for="No11">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="carePlanProblem" id="Na11" />
+                                    <label class="form-check-label" for="Na11">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-top-0 text-center">12</td>
+                            <td class="border-top-0">Care plan has been evaluated</td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.Yes" name="carePlanEvaluted" id="yes12" />
+                                    <label class="form-check-label" for="yes1">Yes</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.No" name="carePlanEvaluted" id="No12" />
+                                    <label class="form-check-label" for="No1">No</label>
+                                </div>
+                            </td>
+                            <td class="border-top-0">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" class="form-check-input mt-1" [value]="riskAction.NotKnown" name="carePlanEvaluted" id="Na12" />
+                                    <label class="form-check-label" for="Na1">NA</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                <button type="button" class="btn btn-sm btn-info btn-next rounded-pill">
+              Submit
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,2745 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Workplace Inspection
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+            <div class="box_note shadow-sm bg-white p-2 mr-lft-10 mt-2">
+                <p>
+                    Provide a score between 0 and 3 for each question on the inspection list,
+                    depending on the current situation. As shown below on the marking scale 0
+                    would be scored when there is nothing in place. A partial compliance would
+                    give a score of 1 or 2 depending on the degree that a requirement has been met.
+                    A score of 3 would show that a high level of health and safety standards is in
+                    place. Where a score is 0 to 2 then comments on the current situation and future
+                    remedial actions must be written in the comments box or in an additional report.
+                    Some questions may not be applicable to all services. Please provide any comments
+                    that might relate to the improvement of the Service Health and Safety resources and support.
+                </p>
+            </div>
+
+            <div class="w-75 mb-0 mt-3 workinspect">
+                <div class="health-laddr">
+                    <ul>
+                        <li class="bg-health-laddr1">
+                            <div class="work-ispect-point work-ispect-point0 py-3">
+                                <span>0</span>
+                            </div>
+                            <div class="work-ispect-point0 py-3 work-ispect-detail">
+                                <span class="text-white">0 - N/A</span>
+                            </div>
+                        </li>
+                        <li class="bg-health-laddr1">
+                            <div class="work-ispect-point work-ispect-point1 py-3">
+                                <span>1</span>
+                            </div>
+                            <div class="work-ispect-point1 py-3 work-ispect-detail">
+                                <span class="text-white">1 - Not met</span>
+                            </div>
+                        </li>
+                        <li class="bg-health-laddr1">
+                            <div class="work-ispect-point work-ispect-point2 py-3">
+                                <span>2</span>
+                            </div>
+                            <div class="work-ispect-point2 py-3 work-ispect-detail">
+                                <span class="text-white">2 - Partly met</span>
+                            </div>
+                        </li>
+                        <li class="bg-health-laddr1">
+                            <div class="work-ispect-point work-ispect-point3 py-3">
+                                <span>3</span>
+                            </div>
+                            <div class="work-ispect-point3 py-3 work-ispect-detail">
+                                <span class="text-white">3 - Moderately met</span>
+                            </div>
+                        </li>
+                        <li class="bg-health-laddr1">
+                            <div class="work-ispect-point work-ispect-point4 py-3">
+                                <span>4</span>
+                            </div>
+                            <div class="work-ispect-point4 py-3 work-ispect-detail">
+                                <span class="text-white">4 - Completely met</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <form>
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <span>{{auditForm.locationName}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{(auditForm.auditor)?((auditForm.auditor.firstName == null ||
+                                                    auditForm.auditor.lastName == null)?
+                                                    auditForm.auditor.email:(auditForm.auditor.firstName+"
+                                                    "+auditForm.auditor.lastName) ):'-'}}
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <span>{{auditForm.signoffByName}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="care-infotable w-96 mb-3 p-3 scorebox">
+                                <table class="table table-bordered whitetable mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6" class="bg-light">
+                                                <h4 class="p-0">Score</h4>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>Total Score</th>
+                                            <th style="color:#000"
+                                                [ngStyle]="{'background-color': (auditForm.totalScore)?(auditForm.totalScore):0| colorSetter:maxScore: formName.Form21 }">
+                                                <label>{{(auditForm.totalScore)?(auditForm.totalScore):'0'}}</label>
+                                            </th>
+                                            <th>Maximum Score</th>
+                                            <th>{{(auditForm.maxScore)?(auditForm.maxScore):'0'}}</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="care-infotable w-96 mb-3 p-3 scorebox">
+                                <table class="table table-bordered whitetable mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6" class="bg-light">
+                                                <h4>Score</h4>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="color: #000; background-color: #FF5050;">
+                                                {{(auditForm.maxScore/4)*1}}
+                                            </td>
+                                            <td style="color: #000; background-color: #FF99CC;">
+                                                {{(auditForm.maxScore/4)*2}}
+                                            </td>
+                                            <td style="color: #000; background-color: #CCFF66;">
+                                                {{(auditForm.maxScore/4)*3}}
+                                            </td>
+                                            <td style="color: #000; background-color: #00FF00;">
+                                                {{(auditForm.maxScore/4)*4}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div
+                                class="care-infotable innerwhite-table w-96 mb-3 pb-3 d-flex overflow-auto limitheight-form">
+                                <table
+                                    class="table mb-0 bg-white shadow-sm table-bordered table-wd-18 twentyone-formtable">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" class="bg-light w-50">Where any question is not
+                                                applicable delete
+                                                the '3' and enter
+                                                '0' in the max score</th>
+                                            <th class="bg-light w-10">Max</th>
+                                            <th class="bg-light w-10">Score</th>
+                                            <th class="bg-light w-30">Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--A-->
+                                        <tr>
+                                            <th class="bg-light">A</th>
+                                            <th class="bg-light">BUILDING GENERAL - OVERVIEW</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                1
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the building free from any structural defects to the inside or
+                                                outside?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isBuildingStructureDefects}}
+
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isBuildingStructureDefectsComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                2
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the building maintained adequately?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{auditForm.isBuildingMaintainedAdequately}}
+                                                </div>
+
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isBuildingMaintainedAdequatelyComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                3
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are services free from damage? E.g. electricity cables, pipes, etc.
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{auditForm.areElectricServicesFree}}
+
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areElectricServicesFreeComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the area free from hazards?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isAreaFreeFromHazards}}
+
+                                                </div>
+
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isAreaFreeFromHazardsComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                5
+                                            </td>
+                                            <td class="border-top-0">
+                                                In areas deemed to be hazardous are the following in place
+                                            </td>
+                                            <td colspan="3" class="border-top-0">
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                a)
+                                            </td>
+                                            <td class="border-top-0">
+                                                warning notices posted?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.hazardousWarningNoticePosted}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.hazardousWarningNoticePostedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                b)
+                                            </td>
+                                            <td class="border-top-0">
+                                                The precautions taken adequate?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.hazardousPrecautionsTakenAdequate}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.hazardousPrecautionsTakenAdequateComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                c)
+                                            </td>
+                                            <td class="border-top-0">
+                                                Casual visitor/worker be adequately safeguarded?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.hazardousCasualVisitorSafeguard}}
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.hazardousCasualVisitorSafeguardComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                6
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are the entrance and exit areas safe?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areEntranceAndExitSafe}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areEntranceAndExitSafeComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                7
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are the staircases safe? E.g. handrails fitted, steps in good
+                                                condition, etc.
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{auditForm.areStaircasesSafe}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areStaircasesSafeComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                8
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all walkways, gratings, etc. secure?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areAllWalkwaysSecure}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areAllWalkwaysSecureComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                9
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all fittings secure, particularly those overhead?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areAllFittingsSecure}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areAllFittingsSecureComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                10
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are there particularly awkward areas of the building which must be
+                                                reached? If
+                                                so, is the means of access adequate?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areAwkwardAreas}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areAwkwardAreasComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                11
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are passages and walkways free of obstruction?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.arePassagesFree}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.arePassagesFreeComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                12
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are gutters, waste pipes and drains in good working order?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areDrainPipesWorkingGood}}
+
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areDrainPipesWorkingGoodComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                13
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the procedure for rectifying defects satisfactory?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isProcedureRectifiyingDefectsSatisfactory}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isProcedureRectifiyingDefectsSatisfactoryComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                14
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is lighting on entrances, exits and stairs satisfactory?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isLightingSatisfactory}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isLightingSatisfactoryComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <!--B-->
+                                        <tr>
+                                            <th class="bg-light">B</th>
+                                            <th class="bg-light">WORKPLACE</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">FLOORS</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                15
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are floors free of oil, grease and fluids?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isFloorsSlippery}}
+
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isFloorsSlipperyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                16
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all floor surfaces in good condition and free from damage,
+                                                unevenness, etc,
+                                                which could cause harm?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areAllFloorSurfaceDamage}}
+
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areAllFloorSurfaceDamageComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                17
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is non-slip polish used for polished floors?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isNonSlipPolishUsed}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isNonSlipPolishUsedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                18
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are working areas level and free from obstructions?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.workingAreaFreeFromObstruction}} </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.workingAreaFreeFromObstructionComment}}</span>
+                                                </div>
+
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                19
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are there openings in the floor? If so, are they adequately
+                                                protected?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.floorAdequatelyProtected}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.floorAdequatelyProtectedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                20
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all areas kept tidy and uncluttered?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areAreaKeptTidy}} </div>
+
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areAreaKeptTidyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                21
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are the care and maintenance treatments applied to each floor
+                                                surface compatible
+                                                with that surface type?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.floorMaintenanceTreatment}} </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.floorMaintenanceTreatmentComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                22
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is safety glass fitted where normal glazing would constitute a
+                                                hazard, e.g.
+                                                below waist height?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isSafetyGlassFitted}}
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isSafetyGlassFittedComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                23
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all window controls easily accessible and working?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areWindowControlAccessibleWorking}}
+
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areWindowControlAccessibleWorkingComment}}</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                24
+                                            </td>
+                                            <td class="border-top-0">
+                                                If any windows open into walkways are they adequately made safe?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areWalkwaysWindowSafe}}
+
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areWalkwaysWindowSafeComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                25
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the bottom edge of all opening windows at least 800mm above floor
+                                                level? If
+                                                not is there a barrier to prevent falls?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isWindowEdgeAboveFloorLevel}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isWindowEdgeAboveFloorLevelComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                26
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are there devices on all windows above ground floor level to prevent
+                                                them from
+                                                opening too far?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areDevicesPreventWindow}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areDevicesPreventWindowComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                27
+                                            </td>
+                                            <td class="border-top-0">
+                                                Can all windows be cleaned safely? If not what safety precautions
+                                                have been
+                                                taken to protect window cleaners?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isWindowCleanedSafely}}
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isWindowCleanedSafelyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">STAFF FACILITIES</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">Toilets and Washing Facilities</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                28
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are washing facilities adequate?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areWashingFacilitiesAdequate}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areWashingFacilitiesAdequateComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                29
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are toilet facilities adequate?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areToiletFacilitiesAdequate}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areToiletFacilitiesAdequateComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                30
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are wash and toilet areas regularly cleaned and disinfected to a
+                                                high standard?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areToiletAreaDisinfected}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areToiletAreaDisinfectedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                31
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are waste disposal systems in wash and toilet areas effective?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areWasteDisposalSystemsAreasEffective}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areWasteDisposalSystemsAreasEffectiveComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                32
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are adequate supplies of soap and hand drying facilities available?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.handDryingFacilitiesAvailable}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.handDryingFacilitiesAvailableComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                33
+                                            </td>
+                                            <td class="border-top-0">
+                                                Where appropriate are safety and hygiene posters displayed?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.safetyPostersDisplayed}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.safetyPostersDisplayedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">Facilities For Rest and To Eat Meals</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                34
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are suitable and sufficient facilities provided for employees to
+                                                take a rest
+                                                break?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.sufficientFacilitiesForEmployees}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.sufficientFacilitiesForEmployeesComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                35
+                                            </td>
+                                            <td class="border-top-0">
+                                                Have employees got access to facilities to eat meals?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.employeeEatMealsFacilities}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.employeeEatMealsFacilitiesComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">CLEANLINESS</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                36
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all work areas, corridors, stairs and building surroundings
+                                                regularly
+                                                cleaned to a good standard?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.workareaRegularlyCleaned}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.workareaRegularlyCleanedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                37
+                                            </td>
+                                            <td class="border-top-0">
+                                                Where appropriate are specialist cleaning processes in force?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.appropriateCleaningProcesses}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.appropriateCleaningProcessesComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                38
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the number of waste bins appropriate?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isNumberWasteBinsAppropriate}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isNumberWasteBinsAppropriateComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                39
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are the bins labelled for the correct type of waste?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areLabelledCorrectForWaste}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areLabelledCorrectForWasteComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                40
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is all waste regularly and correctly disposed of by a registered
+                                                waste carrier?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areWastDisposedRegularly}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areWastDisposedRegularlyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                41
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are liquids adequately stored and used to prevent spillages?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.liquidsAdequatelyStored}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.liquidsAdequatelyStoredComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!--C-->
+                                        <tr>
+                                            <th class="bg-light">C</th>
+                                            <th class="bg-light">ENVIRONMENT</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">VENTILATION</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                42
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are ventilation arrangements satisfactory?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areVentilationArrangementsSatisfactory}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areVentilationArrangementsSatisfactoryComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                43
+                                            </td>
+                                            <td class="border-top-0">
+                                                Where air conditioning is present is the system serviced correctly?
+                                                Community
+                                                Estates can advise.
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.airConditioningPresent}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.airConditioningPresentComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">NOISE</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                44
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are the workplace and external noise levels within acceptable
+                                                limits? (If yes go
+                                                to next section)
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.workplaceNoiseLevelAccepteble}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.workplaceNoiseLevelAcceptebleComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                45
+                                            </td>
+                                            <td class="border-top-0">
+                                                If not, have 'noise hazard zones' been declared?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.noiseHazardZonesDeclared}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.noiseHazardZonesDeclaredComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                46
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are warning notices adequately displayed?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.warningNoticesAdequatelyDisplayed}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.warningNoticesAdequatelyDisplayedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                47
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are ear defenders readily available?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.earDefendersAvailable}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.earDefendersAvailableComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                48
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are precautions against ear damage adequately enforced?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.precautionsAgainstEarDamage}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.precautionsAgainstEarDamageComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                49
+                                            </td>
+                                            <td class="border-top-0">
+                                                Have noise levels been monitored?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.noiseLevelsMonitored}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.noiseLevelsMonitoredComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">TEMPERATURE</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                50
+                                            </td>
+                                            <td class="border-top-0">
+                                                Do all sedentary work areas attain a minimum temperature of 16°C
+                                                within one hour
+                                                after start of work?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.workareasMinimumTemperature}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.workareasMinimumTemperatureComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                51
+                                            </td>
+                                            <td class="border-top-0">
+                                                Do all work areas involving considerable physical effort attain the
+                                                minimum
+                                                temperature of 13°C?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.workareasConsiderablePhysicalEffort}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.workareasConsiderablePhysicalEffortComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                52
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are heating systems suitable for the needs of the buildings?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areHeatingSystemsSuitable}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areHeatingSystemsSuitableComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                53
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are heating systems serviced regularly?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.heatingSystemsServicedRegularly}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.heatingSystemsServicedRegularlyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                54
+                                            </td>
+                                            <td class="border-top-0">
+                                                Where appropriate, are guards fitted to heating appliances & heating
+                                                systems?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.guardsFittedInHeatingAppliances}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.guardsFittedInHeatingAppliancesComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                55
+                                            </td>
+                                            <td class="border-top-0">
+                                                For areas where extremes of temperature are present, is satisfactory
+                                                protective
+                                                clothing provided?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.satisfactoryProtectiveClothingProvided}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.satisfactoryProtectiveClothingProvidedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                56
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is there a conveniently accessible thermometer for staff to refer
+                                                to?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.accessibleThermometerForStaff}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.accessibleThermometerForStaffComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">LIGHTING</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                57
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is lighting in work areas adequate for the work carried out?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.lightingInWorkareas}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.lightingInWorkareasComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                58
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are any changes in levels of walking surfaces (small steps, slopes,
+                                                etc.)
+                                                adequately highlighted to enable them to be noticed?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.anyChangesInWalkingLevels}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.anyChangesInWalkingLevelsComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                59
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are light fittings correctly positioned?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areLightFittingsCorrectlyPositioned}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areLightFittingsCorrectlyPositionedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                60
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are the arrangements for repair of faulty lighting satisfactory?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.repairFaultyLightingSatisfactory}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.repairFaultyLightingSatisfactoryComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                61
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is there a process in place for reporting defects and faults?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.reportingDefectProcess}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.reportingDefectProcessComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                62
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is emergency lighting provided? If not is it required? Community
+                                                Estates will
+                                                advise.
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isEmergencyLightingProvided}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isEmergencyLightingProvidedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                63
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is emergency lighting regularly tested (where it is fitted)?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isEmergencyLightingRegularlyTested}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isEmergencyLightingRegularlyTestedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">WORKSTATIONS AND SEATING</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                64
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the furniture provided in a good state of repair?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.furnitureProvidedGoodState}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.furnitureProvidedGoodStateComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                65
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is it suitable for the personnel using it and for the type of work?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isSuitableForPersonnelUse}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isSuitableForPersonnelUseComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                66
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are work surfaces at the appropriate height for the work carried
+                                                out?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.workSurfacesAppropriateHeightForWork}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.workSurfacesAppropriateHeightForWorkComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                67
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is all seating appropriate for the work tasks?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isSeatingAppropriate}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isSeatingAppropriateComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                68
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is there sufficient space around all workstations to enable the work
+                                                task to be
+                                                done safely?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isSufficientSpaceAroundWorkstations}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isSufficientSpaceAroundWorkstationsComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                69
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all materials and frequently used work equipment or controls
+                                                within easy
+                                                reach of the workers?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.frequentlyUsedworkEquipment}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.frequentlyUsedworkEquipmentComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!--D-->
+                                        <tr>
+                                            <th class="bg-light">D</th>
+                                            <th class="bg-light">GENERAL SAFETY ARRANGEMENTS</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">FIRE</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="border-top-0">
+                                                70
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are fire exits and escape routes clearly marked?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.fireEscapeRoutesClearly}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.fireEscapeRoutesClearlyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                71
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are 'action in event of fire' posters displayed?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.actionInEventOfFire}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.actionInEventOfFireComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                72
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are fire exits regularly checked?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areFireExitsRegularlyChecked}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areFireExitsRegularlyCheckedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                73
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is appropriate fire fighting equipment readily available?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.fireFightingEquipmentReady}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.fireFightingEquipmentReadyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                74
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is it regularly checked?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isRegularlyChecked}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isRegularlyCheckedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                75
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is their a building plan drawn with all fire equipment and
+                                                significant risk areas highlighted?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.buildingPlanWithFireEquipment}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.buildingPlanWithFireEquipmentComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                76
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are fire brigade access routes kept clear at all times?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.fireBrigadeAccessRoutes}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.fireBrigadeAccessRoutesComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                77
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the "no smoking on these premises" sign on display at all
+                                                entrances and are any outside smoking areas well managed?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.noSmokingOnPremises}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.noSmokingOnPremisesComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                78
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are fire alarms fitted and regularly tested? Building surveyor will
+                                                advise as required.
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.fireAlarmsFittedRegularlyTested}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.fireAlarmsFittedRegularlyTestedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">FIRST AID</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                79
+                                            </td>
+                                            <td class="border-top-0">
+                                                Has a first aid risk assessment been undertaken?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.firstAidRiskAssessment}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.firstAidRiskAssessmentComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                80
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are there an adequate number of first aid boxes and have they been
+                                                checked recently?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.firstAidBoxesCheckedRecently}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.firstAidBoxesCheckedRecentlyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                81
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is resuscitation equipment checked by a competent person?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isResuscitationEquipmentChecked}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isResuscitationEquipmentCheckedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                82
+                                            </td>
+                                            <td class="border-top-0">
+                                                Is the name of the nominated first aid trained person and contact
+                                                point clearly displayed?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.nameOfNominatedfirstaidPersonClearlyDisplayed}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.nameOfNominatedfirstaidPersonClearlyDisplayedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                83
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are there procedures to cater for accident/injury both during and
+                                                outside working hours?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.isProceduresCaterAccident}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.isProceduresCaterAccidentComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">COMMUNICATION</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                84
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are communications from the workplace adequate to provide speedy
+                                                reaction in the event of an accident?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.provideSpeedyReactionInAccident}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.provideSpeedyReactionInAccidentComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                85
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are emergency arrangements provided where necessary?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areEmergencyArrangementsProvided}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areEmergencyArrangementsProvidedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">PERSONAL PROTECTION</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-light"> 86</th>
+                                            <th class="bg-light"> Where necessary, are the following available and
+                                                used?</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                a)
+                                            </td>
+                                            <td class="border-top-0">
+                                                a) Protective clothes/overalls/gloves?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.protectiveClothes}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.protectiveClothesComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                b)
+                                            </td>
+                                            <td class="border-top-0">
+                                                Ear defenders?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{auditForm.earDefenders}}
+                                                </div>
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.earDefendersComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                c)
+                                            </td>
+                                            <td class="border-top-0">
+                                                Goggles/safety glasses?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.gogglesGlasses}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.gogglesGlassesComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                d)
+                                            </td>
+                                            <td class="border-top-0">
+                                                Smoke and dust masks?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.smokeDustMasks}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.smokeDustMasksComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                e)
+                                            </td>
+                                            <td class="border-top-0">
+                                                Protective screens?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.protectiveScreens}}
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.protectiveScreensComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">HOUSEKEEPING</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                87
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are materials stacked safely?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areMaterialsStackedSafely}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areMaterialsStackedSafelyComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                88
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are waster or surplus materials adequate stored away after use?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areWastMaterialsKeptAwayAfterUse}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areWastMaterialsKeptAwayAfterUseComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                89
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all walkways free from storage?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areWalkwaysFreeFromStorage}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areWalkwaysFreeFromStorageComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                90
+                                            </td>
+                                            <td class="border-top-0">
+                                                Are all electrical leads adequately marked and protected?
+                                            </td>
+                                            <td class="border-top-0">
+                                                4
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    {{auditForm.areElectricalLeadsProtected}}
+
+                                                </div>
+                                            </td>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+
+                                                    <span>{{auditForm.areElectricalLeadsProtectedComment}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">ADDITIONAL NOTES</th>
+                                            <th colspan="3" class="bg-light"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" class="border-top-0">
+
+                                            </td>
+                                            <td colspan="3" class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{auditForm.additionalNote}}
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <th class="bg-light">TOTAL SCORE</th>
+                                            <td class="bg-light">
+                                                <!-- <p>{{}}</p> -->
+                                                {{auditForm.maxScore}}
+                                            </td>
+                                            <td class="border-top-0">
+                                                <label>{{(auditForm.totalScore)?(auditForm.totalScore):'0'}}</label>
+                                                <!-- <label>{{getToalScore()}}</label> -->
+                                            </td>
+                                            <td class="border-top-0">
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="bg-light"></th>
+                                            <td class="bg-light">Where any question is not applicable delete the '3'
+                                                and enter '0' in the max score</td>
+                                            <td class="bg-light">
+
+                                            </td>
+                                            <td class="border-top-0">
+                                                <label>{{(auditForm.calculatedScore)?(auditForm.calculatedScore):'0'}}</label>
+                                            </td>
+                                            <td class="border-top-0">
+                                                %
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back"
+                                    (click)="goBack()">Go
+                                    Back</button>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,227 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1 class="">
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Monthly Hot Water Temperature Record
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mt-2 mb-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <form [formGroup]="auditForm">
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" (change)="getUsers($event.target.value)" formControlName="locationId">
+                                                        <ng-container *ngFor="let location of locationList">
+                                                            <option [value]="location.id">{{location.name}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" (change)="completeForm($event)"
+                                                        name="auditedBy" formControlName="auditedBy">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id" *ngIf="user.userType != userType.Admin">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{(auditForm.get('auditDate').value)?(auditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy"
+                                                        (change)="changeSignoff()">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-container *ngIf="isFilling">
+
+                                <div class="care-infotable w-96 mb-3 d-flex">
+                                    <table class="table w-50 mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">Floor</th>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" formControlName="floor">
+                                                            <ng-container *ngFor="let floor of floors">
+                                                                <option [ngValue]="floor.value">
+                                                                    {{floor.key }}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="border-top-0">Area</th>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" formControlName="area">
+                                                            <ng-container *ngFor="let area of areas">
+                                                                <option [ngValue]="area.value">
+                                                                    {{area.key }}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="border-top-0">Appliance</th>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" formControlName="appliance">
+                                                            <ng-container *ngFor="let appliance of appliances">
+                                                                <option [ngValue]="appliance.value">
+                                                                    {{appliance.key }}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="border-top-0">Comments</th>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea class="form-control" formControlName="comments"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table w-50 mb-0 table-bordered bg-white my-2 mr-2">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Guidance</th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Temperature of water
+                                                </th>
+                                                <th>
+                                                    Time taken to cause a bad burn
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>66°C</td>
+                                                <td>2 seconds</td>
+                                            </tr>
+                                            <tr>
+                                                <td>60°C</td>
+                                                <td>6 seconds</td>
+                                            </tr>
+                                            <tr>
+                                                <td>52°C</td>
+                                                <td>2 minutes</td>
+                                            </tr>
+                                            <tr>
+                                                <td>49°C</td>
+                                                <td>10 minutes</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3"
+                                *ngIf="auditForm.get('signoffBy').value == currentUserId ">
+                                <p class="mr-2"> <strong>Do you want to create form for next review date</strong> </p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes14"
+                                        [value]="true" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="yes14" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false"
+                                        id="No14" [value]="false"
+                                        class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="No14" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container
+                                    *ngIf="auditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" (click)="onSubmit()" [disabled]="!auditForm.valid"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

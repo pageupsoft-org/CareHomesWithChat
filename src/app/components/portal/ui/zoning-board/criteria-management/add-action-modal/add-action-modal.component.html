@@ -1,0 +1,55 @@
+
+<div class="modal fade in" bsModal #actionModal="bs-modal" [config]="{backdrop: 'static'}"  tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <ng-container *ngIf="!isEdit">Add Action</ng-container>
+                    <ng-container *ngIf="isEdit">Edit Action</ng-container>
+                </h5>
+                <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="isBusy">
+                    <div class="col-sm-12 text-center">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="locationActionForm && !isBusy">
+                    <div class="form-group">
+                        <label class="star_mandator"><strong>Name of Action</strong></label>
+                        <input type="text" [formControl]="locationActionForm.name" id="nameofaction" placeholder=""
+                            class="form-control">
+                            <ng-container
+                                *ngIf="!locationActionForm.controls.name.valid && (locationActionForm.controls.name.dirty )">
+                                <p *ngIf="locationActionForm.controls.name.errors?.minlength" class="errorText">Minimum 2 character required</p>
+                                <p *ngIf="locationActionForm.controls.name.errors?.maxlength" class="errorText">Maximum 60 character allowed</p>
+                                <p *ngIf="locationActionForm.controls.name.errors?.pattern" class="errorText">Provide valid input</p>
+                                <p *ngIf="locationActionForm.controls.name.errors?.required" class="errorText">This field is required</p>
+                            </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label class="star_mandator"><strong>Location</strong> </label>
+                        <select class="form-control" id="location" [formControl]="locationActionForm.locationId">
+                            <!-- <option selected> Select Location</option> -->
+                            <ng-container *ngIf="locationList">
+                                <ng-container *ngFor="let location of locationList">
+                                    <option [ngValue]="location.id">{{location.name}}</option>
+                                </ng-container>
+                            </ng-container>
+                        </select>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-light rounded-pill" (click)="cancel()" data-dismiss="modal"><i class="mdi mdi-close mr-1"></i>Close</button>
+                <button type="submit" (click)="onSubmit()" [ngClass]="{ 'disabled':locationActionForm && !locationActionForm.valid}"
+                    class="btn btn-success btn-sm rounded-pill"><i class="mdi mdi-content-save mr-1"></i>Save</button>
+            </div>
+        </div>
+    </div>
+</div>

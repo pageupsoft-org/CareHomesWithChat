@@ -1,0 +1,295 @@
+<div class="container-fluid">
+    <!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1 class="d-inline-block">
+                    <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i>Progress notes </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm">
+
+                <div class="sv-tab-panel info_tab_container">
+                    <form>
+                        <div class="col-sm-12">
+                            <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                <div class="pull-right">
+                                    <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2"
+                                        (click)="getProgressNoteList()">Go Back</button>
+                                </div>
+                                <ul class="d-flex mb-0">
+                                    <li class="mr-2 ">
+                                        <span class="mr-2"><b>Service User name: </b></span>
+                                        <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                    </li>
+                                    <li class="mr-2 ">
+                                        <span class="mr-2"><b>Service User no.: </b></span>
+                                        <span>{{userData.serviceUserNumber}}</span>
+                                    </li>
+                                    <li class="mr-2">
+                                        <span class="mr-2"><b>DOB: </b></span>
+                                        <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="care-infotable d-inline-block">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="star_mandator">
+                                            Shift
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="text" readonly [formControl]="progressNoteForm.shift"
+                                                        class="form-control">
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Created By
+                                        </th>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <select class="form-control" disabled id="cpa_select"
+                                                        [formControl]="progressNoteForm.userId">
+                                                        <ng-container *ngFor="let user of usersList">
+                                                            <option [ngValue]="user.id">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <th>
+                                            Start Date
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            End Date
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="care-infotable d-inline-block">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="star_mandator">
+                                            Date/Time Note Taken
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="datetime-local" readonly disabled
+                                                        [formControl]="progressNoteForm.noteDate" class="form-control">
+                                                    <!-- {{progressNoteForm.noteDate|date :"short"}} -->
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Signed off by
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <select class="form-control" disabled id="cpa_select"
+                                                        [formControl]="progressNoteForm.signOffBy">
+                                                        <ng-container *ngFor="let user of usersList">
+                                                            <option [ngValue]="user.id">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                        <div class="clearfix"></div>
+                        <div class="care-infotable w-96 mb-3">
+                            <h3>Please comment on the following</h3>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="star_mandator">
+                                            Question 1: Mental state
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            <div class="form-group">
+                                                <textarea class="form-control" cols="4" rows="4" readonly
+                                                    [formControl]="progressNoteForm.answer1"></textarea>
+                                            </div>
+                                            <ng-container *ngIf="!progressNoteForm.controls.answer1.valid && 
+                                            (progressNoteForm.controls.answer1.dirty )">
+                                                <p class="errorText">Minimum
+                                                    {{progressNoteForm.get('answer1').errors.minlength.requiredLength}}
+                                                    character required</p>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="star_mandator">
+                                            Question 2: Physical health
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            <div class="form-group">
+                                                <textarea class="form-control" cols="4" rows="4" readonly
+                                                    [formControl]="progressNoteForm.answer2"></textarea>
+                                            </div>
+                                            <ng-container *ngIf="!progressNoteForm.controls.answer2.valid && 
+                                            (progressNoteForm.controls.answer2.dirty )">
+                                                <p class="errorText">Minimum
+                                                    {{progressNoteForm.get('answer2').errors.minlength.requiredLength}}
+                                                    character required</p>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="star_mandator">
+                                            Question 3: Activities
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            <div class="form-group">
+                                                <textarea class="form-control" cols="4" rows="4" readonly
+                                                    [formControl]="progressNoteForm.answer3"></textarea>
+                                            </div>
+                                            <ng-container *ngIf="!progressNoteForm.controls.answer3.valid && 
+                                            (progressNoteForm.controls.answer3.dirty )">
+                                                <p class="errorText">Minimum
+                                                    {{progressNoteForm.get('answer3').errors.minlength.requiredLength}}
+                                                    character required</p>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="star_mandator">
+                                            Question 4: Plan
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            <div class="form-group">
+                                                <textarea class="form-control" cols="4" rows="4" readonly
+                                                    [formControl]="progressNoteForm.answer4"></textarea>
+                                            </div>
+                                            <ng-container *ngIf="!progressNoteForm.controls.answer4.valid && 
+                                            (progressNoteForm.controls.answer4.dirty )">
+                                                <p class="errorText">Minimum
+                                                    {{progressNoteForm.get('answer4').errors.minlength.requiredLength}}
+                                                    character required</p>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="star_mandator">
+                                            Question 5: Any other issues
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            <div class="form-group">
+                                                <textarea class="form-control" cols="4" rows="4" readonly
+                                                    [formControl]="progressNoteForm.answer5"></textarea>
+                                            </div>
+                                            <ng-container *ngIf="!progressNoteForm.controls.answer5.valid && 
+                                            (progressNoteForm.controls.answer5.dirty )">
+                                                <p class="errorText">Minimum
+                                                    {{progressNoteForm.get('answer5').errors.minlength.requiredLength}}
+                                                    character required</p>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>
+                                            Additional notes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            <div class="form-group">
+                                                <textarea class="form-control" cols="4" rows="4" readonly
+                                                    [formControl]="progressNoteForm.additionalNotes"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bg_lightblue d-inline-block w-96">
+
+                            <div class="care-infotable d-inline-block float-left mb-0 p-3">
+                                <table class="table mb-0">
+                                    <tbody>
+
+                                        <tr>
+                                            <th class="star_mandator border-top-0">
+                                                Circulated to
+                                            </th>
+                                            <td class="border-top-0">
+
+                                                <span class="">{{circulateTo}}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

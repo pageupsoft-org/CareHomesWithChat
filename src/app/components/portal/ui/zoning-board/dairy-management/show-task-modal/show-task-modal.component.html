@@ -1,0 +1,58 @@
+<div class="modal fade in" bsModal #showTaskModal="bs-modal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <ng-container>Show Task</ng-container>
+                </h5>
+                <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="isBusy">
+                    <div class="col-sm-12 text-center">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf=" userTaskForm && !isBusy">
+
+                    <div class="form-group">
+                        <label class="star_mandator"> <strong>Task Name</strong> </label>
+                        <input type="text" disabled readonly [formControl]="userTaskForm.taskName" placeholder=""
+                            class="form-control disabled">
+                    </div>
+                    <div class="form-group">
+                        <label> <strong>Description</strong> </label>
+                        <textarea rows="2" disabled readonly [formControl]="userTaskForm.description" cols="2"
+                            class="form-control disabled"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="star_mandator"><strong>Due Date</strong> </label>
+                        <input type="date" placeholder="" min="{{today |date:'yyyy-MM-dd'}}" class="form-control disabled"
+                            disabled readonly [formControl]="userTaskForm.taskDate">
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Care Coordinator</strong> </label>
+                        <div class="form-group mb-0 input-txtbox">
+                            <div class="input-group">
+                                <input type="text" placeholder="" value="{{userName}}"  class="form-control disabled"
+                            disabled readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Remark</strong> </label>
+                        <textarea rows="2" cols="2" class="form-control disabled" disabled readonly
+                            [formControl]="userTaskForm.remark"></textarea>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-light rounded-pill" (click)="cancel()" data-dismiss="modal"><i class="mdi mdi-close mr-1"></i>Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<h3>Credit Leave
+    <span> <button class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn pull-right"
+            (click)="getCreditedLeaves()">
+            <i class="mdi mdi-location-exit mr-1"></i>
+            Credited Leave List</button></span>
+</h3>
+<hr class="mx-4">
+
+    <div class="col-sm-4">
+        <div class="form-group mb-0 input-txtbox fiscalbox ml-3">
+            <label for="" class="mr-3"> <strong>Financial Year</strong></label>
+            <select class="form-control" id="" (change)="getUsers($event.target.value)">
+                <ng-container *ngIf="financialYears.length > 0">
+                    <option value="0">Select Financial Years</option>
+                    <ng-container *ngFor="let year of financialYears">
+                        <option [value]="year.id">{{year.financialYearName}}</option>
+                    </ng-container>
+                </ng-container>
+            </select>
+        </div>
+</div>
+    
+
+<div class="care-infotable traing-course-table w-96 mt-3 d-inline-block">
+    <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+        <thead class="thead-light">
+            <tr>
+                <th class="w-10"><input type="checkbox" [(ngModel)]="isSelectedAll"
+                        (change)="selectAllUsers($event.target.checked)" class="mt-3 mr-2"></th>
+                <th class="w-15">Employee Name</th>
+                <th class="w-15">Financial Year</th>
+                <th class="w-20">Previous Year Balance</th>
+                <th class="w-10">Leaves Credited</th>
+                <th class="w-15"><input type="checkbox" [(ngModel)]="isCarryForwardAll"
+                        (change)="carryForwaerdToAll($event.target.checked)" class="mt-3 mr-2">Is Carrey Forward</th>
+                <th class="w-20">Total Leaves</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let user of creditLeaves">
+                <tr>
+                    <td class="w-10"><input type="checkbox" (change)="countSelected('isSelected')"
+                            [(ngModel)]="user.isSelected"></td>
+                    <td class="w-15">{{user.userName}} </td>
+                    <td class="w-15">{{user.financialYearName}} </td>
+                    <!-- <td class="w-15"></td> -->
+                    <!-- <td class="w-15"><label></label></td> -->
+                    <td class="w-20">{{user.lastYearBalance}} </td>
+                    <td class="w-10"><input [(ngModel)]="user.leaveCount" type="number"></td>
+                    <td class="w-15"><input [(ngModel)]="user.isCarryForward" (change)="countSelected('isCarryForward')"
+                            type="checkbox" class="mt-3" value="">isCarryForward</td>
+                    <td class="w-20">{{(user.isCarryForward)?(user.leaveCount+user.lastYearBalance):user.leaveCount }}
+                    </td>
+
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+    <button type="button" (click)="onSubmit()" class="btn btn-sm btn-success rounded-pill">
+        <i class="mdi mdi-content-save-settings mr-2"></i> Save </button>
+</div>

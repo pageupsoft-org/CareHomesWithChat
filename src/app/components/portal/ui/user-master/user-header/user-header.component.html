@@ -1,0 +1,96 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- <div class="col-sm-12">
+                <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                    <h1 class="d-inline-block">
+                        <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i>
+                            {{activeTabMessage}}</span>
+                    </h1>
+                </div>
+            </div> -->
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-12">
+            <div class="horizontal-tabs my-3 user-form-container bg-white shadow-sm">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 no-pad scroller">
+                            <div class="left-btn-scroller left-scroll ">
+                                <i class="mdi mdi-chevron-left"></i>
+                            </div>
+                            <div class="right-btn-scroller right-scroll ">
+                                <i class="mdi mdi-chevron-right"></i>
+                            </div>
+                            <div class="box_nav_tab" id="scroll-div">
+                                <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                                    <ng-container *ngIf="userType == userTypeEnum.WECAdmin">
+
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" (click)="onTabChange(5)" [ngClass]="{ 'active':activeTab ==5}" role="tab" aria-controls="carehomes-form">
+                                                <img src="assets/images/care-home.svg">
+                                                <span>CAREHOME MANAGEMENT</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" (click)="onTabChange(1)" [ngClass]="{ 'active':activeTab ==1}" role="tab" aria-controls="carehomes-form">
+                                                <img src="assets/images/care-home.svg">
+                                                <span>CAREHOME</span>
+                                            </a>
+                                        </li>
+                                    </ng-container>
+                                    <ng-container *ngIf="userType != userTypeEnum.User && userType != userTypeEnum.WECAdmin">
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" (click)="onTabChange(2)" [ngClass]="{ 'active':activeTab ==2}" role="tab" aria-controls="userform">
+                                                <img src="assets/images/user-form.svg">
+                                                <span>USERS</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" (click)="onTabChange(3)" [ngClass]="{ 'active':activeTab ==3}" role="tab" aria-controls="location">
+                                                <img src="assets/images/location-carehome.svg">
+                                                <span>LOCATION</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" (click)="onTabChange(4)" [ngClass]="{ 'active':activeTab ==4}" role="tab" aria-controls="trainingcourse">
+                                                <img src="assets/images/course.svg">
+                                                <span>COURSE</span>
+                                            </a>
+                                        </li>
+                                    </ng-container>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <ng-container *ngIf="tabIndex === 1">
+                        <ng-container *ngIf="isCareHomeEdit">
+                            <app-edit-care-home [careHomeId]="careHomeId" (onTabClick)="onTabChange($event)">
+                            </app-edit-care-home>
+                        </ng-container>
+                        <ng-container *ngIf="!isCareHomeEdit">
+                            <app-care-home-create (onTabClick)="onTabChange($event)"></app-care-home-create>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="tabIndex === 2">
+                        <!-- <app-user-create></app-user-create> -->
+                        <app-users-overview></app-users-overview>
+                    </ng-container>
+                    <ng-container *ngIf="tabIndex === 3">
+                        <app-location-create (onTabClick)="onTabChange($event)"></app-location-create>
+                    </ng-container>
+                    <ng-container *ngIf="tabIndex === 4">
+                        <app-course-index></app-course-index>
+                    </ng-container>
+                    <ng-container *ngIf="tabIndex === 5">
+                        <app-care-homes-managment (editCareHomeId)="editCareHomeId($event)"></app-care-homes-managment>
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

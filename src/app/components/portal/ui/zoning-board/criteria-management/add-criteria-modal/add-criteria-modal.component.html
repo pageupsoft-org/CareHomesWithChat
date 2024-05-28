@@ -1,0 +1,65 @@
+<div class="modal fade in" bsModal #criteriaModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <ng-container *ngIf="!isEdit">Add Criteria</ng-container>
+          <ng-container *ngIf="isEdit">Edit Criteria</ng-container>
+        </h5>
+        <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <ng-container *ngIf="isBusy">
+            <div class="col-sm-12 text-center">
+              <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+            </div>
+        </ng-container>
+
+          <ng-container *ngIf="criteria && !isBusy" >
+          <div class="form-group">
+            <label class="star_mandator"> <strong>Name of Criteria</strong> </label>
+            <input type="text" [formControl]="criteria.name" placeholder="" class="form-control">
+            <ng-container
+            *ngIf="!criteria.controls.name.valid && (criteria.controls.name.dirty )">
+            <p *ngIf="criteria.controls.name.errors?.minlength" class="errorText">Minimum 2 character required</p>
+            <p *ngIf="criteria.controls.name.errors?.maxlength" class="errorText">Maximum 90 character allowed</p>
+            <p *ngIf="criteria.controls.name.errors?.pattern" class="errorText">Provide valid input</p>
+            <p *ngIf="criteria.controls.name.errors?.required" class="errorText">This field is required</p>
+        </ng-container>
+        </div>
+        <div class="form-group">
+            <label class="star_mandator"><strong>Zoning Cateogry</strong></label>
+            <div class="d-block">
+                <ng-container *ngFor="let zone of zoneCategory; let i=index">
+                    <div class="form-check d-inline-block mr-3">
+                        <input type="radio" name="category" [formControl]="criteria.zoningCategory"
+                            id="zone{{i}}" [value]="zone.value" class="form-check-input mt-1">
+                        <label for="zone{{i}}" class="form-check-label"> {{zone.key}} </label>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="star_mandator"> <strong>Location</strong> </label>
+            <select class="form-control" id="location" [formControl]="criteria.locationId">
+                <!-- <option selected> Select Location</option> -->
+                <ng-container *ngIf="locationList">
+                    <ng-container *ngFor="let location of locationList">
+                        <option [ngValue]="location.id">{{location.name}}</option>
+                    </ng-container>
+                </ng-container>
+            </select>
+        </div>
+        </ng-container>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-light rounded-pill" (click)="cancel()" data-dismiss="modal"><i class="mdi mdi-close mr-1"></i> Close</button>
+        <button type="submit" (click)="onSubmit()" 
+          [ngClass]="{ 'disabled':criteria && !criteria.valid}" class="btn btn-sm btn-success rounded-pill"><i class="mdi mdi-content-save mr-1"></i> Save</button>
+      </div>
+    </div>
+  </div>
+</div>

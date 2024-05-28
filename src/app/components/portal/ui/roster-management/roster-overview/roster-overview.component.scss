@@ -1,0 +1,67 @@
+.box_nav_tab {
+    overflow: AUTO;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.prof_info_tabs{
+    width: 100%;
+    text-align: center;
+    border-bottom: none;
+    display: inline-block;
+}
+.prof_info_tabs li {
+    width: 30%;
+    margin: 0 1%;
+    display: inline-block;
+}
+.menu-barbox1{
+    background: linear-gradient(4deg, #a93c4b, #d63b4f);
+}
+.menu-barbox img {
+    height: 45px;
+}
+.menu-barbox h4 {
+    font-size: 15px;
+    font-weight: 500;
+}
+.menu-barbox {
+    color: #fff;
+    text-align: CENTER;
+    border-radius: 8px;
+    background: linear-gradient( 
+        4deg, #009688, #14675f);
+    height: 150px;
+    line-height: 80px;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    color: #fff !important;
+    padding: 5px 10px;
+}
+.menu-barbox2 {
+    background: linear-gradient( 
+        4deg, #0f629a, #175477);
+}
+.menu-barbox3 {
+    background: linear-gradient(
+        4deg, #8e1919, #ef4f53);
+}
+.menu-barbox h4 a{
+    border: none !important;
+    color:#fff;
+    font-size: 20px;
+}
+.scroller {
+    margin-top: 100px;
+}
+@media (max-width:1199px) and (min-width:768px){
+    .prof_info_tabs{
+        height: 200px;
+    }
+    .menu-barbox img {
+        height: 40px;
+    }
+    .menu-barbox h4 a {
+        font-size: 15px;
+    }
+}

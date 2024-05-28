@@ -1,0 +1,362 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 mt-0 ml-0 mb-2">
+                <h1 class="d-inline-block">
+                    <span class="usr_headleft">
+            <i class="mdi mdi-account-multiple mx-2"></i>
+            Audit of Clinical Records
+          </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mb-3 bg-white shadow-sm">
+                <div class="sv-tab-panel info_tab_container">
+                    <div class="care-infotable w-96 mb-3 d-flex">
+                        <table class="table w-50 mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="border-top-0">Audited by</th>
+                                    <td class="border-top-0">
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <select class="form-control">
+                        <ng-container *ngFor="let auditor of auditorList">
+                          <option [ngValue]="auditor.id">
+                            {{ (auditor.firstName ==null || auditor.lastName == null)? auditor.email: auditor.firstName+" "+auditor.lastName}}
+                          </option>
+                        </ng-container>
+                      </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="border-top-0">Location</th>
+                                    <td class="border-top-0">
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <select class="form-control">
+                        <ng-container *ngFor="let location of locationList">
+                          <option [ngValue]="location.id">{{location.name}}
+                          </option>
+                        </ng-container>
+                      </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                    <th class="border-top-0">Service User</th>
+                    <td class="border-top-0">
+                      <div class="form-group mb-0 input-txtbox">
+                        <select class="form-control">
+                          <option>Service User one</option>
+                          <option>Service User two</option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="border-top-0">DOB</th>
+                    <td class="border-top-0">
+                      <div class="form-group mb-0 input-txtbox">
+                        <input type="date" class="form-control" />
+                      </div>
+                    </td>
+                  </tr>  -->
+                            </tbody>
+                        </table>
+                        <table class="table w-50 mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="border-top-0">Date of Audit</th>
+                                    <td class="border-top-0">
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <input type="date" class="form-control" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="care-infotable w-96 mb-3 d-flex">
+                        <table class="table w-75 mb-0">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        Audit of Clinical Records
+                                    </th>
+                                    <th colspan="2">
+                                        Yes/No
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Client’s name is in front and the top of all pages</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="clientName" id="yes1" />
+                                            <label class="form-check-label" for="yes1">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="clientName" id="No1" />
+                                            <label class="form-check-label" for="No1">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">All entries are written in black ink</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="blackInk" id="yes2" />
+                                            <label class="form-check-label" for="yes2">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="blackInk" id="No2" />
+                                            <label class="form-check-label" for="No2">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Therapies qualifications are written</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="qualifications" id="yes3" />
+                                            <label class="form-check-label" for="yes3">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="qualifications" id="No3" />
+                                            <label class="form-check-label" for="No3">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Therapies name is printed</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="therapiesName" id="yes4" />
+                                            <label class="form-check-label" for="yes4">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="therapiesName" id="No4" />
+                                            <label class="form-check-label" for="No4">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">All entries are legible</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="entriesLegible" id="yes5" />
+                                            <label class="form-check-label" for="yes5">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="entriesLegible" id="No5" />
+                                            <label class="form-check-label" for="No5">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">All entries are timed</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="entriesTimed" id="yes6" />
+                                            <label class="form-check-label" for="yes6">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="entriesTimed" id="No6" />
+                                            <label class="form-check-label" for="No6">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">There are no black spaces</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="blackSpaces" id="yes7" />
+                                            <label class="form-check-label" for="yes7">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="blackSpaces" id="No7" />
+                                            <label class="form-check-label" for="No7">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Professional entries are differentiated</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="professionalEntries" id="yes8" />
+                                            <label class="form-check-label" for="yes8">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="professionalEntries" id="No8" />
+                                            <label class="form-check-label" for="No8">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Patients name is on every sheet</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="patientName" id="yes9" />
+                                            <label class="form-check-label" for="yes9">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="patientName" id="No9" />
+                                            <label class="form-check-label" for="No9">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">All test reports are securely filed</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="testReports" id="yes10" />
+                                            <label class="form-check-label" for="yes10">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="testReports" id="No10" />
+                                            <label class="form-check-label" for="No10">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">All test reports are initiated & filed</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="testReportsInitiated" id="yes11" />
+                                            <label class="form-check-label" for="yes11">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="testReportsInitiated" id="No11" />
+                                            <label class="form-check-label" for="No11">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Allergy notification is completed</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="allergyNotification" id="yes12" />
+                                            <label class="form-check-label" for="yes12">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="allergyNotification" id="No12" />
+                                            <label class="form-check-label" for="No12">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Admission agreement signed</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="admissionAgreement" id="yes13" />
+                                            <label class="form-check-label" for="yes13">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="admissionAgreement" id="No13" />
+                                            <label class="form-check-label" for="No13">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Consent for audit of notes present & signed</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="consentAuditNotes" id="yes14" />
+                                            <label class="form-check-label" for="yes14">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="consentAuditNotes" id="No14" />
+                                            <label class="form-check-label" for="No14">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Copies of MHA document in notes</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="copiesMHA" id="yes15" />
+                                            <label class="form-check-label" for="yes15">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="copiesMHA" id="No15" />
+                                            <label class="form-check-label" for="No15">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Consent to treatment completed & present</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="treatmentCompleted" id="yes16" />
+                                            <label class="form-check-label" for="yes16">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="treatmentCompleted" id="No16" />
+                                            <label class="form-check-label" for="No16">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-top-0">Staff signature</td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="true" name="staffSignature" id="yes17" />
+                                            <label class="form-check-label" for="yes17">Yes</label>
+                                        </div>
+                                    </td>
+                                    <td class="border-top-0">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="radio" class="form-check-input mt-1" [value]="false" name="staffSignature" id="No17" />
+                                            <label class="form-check-label" for="No17">No</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                        <button type="button" class="btn btn-sm btn-info btn-next rounded-pill">
+              Submit
+            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

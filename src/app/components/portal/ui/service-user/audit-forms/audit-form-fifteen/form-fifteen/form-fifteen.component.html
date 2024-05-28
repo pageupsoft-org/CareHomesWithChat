@@ -1,0 +1,246 @@
+<div class="">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 mx-0 mt-1">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Medication Spot Check <span><button
+                                class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                                (click)="goBack()">Go
+                                Back</button> </span>
+                    </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mt-1 bg-white shadow-sm">
+                <div class="sv-tab-panel info_tab_container">
+
+                    <ng-container *ngIf="isBusy">
+                        <div class="loader">
+                            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                            </mat-spinner>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!isBusy && formFifteen">
+                        <form [formGroup]="formFifteen">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="locationId" readonly
+                                                        disabled>
+                                                        <ng-container *ngFor="let location of locationList">
+                                                            <option [ngValue]="location.id">{{location.name}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            *ngIf="currentUserRole == userType.Admin || currentUserRole == userType.SuperUser ">
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="auditedBy"
+                                                        (change)="completeForm($event)">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id" *ngIf="user.userType == userType.SuperUser || user.userType == userType.User">
+                                                                {{ (user.firstName == null || user.lastName ==
+                                                                null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                       
+                                        <!-- 
+                                    <tr>
+                                        <th class="border-top-0">DOB</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <input type="date" class="form-control" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">Date of Admission</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <input type="date" class="form-control" />
+                                            </div>
+                                        </td>
+                                    </tr> -->
+                                        <!-- <tr>
+                                        <th class="border-top-0">Medication Chart Start Date</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <input type="date" class="form-control" />
+                                            </div>
+                                        </td>
+                                    </tr> -->
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <!-- <input type="date" class="form-control" /> -->
+                                                    <label>{{(formFifteen.get('auditDate').value)?(formFifteen.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy"
+                                                        (change)="changeSignoff()">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-container *ngIf="isFilling">
+                                <ng-container formArrayName="form15Records"
+                                    *ngFor="let stock of formFifteen.get('form15Records')['controls'];let i= index ">
+
+                                    <div [formGroupName]="i" class="care-infotable w-96 mb-2 d-flex">
+                                        <div class="close_course" (click)="remove(i)">
+                                            <i class="mdi mdi-close"></i>
+                                        </div>
+                                        <table class="table w-100 mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-top-0">Medication</th>
+                                                    <th class="border-top-0">Time</th>
+                                                    <th class="border-top-0">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Medication Administration Record (MAR) Front Page
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <input type="time" formControlName="recordDateTime1"
+                                                                class="form-control" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            <input type="radio" formControlName="action1" id="yes{{i}}"
+                                                                [value]="true" class="form-check-input mt-1">
+                                                            <label for="yes{{i}}" class="form-check-label">Yes</label>
+                                                        </div>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            <input type="radio" formControlName="action1" id="No{{i}}"
+                                                                [value]="false" class="form-check-input mt-1">
+                                                            <label for="No{{i}}" class="form-check-label">No</label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Consent to treatment attached where applicable
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <input type="time" formControlName="recordDateTime2"
+                                                                class="form-control" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            <input type="radio" formControlName="action2"
+                                                                id="actionYes{{i}}" [value]="true"
+                                                                class="form-check-input mt-1">
+                                                            <label for="actionYes{{i}}"
+                                                                class="form-check-label">Yes</label>
+                                                        </div>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            <input type="radio" formControlName="action2"
+                                                                id="actionNo{{i}}" [value]="false"
+                                                                class="form-check-input mt-1">
+                                                            <label for="actionNo{{i}}"
+                                                                class="form-check-label">No</label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </ng-container>
+                                <div class="care-infotable w-96 p-3 d-flex bg-white">
+                                    <button type="button" class="btn btn-sm rounded-pill btn-primary"
+                                        (click)="addRecordButtonClick()"><i class="mdi mdi-plus mr-2"></i>Add
+                                        more</button>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block care-infotable w-96 p-3"
+                                *ngIf="formFifteen.get('signoffBy').value == currentUserId ">
+                                <p class=""><strong> Do you want to create form for next review date</strong></p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes14"
+                                        [value]="true" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="yes14" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false"
+                                        id="No14" [value]="false"
+                                        class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="No14" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container
+                                    *ngIf="isEdit && formFifteen.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!formFifteen.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" [disabled]="!formFifteen.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </form>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

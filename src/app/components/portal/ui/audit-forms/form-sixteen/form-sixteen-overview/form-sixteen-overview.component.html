@@ -1,0 +1,90 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0 mb-2">
+                <h3 class="pl-3"> <span class="usr_headleft">Monthly Environmental Safety Audit Form</span> <span>
+                        <button *ngIf="currentUserRole == userType.Admin || currentUserRole == userType.SuperUser"
+                            class="btn btn-sm btn-info rounded-pill mb-3 mr-4 pull-right my-1"
+                            (click)="createFormSixteen()"><i class="mdi mdi-plus mr-1"></i>Add Form</button>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go
+                            Back</button>
+                    </span></h3>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="isBusy">
+        <div class="loader">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+        </div>
+    </ng-container>
+    <!-- Audit Forms for Service user -->
+    <div class="mt-1 mb-3">
+
+        <div class="sv-tab-panel bg-white shadow mr-lft-10">
+            <div class="col-sm-12 d-inline-block mb-2 mt-2 pt-3">
+                <select class="form-control d-inline-block pull-right bg-wine" style="width: 20%;"
+                    (change)="getForms($event.target.value)" id="location">
+                    <option value="" selected> Select Location</option>
+                    <ng-container *ngIf="locationList">
+                        <ng-container *ngFor="let location of locationList">
+                            <option [value]="location.id">{{location.name}}</option>
+                        </ng-container>
+                    </ng-container>
+                </select>
+            </div>
+            <ng-container *ngIf="!isBusy && formSixteen.length > 0">
+                <div class="d-inline-block w-100 bg-white px-3 pb-3 pt-0">
+                    <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="w-10">S.no</th>
+                                <th class="w-10">Audit By</th>
+                                <th class="w-10">Audit Date</th>
+                                <th class="w-10">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <ng-container *ngFor="let form of formSixteen; let i = index">
+                                <tr>
+                                    <td class="w-10">{{i+1}}</td>
+                                    <td class="w-10">{{(form.auditor)?((form.auditor.firstName == null ||
+                                        form.auditor.lastName == null)? form.auditor.email:(form.auditor.firstName+"
+                                        "+form.auditor.lastName) ):'-'}}</td>
+                                    <td class="w-10">{{(form.auditDate)?(form.auditDate| date :"dd-MM-Y"):"-"}}
+                                    </td>
+                                    <td class="w-10">
+                                        <div class="actionbox">
+                                            <ng-container
+                                                *ngIf="!form.isSignedOff && (currentUserRole == userType.Admin || currentUserRole == userType.SuperUser || form.auditedBy == currentUserId)">
+
+                                                <i class="mdi text-primary mdi-pencil mr-2" (click)="editForm(form)"
+                                                    title="Edit"></i>
+                                            </ng-container>
+                                            <i class="mdi text-danger mdi-delete mr-2" *ngIf="!form.isSignedOff"
+                                                (click)="removeForm(form.id)" title="Remove"></i>
+                                            <i class="mdi text-info mdi-eye-circle mr-2" (click)="showForm(form)"
+                                                title="View"></i>
+                                            <a href="{{baseUrl}}/{{form.id}}" title="Download"
+                                                class="mdi text-warning mdi-download mr-2"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isBusy && formSixteen.length <= 0">
+
+                <div class="text-center px-3 py-3">
+                    <h5 class="alert alert-danger text-center mb-0"> No Record Found</h5>
+                </div>
+
+            </ng-container>
+        </div>
+
+    </div>
+</div>

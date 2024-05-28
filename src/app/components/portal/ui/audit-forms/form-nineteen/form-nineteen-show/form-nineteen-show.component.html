@@ -1,0 +1,188 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Weekly Environmental Tool
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <form>
+                        <div class="sv-tab-panel info_tab_container">
+
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{(auditForm.auditor)?((auditForm.auditor.firstName == null ||
+                                                    auditForm.auditor.lastName == null)?
+                                                    auditForm.auditor.email:(auditForm.auditor.firstName+"
+                                                    "+auditForm.auditor.lastName) ):'-'}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{auditForm.locationName}}
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <!-- <input type="date" class="form-control" /> -->
+                                                    <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{auditForm.signoffByName}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                                <div
+                                    class="care-infotable innerwhite-table w-96 mb-3 px-3 pb-3 pt-0 d-flex overflow-auto limitheight-form">
+                                    <table class="table mb-0 bg-white shadow-sm table-bordered table-wd-18 mr-2">
+                                        <thead>
+                                            <tr>
+                                                <th class="bg-light w-10">#</th>
+                                                <th class="bg-light w-10">Area</th>
+                                                <th class="bg-light w-10">Hazard</th>
+                                                <th class="bg-light w-15">If Yes, what is the hazard</th>
+                                                <th class="bg-light w-15">Have you reported any hazards identified to
+                                                    the Manager?</th>
+                                                <th class="bg-light w-10">Follow-up action</th>
+                                                <th class="bg-light w-15">Date of follow up action</th>
+                                                <th class="bg-light w-10">To be actioned by</th>
+                                                <th class="bg-light w-15">Comments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let record of auditForm.form19Records;let i= index ">
+
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                                {{i+1}}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                                {{record.area}}
+                                                            </span>
+                                                        </div>
+                                                      
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                                {{(record.hazard)?"Yes":"No"}}
+                                                            </span>
+                                                        </div>
+                                                      
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                                {{record.whatIsHazard}}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                                {{(record.hazardIdentified)?"Yes":"No"}}
+                                                            </span>
+                                                        </div>
+                                                        
+                                                    </td>
+                                                    <td>
+                                                       
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                                {{record.followUpAction}}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="border-left-0 border-right-0 border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                                {{record.followUpDate}}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-left-0 border-right-0 border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                            {{record.actionedByName}}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-left-0 border-right-0 border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>
+                                                                {{record.comment}}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back"
+                                    (click)="goBack()">Go Back</button>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

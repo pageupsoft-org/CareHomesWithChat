@@ -1,0 +1,44 @@
+<h3>Financial Years <span>
+        <button class="btn btn-sm btn-info rounded-pill mb-2 mr-4 pull-right" *ngIf="currentUserRole == userType.Admin"
+            (click)="addFinancialYear()"><i class="mdi mdi-calendar mr-1"></i>Add Financial Year</button>
+            <button class="btn btn-sm btn-primary rounded-pill mb-2 mr-4 pull-right" *ngIf="currentUserRole == userType.Admin"
+            (click)="setFinancialYear()"><i class="mdi mdi-golf mr-1"></i>Set Current Year</button>
+    </span></h3>
+<ng-container *ngIf="!isBusy && financialYears.length > 0; else elseTemplate">
+
+    <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block">
+        <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+            <thead class="thead-light">
+                <tr>
+                    <th class="w-10">S.no</th>
+                    <th class="w-10">Financial Year</th>
+                    <th class="w-10">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let year of financialYears; let i=index">
+                    <td class="w-10">{{i+1}}</td>
+                    <td class="w-10">{{year.financialYearName}}</td>
+                    <td class="w-10">
+                        <div class="actionbox" *ngIf="currentUserRole == userType.Admin">
+                            <i class="mdi text-primary mdi-pencil mr-2" (click)="editFinancialYear(year)" data-toggle="modal"
+                                data-target="#edit-course"></i>
+                            <i class="mdi text-danger mdi-delete mr-2" (click)="remove(year.id)"></i>
+                            <i *ngIf="year.isCurrent" class="mdi text-success mdi-check mr-2 " style="pointer-events: none;" title="Current Financial Year"  ></i>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-container>
+<ng-template #elseTemplate>
+    <div class="text-center px-3 py-3">
+        <h5 class="alert alert-danger text-center mb-0"> No Record Found</h5>
+    </div>
+</ng-template>
+
+<!-- Modal -->
+<app-financial-year-modal #financialYearModal></app-financial-year-modal>
+<app-set-financial-year-modal #setYearModal></app-set-financial-year-modal>

@@ -1,0 +1,88 @@
+<div class="sv-tab-panel info_tab_container">
+    <h3 class="zoning-head-com">Patient Alerts<span>
+            <button data-toggle="modal" data-target="#add-patient-alert" (click)="addPatientAlert()"
+                class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn pull-right">
+                <i class="mdi mdi-plus mr-1"></i> Add Patient Alert</button>
+        </span></h3>
+    <div class="care-infotable traing-course-table w-96 m-0 d-inline-block">
+
+        <div class="col-sm-12 mb-2 mt-2 d-inline-flex">
+            <div class="form-group mb-0">
+                <label class="form-check-label mr-2 ln-35 float-left ln-40"> Selelct Alert: </label>
+
+                <div class="form-check mr-2 d-inline-block">
+                    <select class="form-control d-inline-block bg-wine" [(ngModel)]="alertId" (ngModelChange)="filterRecord(alertId,status)" id="location">
+                        <option [value]="0" selected>Show All</option>
+                        <ng-container *ngIf="alertList">
+                            <ng-container *ngFor="let alert of alertList">
+                                <option [value]="alert.id"> {{alert.name}}</option>
+                            </ng-container>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group mr-2 mb-0">
+                <label class="form-check-label mr-2 ln-35 float-left ln-40"> Status: </label>
+
+                <div class="form-check mr-2 d-inline-block">
+                    <select class="form-control d-inline-block bg-wine" [(ngModel)]="status" (change)="filterRecord(alertId,status)" id="location">
+                        <option [ngValue]="true">On</option>
+                        <option [ngValue]="false">Off</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover bg-white mb-0 zoning_table">
+            <thead class="thead-light">
+                <tr>
+                    <th class="w-10">Patient Id</th>
+                    <th class="w-10">Patient Name</th>
+                    <th class="w-10">Age</th>
+                    <th class="w-10">Alert Name</th>
+                    <th class="w-10">Alert Start Date</th>
+                    <th class="w-10">Alert End Date</th>
+                    <th class="w-10">Action</th>
+                    <!-- <th>Difference today and end date</th> -->
+
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="patientAlertList.length > 0">
+
+                    <ng-container *ngFor="let patientAlert of patientList">
+
+                        <tr [ngStyle]="{'background-color': patientAlert.endDate|zoningAlertColor}">
+                            <td class="w-10">{{(patientAlert.patient)?patientAlert.patient.serviceUserNumber:'-'}}</td>
+                            <td class="w-10">{{(patientAlert.patient)?patientAlert.patient.firstName+" "+patientAlert.patient.lastName :"-"}}</td>
+                            <td class="w-10">{{(patientAlert.patient)?patientAlert.patient.age :"-"}}</td>
+                            <td class="w-10">{{getLocationName(patientAlert.locationAlertId)}}</td>
+                            <td class="w-10">{{patientAlert.startDate|date:'dd-MM-yyyy' }}</td>
+                            <td class="w-10">{{patientAlert.endDate|date:'dd-MM-yyyy' }}</td>
+                            <td class="w-10">
+                                <div class="actionbox" *ngIf="patientAlert.status">
+                                    <i class="mdi text-primary mdi-pencil mr-2" (click)="editPatientAlert(patientAlert)" title="Edit"></i>
+                                    <i class="mdi text-danger mdi-delete mr-2" (click)="remove(patientAlert.id)" title="Remove"></i>
+                                    <i class="mdi text-dark mdi-eye-off mr-2" (click)="turnOffAlert(patientAlert)" title="turn off"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="patientAlertList.length <= 0">
+                    <tr>
+                        <td class="p-0" colspan="7">
+                            <div class="alert alert-danger text-center mb-0">No Result Found</div>
+                        </td>
+                    </tr>
+                </ng-container>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<ng-container *ngIf="locationId">
+
+    <app-add-patient-alert-modal #patientAlertModal [locationId]="locationId"></app-add-patient-alert-modal>
+    <app-edit-patient-alert-modal #patientAlertEditModal [locationId]="locationId"></app-edit-patient-alert-modal>
+</ng-container>

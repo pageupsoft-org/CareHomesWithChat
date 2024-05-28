@@ -1,0 +1,90 @@
+<div class="parentcontianer">
+    <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block">
+
+        <div class="row p-1">
+            <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">
+                    <p class="mb-0">Top</p>
+                    <select [(ngModel)]="records.top" class="form-control w-20" (change)="getAllCareHomes()">
+                        <option [ngValue]="10" selected>10</option>
+                        <option [ngValue]="25">25</option>
+                        <option [ngValue]="50">50</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers pull-right" id="dtBasicExample_paginate">
+                    <p class="mb-0">Search</p>
+                    <input type="text" [(ngModel)]="records.searchString" (keyup)="searchPatients()" placeholder=""
+                        class="form-control pull-right">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 p-0">
+            <table class="table table-bordered table-hover bg-white mb-0">
+                <thead class="thead-light">
+                    <tr>
+                        <!-- <th>S.no</th> -->
+                        <th class="w-20">Care Home</th>
+                        <th class="w-20">Contact First Name</th>
+                        <th class="w-15">Contact Last Name</th>
+                        <th class="w-20">Contact Email</th>
+                        <th class="w-10">Contact Number</th>
+                        <th class="w-5">Status</th>
+                        <th class="w-10">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="isBusy">
+                        <td colspan="6">
+                            <div class="col-sm-12 text-center">
+                                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                                </mat-spinner>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="!isBusy && careHomeList.length > 0">
+                        <tr *ngFor="let item of careHomeList; let i=index">
+                            <!-- <td>{{i+1}}</td> -->
+                            <td>{{item.name}}</td>
+                            <td>{{item.contactFirstName}}</td>
+                            <td>{{item.contactLastName}}</td>
+                            <td>{{item.contactEmail}}</td>
+                            <td>{{item.contactNumber}}</td>
+                            <td><span
+                                    class="badge badge-{{(item.isActive)?'success':'danger'}}">{{(item.isActive)?'Active':'Deleted'}}</span>
+                            </td>
+                            <td>
+                                <div class="actionbox">
+                                    <!-- <i class="mdi text-primary mdi-pencil mr-2" data-toggle="modal"
+                                data-target="#edit-course"></i> -->
+                                    <i class="mdi text-primary mdi-pencil mr-2" (click)="editCareHome(item.id)"></i>
+                                    <i class="mdi text-danger mdi-delete mr-2" (click)="removeCareHome(item.id)"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf=" !isBusy && careHomeList.length == 0">
+                        <h4 style="color: red;text-align: center;">No care home found</h4>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row p-1">
+            <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">Showing
+                    {{records.skip+1}} to
+                    {{lastRecord}} of {{recordCount}} entries</div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers pull-right" id="dtBasicExample_paginate">
+                    <pagination [totalItems]=recordCount [rotate]="rotate" [maxSize]="maxSize"
+                        [itemsPerPage]=records.top (pageChanged)="pageChanged($event)"></pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

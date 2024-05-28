@@ -1,0 +1,60 @@
+<div class="sv-tab-panel info_tab_container">
+    <h3 class="zoning-head-com">Criteria List<span>
+            <button data-toggle="modal" data-target="#create-criteria" (click)="addCriteria()"
+                class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn pull-right">
+                <i class="mdi mdi-plus mr-1"></i> Create criteria</button>
+        </span>
+
+    </h3>
+
+    <div class="care-infotable traing-course-table w-96 m-0 d-inline-block">
+        <ng-container *ngIf="isBusy">
+            <div class="loader">
+                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!isBusy && criteriaList">
+
+            <table class="table table-bordered table-hover bg-white mb-0 zoning_table">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="w-25">Criteria Id</th>
+                        <th class="w-25">Name of Criteria</th>
+                        <th class="w-25">Zoning Category</th>
+                        <th class="w-25">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="criteriaList.length > 0">
+
+                        <ng-container *ngFor="let criteria of criteriaList; let i=index">
+
+                            <tr>
+                                <td class="w-25">CRIT000{{criteria.id}}</td>
+                                <td class="w-25">{{criteria.name}} </td>
+                                <td class="w-25">{{(criteria.zoningCategory == "R")?"Red":((criteria.zoningCategory == "A")?"Amber":"Green")}}
+                                </td>
+                                <td class="w-25">
+                                    <div class="actionbox">
+                                        <i data-toggle="modal" data-target="#edit-course" (click)="editCriteria(criteria)" class="mdi text-primary mdi-pencil mr-2"></i>
+                                        <i class="mdi text-danger mdi-delete mr-2" (click)="remove(criteria.id)"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="criteriaList.length <= 0">
+                        <tr>
+                            <td class="p-0" colspan="4">
+                                <div class="alert alert-danger text-center mb-0">No Result Found</div>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                </tbody>
+            </table>
+        </ng-container>
+    </div>
+</div>
+
+<app-add-criteria-modal #criteriaModal></app-add-criteria-modal>

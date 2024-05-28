@@ -1,0 +1,240 @@
+<ng-container *ngIf="isBusy">
+  <div class="col-sm-12 text-center">
+    <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+  </div>
+</ng-container>
+<ng-container *ngIf="!isBusy && !isEdit">
+  <form [formGroup]="careHomeForm" (ngSubmit)="onSubmit()">
+    <div class="tab-pane active" id="carehomes-form" role="tabpanel">
+      <div class="sv-tab-panel info_tab_container">
+        <h3>Add CareHome</h3>
+        <div class="care-infotable d-inline-block float-left">
+          <table class="table mb-0">
+            <tbody>
+              <tr>
+                <th class="star_mandator">Name of Carehome</th>
+                <td>
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Name of Carehome"
+                        [formControl]="careHomeForm.name" />
+                    </div>
+                    <ng-container
+                      *ngIf="!careHomeForm.controls.name.valid && careHomeForm.controls.name.touched || careHomeForm.controls.name.dirty">
+                      <!--question mark(?) is a safe navigation operator-->
+                      <p *ngIf="careHomeForm.controls.name.errors?.pattern" class="text-danger">Please provide a valid
+                        name</p>
+                      <p *ngIf="careHomeForm.controls.name.errors?.required" class="text-danger">Care Home name is
+                        required</p>
+                      <p *ngIf="careHomeForm.controls.name.errors?.minlength" class="text-danger">Minimum
+                        {{careHomeForm.get('name').errors.minlength.requiredLength}}
+                        character required</p>
+                      <p *ngIf="careHomeForm.controls.name.errors?.maxlength" class="text-danger">Maximum
+                        {{careHomeForm.get('name').errors.maxlength.requiredLength}}
+                        character allowed</p>
+                    </ng-container>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th class="star_mandator">Contact first name</th>
+                <td>
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="First Name"
+                        [formControl]="careHomeForm.contactFirstName" />
+                    </div>
+                    <ng-container
+                      *ngIf="!careHomeForm.controls.contactFirstName.valid && careHomeForm.controls.contactFirstName.touched || careHomeForm.controls.contactFirstName.dirty">
+                      <p *ngIf="careHomeForm.controls.contactFirstName.errors?.required" class="text-danger">Name is
+                        required</p>
+                      <!--question mark(?) is a safe navigation operator-->
+                      <p *ngIf="careHomeForm.controls.contactFirstName.errors?.pattern" class="text-danger">Please
+                        provide a valid name</p>
+                      <p *ngIf="careHomeForm.controls.contactFirstName.errors?.minlength" class="text-danger">Minimum
+                        {{careHomeForm.get('contactFirstName').errors.minlength.requiredLength}}
+                        character required</p>
+                      <p *ngIf="careHomeForm.controls.contactFirstName.errors?.maxlength" class="text-danger">Maximum
+                        {{careHomeForm.get('contactFirstName').errors.maxlength.requiredLength}}
+                        character allowed</p>
+                    </ng-container>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Contact Last name</th>
+                <td>
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Last Name"
+                        [formControl]="careHomeForm.contactLastName" />
+                    </div>
+                  </div>
+                  <ng-container
+                    *ngIf="!careHomeForm.controls.contactLastName.valid && careHomeForm.controls.contactLastName.touched || careHomeForm.controls.contactLastName.dirty">
+                    <!--question mark(?) is a safe navigation operator-->
+                    <p *ngIf="careHomeForm.controls.contactLastName.errors?.pattern" class="text-danger">Please provide
+                      a valid last name</p>
+
+                    <p *ngIf="careHomeForm.controls.contactLastName.errors?.maxlength" class="text-danger">Maximum
+                      limit reached</p>
+                  </ng-container>
+                </td>
+              </tr>
+              <tr>
+                <th class="star_mandator">Contact email</th>
+                <td>
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <div class="input-group">
+                      <input type="email" class="form-control" placeholder="Email"
+                        [formControl]="careHomeForm.contactEmail" />
+                    </div>
+                    <ng-container
+                      *ngIf="!careHomeForm.controls.contactEmail.valid && careHomeForm.controls.contactEmail.touched || careHomeForm.controls.contactEmail.dirty">
+                      <p *ngIf="careHomeForm.controls.contactEmail.errors?.required" class="text-danger">Email is
+                        required</p>
+                      <!--question mark(?) is a safe navigation operator-->
+                      <p *ngIf="careHomeForm.controls.contactEmail.errors?.pattern" class="text-danger">Please
+                        provide a valid email address</p>
+                    </ng-container>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th class="star_mandator">Contact no.</th>
+                <td>
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <div class="input-group">
+                      <input maxlength="12" type="text" class="form-control" placeholder="Contact No"
+                        [formControl]="careHomeForm.contactNumber" />
+                    </div>
+                    <ng-container
+                      *ngIf="!careHomeForm.controls.contactNumber.valid && careHomeForm.controls.contactNumber.touched || careHomeForm.controls.contactNumber.dirty">
+                      <p *ngIf="careHomeForm.controls.contactNumber.errors?.required" class="text-danger">Contact is
+                        required</p>
+                      <!--question mark(?) is a safe navigation operator-->
+                      <p *ngIf="careHomeForm.controls.contactNumber.errors?.pattern" class="text-danger">Please provide
+                        valid contact no.</p>
+                    </ng-container>
+
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="care-infotable d-inline-block float-left">
+          <table class="table mb-0">
+            <tbody>
+              <tr>
+                <th class="star_mandator">Main Address 1</th>
+                <td>
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <input type="text" cols="1" rows="1" class="form-control" placeholder="Main Address 1"
+                      spellcheck="false" [formControl]="careHomeForm.mainAddress1">
+                  </div>
+                  <ng-container
+                    *ngIf="(careHomeForm.controls.mainAddress1.valid && careHomeForm.controls.mainAddress1.touched) || careHomeForm.controls.mainAddress1.dirty">
+                    <p *ngIf="careHomeForm.controls.mainAddress1.errors?.required" class="text-danger">Main Address
+                      1 is required</p>
+                    <p *ngIf="careHomeForm.controls.mainAddress1.errors?.minlength" class="text-danger">Minimum 2 character allowed</p>
+                    <p *ngIf="careHomeForm.controls.mainAddress1.errors?.maxlength" class="text-danger">Maximum limit reached</p>
+
+                  </ng-container>
+
+                </td>
+              </tr>
+              <tr>
+                <th class="w-50">Main Address 2</th>
+                <td class="w-50">
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <input type="text" cols="1" rows="1" class="form-control" placeholder="Main Address 2" spellcheck="false"
+                      [formControl]="careHomeForm.mainAddress2">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th class="w-50">Main Address 3</th>
+                <td class="w-50">
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <input type="text" cols="1" rows="1" class="form-control" placeholder=" Main Address 3" spellcheck="false"
+                      [formControl]="careHomeForm.mainAddress3">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th class="w-50">Main Address 4</th>
+                <td class="w-50">
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <input maxlength="250" type="text" cols="1" rows="1" class="form-control" placeholder="Main Address 4" spellcheck="false"
+                      [formControl]="careHomeForm.mainAddress4">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th class="w-50 star_mandator">Service User Limit</th>
+                <td class="w-50">
+                  <span class="d-none">N/A</span>
+                  <div class="form-group mb-0 input-txtbox">
+                    <input type="number" min="5" class="form-control" placeholder="Service User Limit" spellcheck="false"
+                      [formControl]="careHomeForm.serviceUserLimit">
+                  </div>
+                  <ng-container
+                    *ngIf="(careHomeForm.controls.serviceUserLimit.valid && careHomeForm.controls.serviceUserLimit.touched) || careHomeForm.controls.serviceUserLimit.dirty">
+                    <p *ngIf="careHomeForm.controls.serviceUserLimit.errors?.required" class="text-danger">Service user limit is required</p>
+                    <!-- <p *ngIf="careHomeForm.controls.serviceUserLimit.errors?.max" class="text-danger">Maximum 500 service user are allowed</p> -->
+                    <p *ngIf="careHomeForm.controls.serviceUserLimit.errors?.min" class="text-danger">Minimum 5 </p>
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="w-100 d-inline-block mt-3">
+          <h4>Admin Profile</h4>
+          <div class="care-infotable d-inline-block float-left">
+            <table class="table mb-0">
+              <tbody>
+                <tr>
+                  <th class="star_mandator">Email/Username</th>
+                  <td>
+                    <span class="d-none">N/A</span>
+                    <div class="form-group mb-0 input-txtbox">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter User Name"
+                          [formControl]="careHomeForm.userName" (keyup)="checkUserName()" />
+                      </div>
+                      <ng-container *ngIf="userNameError">
+                        <p class="text-danger">{{userNameErrorMsg}}</p>
+                      </ng-container>
+                     
+                      
+
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+          <button type="submit" [ngClass]="{ 'disabled':careHomeForm && !careHomeForm.valid}"
+            [disabled]="careHomeForm && !careHomeForm.valid" class="btn btn-sm btn-success rounded-pill">
+            <i class="mdi mdi-content-save-settings mr-2"></i> Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

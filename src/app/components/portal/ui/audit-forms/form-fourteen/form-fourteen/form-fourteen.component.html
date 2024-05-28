@@ -1,0 +1,574 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 mt-2 ml-0 mb-2">
+                <h1 class="">
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        General Medication Audit Tool
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mb-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <form [formGroup]="auditForm">
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control"
+                                                    (change)="getUsers($event.target.value)"
+                                                    formControlName="locationId">
+                                                    <ng-container
+                                                        *ngFor="let location of locationList">
+                                                        <option [value]="location.id">
+                                                            {{location.name}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control"
+                                                    (change)="completeForm($event)" name="auditedBy"
+                                                    formControlName="auditedBy">
+                                                    <ng-container *ngFor="let user of userList">
+                                                        <option [ngValue]="user.id"
+                                                            *ngIf="user.userType != userType.Admin">
+                                                            {{ (user.firstName ==null ||
+                                                            user.lastName == null)?
+                                                            user.email: user.firstName+"
+                                                            "+user.lastName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{(auditForm.get('auditDate').value)?(auditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy"
+                                                        (change)="changeSignoff()">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-container *ngIf="isFilling">
+
+                                <div class="care-infotable w-96 mb-3 d-flex">
+                                    <table class="table w-75 mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0 w-75">Areas of Audit</th>
+                                                <th class="border-top-0 w-25">
+                                                    Findings
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th colspan="2">Controlled Drugs (CD)</th>
+                                            </tr>
+                                            <tr>
+                                                <td>CD requisition book available with two counter signatures for all
+                                                    CDs in use/ stock</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes1" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="allCounterSignature"
+                                                            formControlName="allCounterSignature">
+                                                        <label for="yes1" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No1" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="allCounterSignature"
+                                                            formControlName="allCounterSignature">
+                                                        <label for="No1" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na1" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="allCounterSignature"
+                                                            formControlName="allCounterSignature">
+                                                        <label for="Na1" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>CD recording book with two counter signatures when administered
+                                                </td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes2" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1"
+                                                            name="administeredCounterSignature"
+                                                            formControlName="administeredCounterSignature">
+                                                        <label for="yes2" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No2" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1"
+                                                            name="administeredCounterSignature"
+                                                            formControlName="administeredCounterSignature">
+                                                        <label for="No2" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na2" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1"
+                                                            name="administeredCounterSignature"
+                                                            formControlName="administeredCounterSignature">
+                                                        <label for="Na2" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>CD in Date, Expiry date in diary for prompts</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes3" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1"
+                                                            name="controlledDrugExpiryDate"
+                                                            formControlName="controlledDrugExpiryDate">
+                                                        <label for="yes3" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No3" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1"
+                                                            name="controlledDrugExpiryDate"
+                                                            formControlName="controlledDrugExpiryDate">
+                                                        <label for="No3" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na3" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1"
+                                                            name="controlledDrugExpiryDate"
+                                                            formControlName="controlledDrugExpiryDate">
+                                                        <label for="Na3" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th colspan="2">Emergency Drugs (ED)</th>
+                                            </tr>
+                                            <tr>
+                                                <td>ED in date, Expiry date in diary for prompts</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes4" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="emergencyDrugExpiryDate"
+                                                            formControlName="emergencyDrugExpiryDate">
+                                                        <label for="yes4" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No4" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="emergencyDrugExpiryDate"
+                                                            formControlName="emergencyDrugExpiryDate">
+                                                        <label for="No4" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na4" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="emergencyDrugExpiryDate"
+                                                            formControlName="emergencyDrugExpiryDate">
+                                                        <label for="Na4" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>ED recording book with two counter signatures when administered</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes5" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="emergencyDrugRecording"
+                                                            formControlName="emergencyDrugRecording">
+                                                        <label for="yes5" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No5" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="emergencyDrugRecording"
+                                                            formControlName="emergencyDrugRecording">
+                                                        <label for="No5" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na5" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="emergencyDrugRecording"
+                                                            formControlName="emergencyDrugRecording">
+                                                        <label for="Na5" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th colspan="2">Treatment/ Medication Room(s) </th>
+                                            </tr>
+                                            <tr>
+                                                <td>Room/ space is clean, neat and tidy</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes6" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="isRoomClean"
+                                                            formControlName="isRoomClean">
+                                                        <label for="yes6" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No6" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="isRoomClean"
+                                                            formControlName="isRoomClean">
+                                                        <label for="No6" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na6" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="isRoomClean"
+                                                            formControlName="isRoomClean">
+                                                        <label for="Na6" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cupboards/ trolleys are clean neat and tidy</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes7" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="isCupboardsClean"
+                                                            formControlName="isCupboardsClean">
+                                                        <label for="yes7" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No7" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="isCupboardsClean"
+                                                            formControlName="isCupboardsClean">
+                                                        <label for="No7" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na7" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="isCupboardsClean"
+                                                            formControlName="isCupboardsClean">
+                                                        <label for="Na7" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th colspan="2">Areas of Audit</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Daily room temperature maintained 250C and below </td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes8" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1"
+                                                            name="roomTemperatureMaintained"
+                                                            formControlName="roomTemperatureMaintained">
+                                                        <label for="yes8" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No8" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1"
+                                                            name="roomTemperatureMaintained"
+                                                            formControlName="roomTemperatureMaintained">
+                                                        <label for="No8" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na8" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1"
+                                                            name="roomTemperatureMaintained"
+                                                            formControlName="roomTemperatureMaintained">
+                                                        <label for="Na8" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Clinical fridge clean, neat and tidy</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes9" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="isClinicalFridgeClean"
+                                                            formControlName="isClinicalFridgeClean">
+                                                        <label for="yes9" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No9" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="isClinicalFridgeClean"
+                                                            formControlName="isClinicalFridgeClean">
+                                                        <label for="No9" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na9" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="isClinicalFridgeClean"
+                                                            formControlName="isClinicalFridgeClean">
+                                                        <label for="Na9" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Daily clinical fridge temperature maintained between 20C and 80C
+                                                </td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes10" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1"
+                                                            name="clinicalFridgeTemperatureMaintained"
+                                                            formControlName="clinicalFridgeTemperatureMaintained">
+                                                        <label for="yes10" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No10" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1"
+                                                            name="clinicalFridgeTemperatureMaintained"
+                                                            formControlName="clinicalFridgeTemperatureMaintained">
+                                                        <label for="No10" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na10" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1"
+                                                            name="clinicalFridgeTemperatureMaintained"
+                                                            formControlName="clinicalFridgeTemperatureMaintained">
+                                                        <label for="Na10" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Clinical waste bags available </td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes11" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="wasteBagsAvailable"
+                                                            formControlName="wasteBagsAvailable">
+                                                        <label for="yes11" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No11" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="wasteBagsAvailable"
+                                                            formControlName="wasteBagsAvailable">
+                                                        <label for="No11" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na11" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="wasteBagsAvailable"
+                                                            formControlName="wasteBagsAvailable">
+                                                        <label for="Na11" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sharp box available, clean, neat and tidy</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes12" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="sharpBoxAvailable"
+                                                            formControlName="sharpBoxAvailable">
+                                                        <label for="yes12" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No12" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="sharpBoxAvailable"
+                                                            formControlName="sharpBoxAvailable">
+                                                        <label for="No12" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na12" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="sharpBoxAvailable"
+                                                            formControlName="sharpBoxAvailable">
+                                                        <label for="Na12" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Updated BNF availabley</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes13" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="updatedBNFAvailable"
+                                                            formControlName="updatedBNFAvailable">
+                                                        <label for="yes13" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No13" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="updatedBNFAvailable"
+                                                            formControlName="updatedBNFAvailable">
+                                                        <label for="No13" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na13" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="updatedBNFAvailable"
+                                                            formControlName="updatedBNFAvailable">
+                                                        <label for="Na13" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Updated Drug Alert emails available</td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes14" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="updatedDrugAlert"
+                                                            formControlName="updatedDrugAlert">
+                                                        <label for="yes14" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No14" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="updatedDrugAlert"
+                                                            formControlName="updatedDrugAlert">
+                                                        <label for="No14" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na14" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="updatedDrugAlert"
+                                                            formControlName="updatedDrugAlert">
+                                                        <label for="Na14" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Updated signatory list </td>
+                                                <td>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="yes15" [value]="riskEntry.Yes"
+                                                            class="form-check-input mt-1" name="updatedSignatoryList"
+                                                            formControlName="updatedSignatoryList">
+                                                        <label for="yes15" class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="No15" [value]="riskEntry.No"
+                                                            class="form-check-input mt-1" name="updatedSignatoryList"
+                                                            formControlName="updatedSignatoryList">
+                                                        <label for="No15" class="form-check-label">No</label>
+                                                    </div>
+                                                    <div
+                                                        class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <input type="radio" id="Na15" [value]="riskEntry.NotKnown"
+                                                            class="form-check-input mt-1" name="updatedSignatoryList"
+                                                            formControlName="updatedSignatoryList">
+                                                        <label for="Na15" class="form-check-label">NA</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+                            <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3"
+                                *ngIf="auditForm.get('signoffBy').value == currentUserId ">
+                                <p class="errorText mr-2"> Do you want to create form for next review date</p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes16"
+                                        [value]="true" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="yes16" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false"
+                                        id="No17" [value]="false"
+                                        class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="No17" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container
+                                    *ngIf="auditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" (click)="onSubmit()" [disabled]="!auditForm.valid"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

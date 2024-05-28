@@ -1,0 +1,667 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        INTERNAL FOOD SAFETY INSPECTION RECORD
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go
+                            Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="horizontal-tabs mt-2 mb-3 bg-white shadow-sm mr-lft-10">
+
+        <ng-container *ngIf="auditForm">
+
+            <div class="sv-tab-panel info_tab_container">
+                <div class="care-infotable w-96 mb-3 d-flex">
+                    <table class="table w-50 mb-0">
+                        <tbody>
+                            <tr>
+                                <th class="border-top-0">Audited by</th>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{(auditForm.auditor)?((auditForm.auditor.firstName == null ||
+                                        auditForm.auditor.lastName == null)?
+                                        auditForm.auditor.email:(auditForm.auditor.firstName+"
+                                        "+auditForm.auditor.lastName) ):'-'}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="border-top-0">Location</th>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.locationName}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table w-50 mb-0">
+                        <tbody>
+                            <tr>
+                                <th class="border-top-0">Date of Audit</th>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <!-- <input type="date" class="form-control" /> -->
+                                        <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="border-top-0">SignOff By</th>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <label>{{auditForm.signoffByName}}</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="care-infotable w-96 mb-3 d-flex">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th class="w-25">SUBJECT</th>
+                                <th class="w-25">STANDARD</th>
+                                <th class="w-25">Yes / No</th>
+                                <th class="w-25">COMMENTS / ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-top-0">Deliveries</td>
+                                <td>Deliveries put away quickly</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.deliveriesPutAwayAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.deliveriesPutAwayComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="8" class="border-top-0">Storage</td>
+                                <td class="border-top-0">Raw and other foods stored apart</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.rawOtherFoodsStoredAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.rawOtherFoodsStoredComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">All food suitably covered or wrapped</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodSuitablyCoveredAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodSuitablyCoveredComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Food-grade material only in use</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodGradeMaterialAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodGradeMaterialComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">No food in opened cans</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noFoodOpenedAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noFoodOpenedComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">All food clear of floor level</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodClearAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodClearComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">No unnecessary glass</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noUnnecessaryGlassAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noUnnecessaryGlassComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">No dirty packaging</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noDirtyPackagingAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noDirtyPackagingComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">No over-stocking</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noOverStockingAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noOverStockingComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="6" class="border-top-0">Preparation</td>
+                                <td class="border-top-0">Only food in process of preparation or service
+                                    uncovered</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodInProcessAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodInProcessComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">No excessive handling of open food</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noExcessiveHandlingAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noExcessiveHandlingComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">No high risk use of raw eggs</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noHighRiskUseRawEggsAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noHighRiskUseRawEggsComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Adequate separation of clean and dirty activities
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.adequateSeparationActivitiesAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.adequateSeparationActivitiesComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Only reasonable quantities of temperature-sensitive
+                                    food out of refrigeration</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.quantitiesOfTemperatureAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.quantitiesOfTemperatureComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Sufficient knives, chopping boards, tables, etc.
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.sufficientkitchenEquipmentAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.sufficientkitchenEquipmentComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="8" class="border-top-0">Personal Hygiene</td>
+                                <td class="border-top-0">Staff facilities clean and tidy</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.staffFacilitiesCleanAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.staffFacilitiesCleanComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Staff appearance satisfactory</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.staffAppearanceSatisfactoryAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.staffAppearanceSatisfactoryComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Adequate protective clothing</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.adequateProtectiveClothingAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.adequateProtectiveClothingComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">No bad habits or practices</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noBadHabitsPracticesAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noBadHabitsPracticesComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Hand wash disciplines followed</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.handWashDisciplinesAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.handWashDisciplinesComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Wash hand basins fully stocked</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.handWashBasinsStockedAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.handWashBasinsStockedComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">"Now wash hands" notice in staff toilets</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noticeInStaffToiletAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noticeInStaffToiletComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">"First-Aid kit available in kitchen, fully stocked
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.firstAidAvailableInKitchenAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.firstAidAvailableInKitchenComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="13" class="border-top-0">Temperature Control</td>
+                                <td class="border-top-0">Fridges at 0 - 5°C</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.FridgesAtZeroToFiveCAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.FridgesAtZeroToFiveCComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Freezers at -18°C or below</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.FridgesBelow18Action?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.FridgesBelow18Comment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">All refrigeration equipment has internal
+                                    thermometer or casing display</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.thermometerOrCasingDisplayAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.thermometerOrCasingDisplayComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Probe thermometer and disinfectant wipes available
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.thermometerDisinfectantWipesAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.thermometerDisinfectantWipesComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Only food in process of preparation or service out
+                                    of temperature control</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodInProcessOfPreparationAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodInProcessOfPreparationComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">All food stored correctly</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodStoredCorrectlyAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodStoredCorrectlyComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Frozen food suitably thawed</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.frozenFoodSuitablyAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.frozenFoodSuitablyComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Food cooked/reheated to a minimum 75°C</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodCookedReheatedAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodCookedReheatedComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Probe thermometer in use to verify food
+                                    temperatures</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.thermometerUseVerifyFoodTempAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.thermometerUseVerifyFoodTempComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">No misuse of equipment (e.g. reheating in
+                                    bain-marie)</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noMisuseEquipmentAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.noMisuseEquipmentComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Max. 90 minute hot food cooling period</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.hotFoodCoolingPeriodAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.hotFoodCoolingPeriodComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">
+                                    Food displayed <br>
+                                    - Hot minimum 63°C<br>
+                                    - Cold 0 - 5°C</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodDisplayedAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodDisplayedComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Food displayed temperature control subject to 2 and
+                                    4-hour rules</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodDisplayedTempControlAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.foodDisplayedTempControlComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3" class="border-top-0">Cleaning and Disinfection</td>
+                                <td class="border-top-0">Clean and dirty equipment kept separate</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.separateDirtyEquipmentAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.separateDirtyEquipmentComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td class="border-top-0">Good visual standards of housekeeping.</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.visualStandardsOfHousekeepingAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.visualStandardsOfHousekeepingComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">‘Clean as you go" apparent</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.apparentAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.apparentComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3" class="border-top-0">Cleaning and Disinfection</td>
+                                <td class="border-top-0">Cleaning schedule on display, in use, complete and
+                                    compatible with chemicals available</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.cleaningScheduleAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.cleaningScheduleComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Full range of cleaning chemicals available — oven
+                                    cleaner, degreasers, sanitiser, wash-up, etc.</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.cleaningChemicalsAvailableAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.cleaningChemicalsAvailableComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-top-0">Sufficient cleaning equipment, including disposable
+                                    cloths or good laundry arrangements</td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.sufficientCleaningEquipmentAction?"Yes":"No"}}
+                                    </div>
+                                </td>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        {{auditForm.sufficientCleaningEquipmentComment}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

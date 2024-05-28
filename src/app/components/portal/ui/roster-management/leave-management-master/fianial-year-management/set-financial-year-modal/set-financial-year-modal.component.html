@@ -1,0 +1,37 @@
+<div class="modal fade in" bsModal #setYearModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <ng-container>Set Financial Year</ng-container>
+                </h5>
+                <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label class="star_mandator"><strong>Select Year</strong></label>
+                    <select class="form-control" id="" [(ngModel)]="id">
+                        <ng-container *ngIf="financialYears.length > 0">
+                            <option value="0">Select Financial Years</option>
+                            <ng-container *ngFor="let year of financialYears">
+                                <option [value]="year.id">{{year.financialYearName}}</option>
+                            </ng-container>
+                        </ng-container>
+                    </select>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light rounded-pill" (click)="cancel()" data-dismiss="modal"> <i
+                        class="mdi mdi-close mr-1"></i> Close</button>
+                <button type="submit" (click)="onSubmit()" class="btn btn-success rounded-pill"><i
+                        class="mdi mdi-content-save mr-1"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>

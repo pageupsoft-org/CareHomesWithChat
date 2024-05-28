@@ -1,0 +1,1639 @@
+<div class="container-fluid">
+    <!-- header Start -->
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 no-pad scroller">
+                        <div class="box_nav_tab" id="scroll-div1">
+                            <ul class="nav nav-tabs top_head_tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeHead ==1}" (click)="changeTab(1)"
+                                        role="" aria-controls="">
+                                        <span>Registration</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeHead ==2}" (click)="changeTab(2)"
+                                        aria-controls="">
+                                        <span>Risk Assessment</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        [ngClass]="{ 'active':activeHead ==4 || activeHead == 3 || activeHead == 5 }"
+                                        (click)="changeTab(4)" aria-controls="">
+                                        <span>Careplan</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeHead ==6}" (click)="changeTab(6)"
+                                        aria-controls="">
+                                        <span>Medication</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeHead ==7}" (click)="changeTab(7)"
+                                        aria-controls="">
+                                        <!-- <span>Progress notes</span> -->
+                                        <span>Daily Occurrence</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeHead ==8}" (click)="changeTab(8)"
+                                        aria-controls="">
+                                        <span>Move-On Assessments</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeHead ==9}" (click)="changeTab(9)"
+                                        aria-controls="">
+                                        <span>Finance</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeHead ==10}" (click)="changeTab(10)"
+                                        aria-controls="">
+                                        <span>Audit</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+    <ng-container *ngIf="isBusy">
+        <div class="col-sm-12 text-center">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+            </mat-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!isBusy ">
+        <div class="col-md-12">
+            <ng-container *ngIf="headerTab == 1">
+                <div class="horizontal-tabs my-3 bg-white shadow-sm">
+
+                    <ng-container *ngIf="patientAdmission && !showLogDetail">
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="col-lg-12 no-pad scroller">
+                                    <div class="left-btn-scroller left-scroll ">
+                                        <i class="mdi mdi-chevron-left"></i>
+                                    </div>
+                                    <div class="right-btn-scroller right-scroll ">
+                                        <i class="mdi mdi-chevron-right"></i>
+                                    </div>
+                                    <div class="box_nav_tab" id="scroll-div">
+                                        <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':active ==2}"
+                                                    (click)="onTabChange(2)" data-toggle="tab" href="#personal-details"
+                                                    role="tab" aria-controls="personal-details">
+                                                    <img src="assets/images/personal-details.svg">
+                                                    <span>PERSONAL DETAILS</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':active ==1}"
+                                                    (click)="onTabChange(1)" data-toggle="tab"
+                                                    href="#record-information" role="tab"
+                                                    aria-controls="record-information">
+                                                    <img src="assets/images/care-information.svg">
+                                                    <span>SUMMARY INFO</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':active ==3}"
+                                                    (click)="onTabChange(3)" data-toggle="tab" href="#dependents"
+                                                    role="tab" aria-controls="dependents">
+                                                    <img src="assets/images/family-friends.svg">
+                                                    <span>DEPENDENTS</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':active ==4}"
+                                                    (click)="onTabChange(4)" data-toggle="tab" href="#medical-record"
+                                                    role="tab" aria-controls="medical-record">
+                                                    <img src="assets/images/medical-record.svg">
+                                                    <span>MEDICAL RECORDS</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':active ==5}"
+                                                    (click)="onTabChange(5)" data-toggle="tab" href="#provisional-care"
+                                                    role="tab" aria-controls="provisional-care">
+                                                    <img src="assets/images/provisional-care-plan.svg">
+                                                    <span>PROVISIONAL CARE PLANS</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':active ==6}"
+                                                    (click)="onTabChange(6)" data-toggle="tab" href="#signatory"
+                                                    role="tab" aria-controls="signatory">
+                                                    <img src="assets/images/signatory.svg">
+                                                    <span>SIGNATORY</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':active ==7}"
+                                                    (click)="onTabChange(7)" data-toggle="tab" href="#audit" role="tab"
+                                                    aria-controls="audit">
+                                                    <img src="assets/images/audit-log.png">
+                                                    <span>AUDIT LOG</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab-pane " [ngClass]="{ 'active':active ==1}" id="record-information"
+                                role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{nameTitle[patientAdmission.title]}}
+                                                        {{patientAdmission.firstName}}
+                                                        {{(patientAdmission.middleName)?patientAdmission.middleName:""}}
+                                                        {{(patientAdmission.lastName)?patientAdmission.lastName:""}}</span>
+                                                </li>
+
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{patientAdmission.dob|date:'dd-MM-Y'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <h3>SUMMARY INFO</h3>
+
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Date of admission
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{patientAdmission.dateOfAdmission |
+                                                            date:'dd-MM-Y'}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Reason for admission
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{patientAdmission.reasonForAdmission}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Referral Date
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{patientAdmission.referralDate|date:'dd-MM-Y'}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Sources of Referral
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.sourceOfReferral)?patientAdmission.sourceOfReferral:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Authority
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{patientAdmission.authority}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Location
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{getLocationName(patientAdmission.locationId)}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Staff / Care co-ordinator
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{getUserNameList(patientAdmission.careCoordinators)}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Status
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{admissionStatusArray[patientAdmission.status]}}</span>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>
+                                                        Date of Leaving
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{patientAdmission.dateOfLeaving|date:'dd-MM-Y'}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Legal Status
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{legalStatusArray[patientAdmission.legalStatus]}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        MHA Status
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{mahStatus[patientAdmission.mhaStatus]}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Responsible clinician
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{patientAdmission.responsibleClinician}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Responsible phychiatrist
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{patientAdmission.responsiblePhychiatrist}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                        <button type="button" (click)="onTabChange(2)"
+                                            class="btn btn-sm btn-secondary rounded-pill">
+                                            <i class="mdi mdi-arrow-left mr-2"></i>
+                                            Back
+                                        </button>
+                                        <button type="button" (click)="onTabChange(3)"
+                                            class="btn btn-sm btn-info btn-next rounded-pill">
+                                            Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active ==2}" id="personal-details"
+                                role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{nameTitle[patientAdmission.title]}}
+                                                        {{patientAdmission.firstName}}
+                                                        {{(patientAdmission.middleName)?patientAdmission.middleName:""}}
+                                                        {{(patientAdmission.lastName)?patientAdmission.lastName:""}}</span>
+                                                </li>
+
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{patientAdmission.dob|date:'dd-MM-Y'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <h3>Personal Details</h3>
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Title
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{nameTitle[patientAdmission.title]}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Forename
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{patientAdmission.firstName}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Middle Name
+                                                    </th>
+                                                    <td>
+                                                        <span>{{(patientAdmission.middleName)?patientAdmission.middleName:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Surname
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.lastName)?patientAdmission.lastName:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Preferred Name
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.preferredName)?patientAdmission.preferredName:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Service User no.
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.serviceUserNumber)?patientAdmission.serviceUserNumber:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Address line 1
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.address1)?patientAdmission.address1:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Address line 2
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.address2)?patientAdmission.address2:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Address line 3
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.address3)?patientAdmission.address3:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Address line 4
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.address4)?patientAdmission.address4:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Post Code
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.postCode)?patientAdmission.postCode:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Date of Birth
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.dob)?(patientAdmission.dob|date:'dd-MM-Y'):"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        Age
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{(patientAdmission.age ||
+                                                            patientAdmission.age==
+                                                            0 )?patientAdmission.age:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Gender
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{genderArr[patientAdmission.gender]}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Marital Status
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{(patientAdmission.maritalStatus == 1
+                                                            )?"Married":"Not Married"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Ethinic Origin
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{ethinicArray[patientAdmission.ethnicOrigin]}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Weight (KG)
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.weight)?patientAdmission.weight:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Height (cm)
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.height)?patientAdmission.height:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Religion
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.religion)?patientAdmission.religion:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        NI Number
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.niNumber)?patientAdmission.niNumber:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        NHS Number
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.nhsNumber)?patientAdmission.nhsNumber:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        DWP Number
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.dwpNumber)?patientAdmission.dwpNumber:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Telephone Number
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.telePhone)?patientAdmission.telePhone:"-"}}</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+
+                                        <button type="button" (click)="onTabChange(1)"
+                                            class="btn btn-sm btn-info btn-next rounded-pill">
+                                            Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active == 3}" id="dependents" role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{nameTitle[patientAdmission.title]}}
+                                                        {{patientAdmission.firstName}}
+                                                        {{(patientAdmission.middleName)?patientAdmission.middleName:""}}
+                                                        {{(patientAdmission.lastName)?patientAdmission.lastName:""}}</span>
+                                                </li>
+
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{patientAdmission.dob|date:'dd-MM-Y'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <h3>Dependents</h3>
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Next of Kin Name
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.kinName)?patientAdmission.kinName:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Next of Kin address line 1
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.kinAddress1)?patientAdmission.kinAddress1:"-"}}</span>
+
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Next of Kin address line 2
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.kinAddress2)?patientAdmission.kinAddress2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Next of Kin address line 3
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.kinAddress3)?patientAdmission.kinAddress3:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Next of Kin address line 4
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.kinAddress4)?patientAdmission.kinAddress4:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        Next of Kin address line 5
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.kinAddress5)?patientAdmission.kinAddress5:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Next of contact no.
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.kinContact)?patientAdmission.kinContact:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Relationship to next of Kin
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.kinRelationship)?relationshipArr[patientAdmission.kinRelationship]:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Nearest relative
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.nearestRelative)?patientAdmission.nearestRelative:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Emergency Contact (Nearest relative)
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.emergencyContact)?patientAdmission.emergencyContact:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="w-100 d-inline-block mt-3">
+
+
+                                        <div class="care-infotable add_couse_info d-inline-block w-96">
+
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-10">
+                                                            <span class="">Dependent Name</span>
+                                                        </th>
+                                                        <th class="w-10">
+                                                            <span>Address line 1</span>
+                                                        </th>
+                                                        <th class="w-10">
+                                                            <span>Address line 2</span>
+                                                        </th>
+                                                        <th class="w-10">
+                                                            <span>Address line 3</span>
+                                                        </th>
+                                                        <th class="w-10">
+                                                            <span>Address line 4</span>
+                                                        </th>
+                                                        <th class="w-10">
+                                                            <span>Address line 5</span>
+                                                        </th>
+                                                        <th class="w-10">
+                                                            <span>Relationship to dependent</span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let patient of patientAdmission.patientDependents; let i = index">
+                                                        <tr>
+                                                            <td class="w-10">
+
+                                                                <span
+                                                                    class="">{{(patient.dependentName)?patient.dependentName:"-"}}</span>
+
+                                                            </td>
+                                                            <td class="w-10">
+
+                                                                <span
+                                                                    class="">{{(patient.address1)?patient.address1:"-"}}</span>
+
+                                                            </td>
+                                                            <td class="w-10">
+
+                                                                <span
+                                                                    class="">{{(patient.address2)?patient.address2:"-"}}</span>
+
+                                                            </td>
+                                                            <td class="w-10">
+
+                                                                <span
+                                                                    class="">{{(patient.address3)?patient.address3:"-"}}</span>
+
+                                                            </td>
+                                                            <td class="w-10">
+
+                                                                <span
+                                                                    class="">{{(patient.address4)?patient.address4:"-"}}</span>
+
+                                                            </td>
+                                                            <td class="w-10">
+
+                                                                <span
+                                                                    class="">{{(patient.address5)?patient.address5:"-"}}</span>
+
+
+                                                            </td>
+                                                            <td class="w-10">
+
+                                                                <span
+                                                                    class="">{{(patient.dependentRelationship)?relationshipArr[patient.dependentRelationship]:"-"}}</span>
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </ng-container>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                        <button type="button" (click)="onTabChange(1)"
+                                            class="btn btn-sm btn-secondary rounded-pill">
+                                            <i class="mdi mdi-arrow-left mr-2"></i>
+                                            Back
+                                        </button>
+                                        <button type="button" (click)="onTabChange(4)"
+                                            class="btn btn-sm btn-info btn-next rounded-pill">
+                                            Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active == 4}" id="medical-record"
+                                role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{nameTitle[patientAdmission.title]}}
+                                                        {{patientAdmission.firstName}}
+                                                        {{(patientAdmission.middleName)?patientAdmission.middleName:""}}
+                                                        {{(patientAdmission.lastName)?patientAdmission.lastName:""}}</span>
+                                                </li>
+
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{patientAdmission.dob|date:'dd-MM-Y'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <h3>Medical Records</h3>
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        GP Surgery name
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.gpSurgeryName)?patientAdmission.gpSurgeryName:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        GP address line 1
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.gpAddress1)?patientAdmission.gpAddress1:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        GP address line 2
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.gpAddress2)?patientAdmission.gpAddress2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        GP address line 3
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.gpAddress3)?patientAdmission.gpAddress3:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        GP address line 4
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.gpAddress4)?patientAdmission.gpAddress4:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        GP Post Code
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.gpPostCode)?patientAdmission.gpPostCode:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        GP Contact No.
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.gpContactNo)?patientAdmission.gpContactNo:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Types of facility
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.typeOfFacility)?patientAdmission.typeOfFacility:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Diagnosis
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.diagnosis)?patientAdmission.diagnosis:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Are the any Safeguarding Concern?
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.isSafeGuard)?"Yes":"No"}}</span>
+
+                                                        <ng-container *ngIf="patientAdmission.isSafeGuard">
+                                                            <p>{{patientAdmission.safeGuardDetail}}</p>
+                                                        </ng-container>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Is the person on DOLS?
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{(patientAdmission.isDOLs)?"Yes":"No"}}</span>
+                                                        <ng-container *ngIf="patientAdmission.isDOLs">
+                                                            {{patientAdmission.doLsDetails}}
+                                                        </ng-container>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Is there a legal Power of Attorney for ?
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.isPowerOfAttorney)?"Yes":"No"}}</span>
+                                                        <ng-container *ngIf="patientAdmission.isPowerOfAttorney">
+                                                            <p style="margin-bottom: 1px;">
+                                                                {{(patientAdmission.powerOfAttorneyDetail)?patientAdmission.powerOfAttorneyDetail:"-"}}
+                                                            </p>
+                                                            <p style="margin-bottom: 1px;">
+                                                                {{(patientAdmission.powerOfAttorneyContact)?patientAdmission.powerOfAttorneyContact:"-"}}
+                                                            </p>
+                                                        </ng-container>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Assessment Details
+                                                    </th>
+                                                    <td>
+                                                        <div class="d-block w-100">
+                                                            <div class="d-block mb-2">
+                                                                <span
+                                                                    class="">{{(patientAdmission.assessmentDate)?(patientAdmission.assessmentDate|date:"dd-MM-Y"):"-"}}</span>
+
+                                                            </div>
+                                                            <div class="d-block">
+                                                                <span
+                                                                    class="">{{(patientAdmission.assessmentLocation)?patientAdmission.assessmentLocation:"-"}}</span>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <table class="table mb-0">
+                                            <tbody>
+
+                                                <tr>
+                                                    <th>
+                                                        COVID-19 Screening
+                                                    </th>
+                                                    <td>
+                                                        <div class="d-block w-100">
+                                                            <div class="d-block mb-2">
+                                                                <span
+                                                                    class="">{{covidScreeningArray[patientAdmission.coviD19]}}</span>
+
+                                                            </div>
+                                                            <div class="d-block">
+                                                                <span
+                                                                    class="">{{(patientAdmission.coviD19TestDate)?(patientAdmission.coviD19TestDate|date:'dd-MM-Y'):"-"}}</span>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Professional(s) Consulted
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.professionalConsulted)?(patientAdmission.professionalConsulted):"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Report(s) Consulted
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.reportsConsulted)?(patientAdmission.reportsConsulted):"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Presenting Problems
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.presentingProblem)?patientAdmission.presentingProblem:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Personal History
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.personalHistory)?patientAdmission.personalHistory:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Past Medical History
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.pastMedicalHistory)?patientAdmission.pastMedicalHistory:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Drug and Alcohol History
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.pastMedicalHistory)?patientAdmission.pastMedicalHistory:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Forensic History (alleged offence)
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.forensicHistory)?patientAdmission.forensicHistory:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Current Medication
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.currentMedication)?patientAdmission.currentMedication:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="star_mandator">
+                                                        Allergies
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.allergies)?patientAdmission.allergies:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Mental state
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.mentalState)?patientAdmission.mentalState:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                        <button type="button" (click)="onTabChange(3)"
+                                            class="btn btn-sm btn-secondary rounded-pill">
+                                            <i class="mdi mdi-arrow-left mr-2"></i>
+                                            Back
+                                        </button>
+                                        <button type="button" (click)="onTabChange(5)"
+                                            class="btn btn-sm btn-info btn-next rounded-pill">
+                                            Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active == 5}" id="provisional-care"
+                                role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <h3>Provisional Care Plans</h3>
+                                    <div class="care-infotable w-75 mb-3">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        Identified Needs
+                                                    </th>
+                                                    <th>
+                                                        Action/Interventions to Meet need
+                                                    </th>
+                                                    <th>
+                                                        Professionals Responsible
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        My Mental Health
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.myMentalHealth1)?patientAdmission.myMentalHealth1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.myMentalHealth2)?patientAdmission.myMentalHealth2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Medications
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.medications1)?patientAdmission.medications1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.medications2)?patientAdmission.medications2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Nutritions
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.nutrition1)?patientAdmission.nutrition1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.nutrition2)?patientAdmission.nutrition2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Physical Health
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.physicalHealth1)?patientAdmission.physicalHealth1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.physicalHealth2)?patientAdmission.physicalHealth2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Behaviour
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.behaviour1)?patientAdmission.behaviour1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.behaviour2)?patientAdmission.behaviour2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        My safety and risk to others
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.mySafetyAndRisk1)?patientAdmission.mySafetyAndRisk1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.mySafetyAndRisk2)?patientAdmission.mySafetyAndRisk2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Personal Hygiene
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.personalHygiene1)?patientAdmission.personalHygiene1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.personalHygiene2)?patientAdmission.personalHygiene2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        My Relationships
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.myRelationship1)?patientAdmission.myRelationship1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.myRelationship2)?patientAdmission.myRelationship2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Activities of Daily Living
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.activitiesOfDailyLiving1)?patientAdmission.activitiesOfDailyLiving1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.activitiesOfDailyLiving2)?patientAdmission.activitiesOfDailyLiving2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        My Recovery
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.myRecovery1)?patientAdmission.myRecovery1:"-"}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.myRecovery2)?patientAdmission.myRecovery2:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="care-infotable mb-3">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        CPA Status
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{(patientAdmission.cpaStatus ==
+                                                            'true')?"Yes":"No"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Is Observation requried & agreed
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{(patientAdmission.isObservation ==
+                                                            'true')?"Yes":"No"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="patientAdmission.isObservation == 'true'">
+                                                    <th>
+                                                        If above Yes, then select one
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.observationDuration)?patientAdmission.observationDuration:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h4>Overall Conclusions and Further Actions</h4>
+                                    <div class="care-infotable w-75 mb-3">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="w-100">
+                                                        <span
+                                                            class="">{{(patientAdmission.furtherAction)?patientAdmission.furtherAction:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h4>Based on the evidence during our assessment, please identify most appropriate
+                                        service for the person:</h4>
+                                    <div class="care-infotable w-75 mb-3">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{(patientAdmission.appropriateService)?appropriateArray[patientAdmission.appropriateService]:"-"}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h4>If not suitable, please provide reasons for rejection</h4>
+                                    <div class="care-infotable w-75 mb-3">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="w-100">
+                                                        <span
+                                                            class="">{{(patientAdmission.reasonForRejection)?patientAdmission.reasonForRejection:"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                        <button type="button" (click)="onTabChange(4)"
+                                            class="btn btn-sm btn-secondary rounded-pill">
+                                            <i class="mdi mdi-arrow-left mr-2"></i>
+                                            Back
+                                        </button>
+                                        <button type="button" (click)="onTabChange(6)"
+                                            class="btn btn-sm btn-info btn-next rounded-pill">
+                                            Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active ==6}" id="signatory" role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <h3>Signatory</h3>
+                                    <div class="care-infotable mb-3">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        Staff creating this record
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.isSignOff)?"Yes":"No"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Date record created
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{(patientAdmission.createdAt)?(patientAdmission.createdAt|date:'dd-MM-Y'):"-"}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Signed off by
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{getSignOffName(patientAdmission.signOffBy)}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="w-100 d-inline-block mt-3"
+                                        *ngIf="patientAdmission.patientDocuments.length>0">
+
+                                        <div class="care-infotable add_couse_info d-inline-block w-96">
+
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <th>Document Name</th>
+                                                    <th>Download</th>
+                                                </thead>
+
+                                                <tbody>
+                                                    <ng-container
+                                                        *ngFor="let document of patientAdmission.patientDocuments; let i = index">
+                                                        <tr>
+                                                            <th class="w-10">
+                                                                <span class="">{{document.documentName}}</span>
+
+                                                            </th>
+                                                            <th class="w-10">
+                                                                <span><a target="_blank"
+                                                                        href="https://carehomesstorageuk.blob.core.windows.net/docs/{{document.documentLocation}}"><i
+                                                                            class="mdi mdi-download-circle"
+                                                                            style="font-size: 30px;"></i>
+                                                                    </a></span>
+                                                            </th>
+
+                                                        </tr>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                        <button type="button" (click)="onTabChange(5)"
+                                            class="btn btn-sm btn-secondary rounded-pill">
+                                            <i class="mdi mdi-arrow-left mr-2"></i>
+                                            Back
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active ==7}" id="audit" role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{nameTitle[patientAdmission.title]}}
+                                                        {{patientAdmission.firstName}}
+                                                        {{(patientAdmission.middleName)?patientAdmission.middleName:""}}
+                                                        {{(patientAdmission.lastName)?patientAdmission.lastName:""}}</span>
+                                                </li>
+
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{patientAdmission.dob|date:'dd-MM-Y'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="care-infotable w-96 mb-0">
+                                        <table class="table w-50 tab-w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-25">
+                                                        SNo.
+                                                    </th>
+                                                    <th class="w-25">
+                                                        Date
+                                                    </th>
+                                                    <th class="w-25">
+                                                        Changed by
+                                                    </th>
+                                                    <th class="w-25">
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngIf="logList.length >0">
+
+                                                    <ng-container *ngFor="let log of logList; let i = index">
+                                                        <tr>
+                                                            <td>{{i+1}}</td>
+                                                            <td>{{log.updatedTime|date:'dd-MM-yyyy'}}</td>
+                                                            <td>{{(log.userName)?log.userName:'-'}}</td>
+                                                            <td>
+                                                                <div class="actionbox">
+                                                                    <i class="mdi text-info mdi-eye-circle mr-2"
+                                                                        title="Show Details"
+                                                                        (click)="showLogDetails(log.previousValue)"></i>
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="logList.length <= 0">
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="text-center w-100 d-inline-block px-3 py-3">
+                                                                <div class="alert alert-danger" role="alert">
+                                                                    <p class="mb-0"> No Record Found</p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="showLogDetail">
+                        <app-updated-registrationlog [previousValues]="previousValues" (showAllLogs)="showAllLogs()">
+                        </app-updated-registrationlog>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="headerTab == 2">
+                <app-risk-assessment-overview [userData]="userData"></app-risk-assessment-overview>
+            </ng-container>
+            <ng-container *ngIf="headerTab == 3">
+                <!-- <app-my-shared-pathway [userData]="userData"></app-my-shared-pathway> -->
+                <app-my-shared-pathway-overview [userData]="userData"></app-my-shared-pathway-overview>
+            </ng-container>
+            <ng-container *ngIf="headerTab == 4">
+                <div class="horizontal-tabs my-3 bg-white shadow-sm">
+                    <div class="sv-tab-panel info_tab_container">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 text-center my-5">
+                                    <div class="card p-4 bg-light rounded-pill">
+                                        <h3>My SharedPathway</h3>
+                                        <button class="btn btn-sm btn-primary rounded-pill" (click)="changeTab(3)">
+                                            Open My Shared Pathway</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 text-center my-5">
+                                    <div class="card p-4 bg-light rounded-pill">
+                                        <h3>Recovery Star</h3>
+                                        <button class="btn btn-sm btn-info rounded-pill" (click)="changeTab(5)">
+                                            Open My
+                                            Recovery Star</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="headerTab == 5">
+                <app-recovery-star-overview [userData]="userData"></app-recovery-star-overview>
+            </ng-container>
+            <ng-container *ngIf="headerTab == 6">
+                <!-- <app-medication [userData]="userData"></app-medication> -->
+                <app-medication-overview [userData]="userData"></app-medication-overview>
+            </ng-container>
+
+            <ng-container *ngIf="headerTab == 7">
+                <app-progress-note-overview [userData]="userData"></app-progress-note-overview>
+            </ng-container>
+
+            <ng-container *ngIf="headerTab == 8">
+                <app-functional-checklist-overview [userData]="userData"></app-functional-checklist-overview>
+                <!-- <app-functional-checklist [userData]="userData"></app-functional-checklist> -->
+            </ng-container>
+
+            <ng-container *ngIf="headerTab == 9">
+                <app-finance-overview [userData]="userData"></app-finance-overview>
+            </ng-container>
+
+            <ng-container *ngIf="headerTab == 10">
+                <!-- <app-audit-forms></app-audit-forms> -->
+                <app-audit-forms [serviceUserData]="userData" [auditType]="1"></app-audit-forms>
+                <!-- <app-audit-overview [serviceUserData]="userData"></app-audit-overview> -->
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

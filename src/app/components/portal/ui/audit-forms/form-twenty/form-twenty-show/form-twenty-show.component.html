@@ -1,0 +1,511 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1 class="">
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Window Safety Risk Assessment
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go
+                            Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <div class="sv-tab-panel info_tab_container">
+                        <div class="care-infotable w-96 mb-3 d-flex">
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.auditor)?((auditForm.auditor.firstName == null ||
+                                                auditForm.auditor.lastName == null)?
+                                                auditForm.auditor.email:(auditForm.auditor.firstName+"
+                                                "+auditForm.auditor.lastName) ):'-'}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.locationName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Date of Audit</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <!-- <input type="date" class="form-control" /> -->
+                                                <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">SignOff By</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <label>{{auditForm.signoffByName}}</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div
+                            class="care-infotable innerwhite-table w-96 mb-3 px-3 py-3 d-flex overflow-auto limitheight-form">
+                            <table class="table mb-0 bg-white shadow-sm table-bordered table-wd-18 ">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-light w-5">S.no</th>
+                                        <th class="bg-light w-30">Risk</th>
+                                        <th class="bg-light w-15">Response</th>
+                                        <th class="bg-light w-15">Further action</th>
+                                        <th class="bg-light w-15">Date due</th>
+                                        <th class="bg-light w-15">Actioned by</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            1
+                                        </td>
+                                        <td class="border-top-0">
+                                            Are all window installations maintained in a manner which will avoid
+                                            the
+                                            risk of persons falling through open windows?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.windowInstallationsMaintainResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.windowInstallationsMaintainAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.windowInstallationsMaintainDueDate)?(auditForm.windowInstallationsMaintainDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.windowInstallationsMaintainActionBy)}}
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            2
+                                        </td>
+                                        <td class="border-top-0">
+                                            If a window is large enough for someone to fall through, have you
+                                            ensured that they are restricted to opening 1OOmm or less, thereby
+                                            complying with Regulation 15 of ACOP (The Approved Code of Practice
+                                            issued by the HSE)?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.restrictedToOpeningResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.restrictedToOpeningAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.restrictedToOpeningDueDate)?(auditForm.restrictedToOpeningDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.restrictedToOpeningActionBy)}}
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            3
+                                        </td>
+                                        <td class="border-top-0">
+                                            As per Regulation 15 above, have you also ensured that the bottom
+                                            edge
+                                            of openable windows are at least 800mm above floor level, unless
+                                            there
+                                            is a barrier to prevent this?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.bottomEdgeOfOpenableWindowResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.bottomEdgeOfOpenableWindowAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.bottomEdgeOfOpenableWindowDueDate)?(auditForm.bottomEdgeOfOpenableWindowDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.bottomEdgeOfOpenableWindowActionBy)}}
+                                              
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            4
+                                        </td>
+                                        <td class="border-top-0">
+                                            Are all window installations maintained in a manner which will avoid
+                                            the
+                                            risk of unauthorised access through open windows?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.avoidUnauthorisedAccessResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.avoidUnauthorisedAccessAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.avoidUnauthorisedAccessDueDate)?(auditForm.avoidUnauthorisedAccessDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.avoidUnauthorisedAccessActionBy)}}
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            5
+                                        </td>
+                                        <td class="border-top-0">
+                                            Have you ensured that frames are of a high quality with sufficient
+                                            rigidity to prevent excessive amounts of movement from occurring?
+                                            This
+                                            will prevent sliding sashes becoming detached and falling to the
+                                            ground.
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.preventExcAmtsOfMovementResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.preventExcAmtsOfMovementAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.preventExcAmtsOfMovementDueDate)?(auditForm.preventExcAmtsOfMovementDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.preventExcAmtsOfMovementActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            6
+                                        </td>
+                                        <td class="border-top-0">
+                                            Have you ensured that suitable glazing mastic is used, particularly
+                                            when
+                                            used with setting blocks, in order to prevent glass panels becoming
+                                            damaged and insecure?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.suitableGlazingMasticResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.suitableGlazingMasticAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.suitableGlazingMasticDueDate)?(auditForm.suitableGlazingMasticDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.suitableGlazingMasticActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            7
+                                        </td>
+                                        <td class="border-top-0">
+                                            Have all windows above the ground floor been fitted with opening
+                                            restrictors? Window restrictor devices must be secure in order to
+                                            prevent opening tolerances from being overridden.
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.fittedWidOpeningRestrictorResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.fittedWidOpeningRestrictorAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.fittedWidOpeningRestrictorDueDate)?(auditForm.fittedWidOpeningRestrictorDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.fittedWidOpeningRestrictorActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            8
+                                        </td>
+                                        <td class="border-top-0">
+                                            Are window restrictors sufficiently robust to withstand damage,
+                                            either
+                                            deliberate or through general wear?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.robustToWithstandDamageResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.robustToWithstandDamageAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.robustToWithstandDamageDueDate)?(auditForm.robustToWithstandDamageDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.robustToWithstandDamageActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            9
+                                        </td>
+                                        <td class="border-top-0">
+                                            Can you confirm that the window restrictor is robustly secured using
+                                            tamper-proof fittings, so that they cannot be removed or disengaged
+                                            using readily accessible implements (such as cutlery) and can only
+                                            be
+                                            disengaged using a special tool or key?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.tamperProofFittingsResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.tamperProofFittingsAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.tamperProofFittingsDueDate)?(auditForm.tamperProofFittingsDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.tamperProofFittingsActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            10
+                                        </td>
+                                        <td class="border-top-0">
+                                            Are the window frames to which the restrictors are fitted
+                                            sufficiently
+                                            robust?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.fittedSufficientlyRobustResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.fittedSufficientlyRobustAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.fittedSufficientlyRobustDueDate)?(auditForm.fittedSufficientlyRobustDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.fittedSufficientlyRobustActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            11
+                                        </td>
+                                        <td class="border-top-0">
+                                            Have you restricted access to upper floors where necessary?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.restrictedAccessToUpperFloorsResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.restrictedAccessToUpperFloorsAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.restrictedAccessToUpperFloorsDueDate)?(auditForm.restrictedAccessToUpperFloorsDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.restrictedAccessToUpperFloorsActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            12
+                                        </td>
+                                        <td class="border-top-0">
+                                            Have you assessed the risk of furniture or other items, being used
+                                            as an
+                                            enabler to climb over barriers, or otherwise access windows and/or
+                                            balconies which otherwise might be inaccessible? Other items could
+                                            include, but not be limited to: natural footholds, plant pots, walls
+                                            etc.
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.climbOverBarrierResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.climbOverBarrierAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.climbOverBarrierDueDate)?(auditForm.climbOverBarrierDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.climbOverBarrierActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            13
+                                        </td>
+                                        <td class="border-top-0">
+                                            Is maintenance ensuring that all safety fixtures and fittings are
+                                            functioning effectively, and that their performance has not
+                                            deteriorated
+                                            as a result of use, wear or tampering?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.fittingsFunctioningEffectivelyResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.fittingsFunctioningEffectivelyAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.fittingsFunctioningEffectivelyDueDate)?(auditForm.fittingsFunctioningEffectivelyDueDate|
+                                                date :"dd-MM-Y"):"-"}} </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.fittingsFunctioningEffectivelyActionBy)}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-top-0">
+                                            14
+                                        </td>
+                                        <td class="border-top-0">
+                                            Are you providing adequate training and supervision to staff to
+                                            ensure
+                                            that they understand the risks, the precautions required, and the
+                                            need
+                                            to report any defects or concerns to a responsible person?
+                                        </td>
+                                        <td class="border-top-0">
+                                            {{riskEntry[auditForm.providingAdequateTrainingResponse]}}
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.providingAdequateTrainingAction}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.providingAdequateTrainingDueDate)?(auditForm.providingAdequateTrainingDueDate|
+                                                date :"dd-MM-Y"):"-"}}
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{getUserName(auditForm.providingAdequateTrainingActionBy)}}
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+.bg-close-alert{ 
+    position: absolute;
+    height: 22px;
+    line-height: 22px;
+    right: -4px;
+    width: 22px;
+    /* top: 13px; */
+    top: -6px;
+    font-size: 14px;
+    text-align: CENTER;
+    border-radius: 50%;
+    color: #ecf4fa;
+    background-color: #b9727a;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.bg-patient-alert{
+    position: relative;
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 5px;
+}

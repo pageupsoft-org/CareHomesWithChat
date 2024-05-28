@@ -1,0 +1,136 @@
+<ng-container *ngIf="isBusy">
+    <div class="col-sm-12 container container-fluid text-center">
+        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+    </div>
+</ng-container>
+<ng-container *ngIf="!isBusy">
+    <div class="login_Container">
+        <div class="circlebrown"></div>
+        <ng-container *ngIf="!isfogetPassword; else elseTemplate">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="leftlogin">
+                            <h3>Welcome to</h3>
+                            <h1>DReS</h1>
+                            <form (ngSubmit)="onSubmit()">
+                                <div class="form_box">
+                                    <div class="row">
+
+                                        <div class="col-sm-12">
+                                            <div class="inputbox form-group">
+                                                <span>User Name</span>
+                                                <input type="text" class="form-control" placeholder="Enter User Name"
+                                                    [formControl]='loginForm.userName' />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="inputbox form-group">
+                                                <span>Password</span>
+                                                <input type="password" class="form-control"
+                                                    placeholder="Enter User Password"
+                                                    [formControl]='loginForm.password' />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-6 d-none">
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                <label class="form-check-label text-keepmelogin"
+                                                    for="exampleCheck1">Keep me
+                                                    login</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-12 pull-right text-right">
+                                            <span class="txt-forgot-pass" style="cursor: pointer;" (click)="forgotPassword()"> forgot password? </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn-dark btn-login"
+                                                [disabled]="!loginForm.valid"
+                                                [ngClass]="{ 'disabled':!loginForm.valid}">
+                                                Login
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="rightloginimage">
+                            <div class="bg_img1">
+                                <img src="assets/images/login-hospital-image.jpg" class="img-fluid" />
+                            </div>
+                            <div class="col-sm-12">
+                                <h3 class="text-center">
+                                    Digital Recovery System</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #elseTemplate>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="leftlogin">
+                            <h3>Welcome to</h3>
+                            <h1>DReS</h1>
+                            <form (ngSubmit)="getPassword()" [formGroup]="forgetPassword" *ngIf="forgetPassword">
+                                <div class="form_box">
+                                    <div class="row">
+
+                                        <div class="col-sm-12">
+                                            <div class="inputbox form-group">
+                                                <span>Registered Email</span>
+                                                <input type="text" class="form-control"
+                                                    placeholder="Enter Registered Email"
+                                                    formControlName='email' />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-12 pull-right text-right">
+                                            <span (click)="isfogetPassword = false" style="cursor: pointer;" class="txt-forgot-pass"> Go Back
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn-dark btn-login" 
+                                                [disabled]="!forgetPassword.valid"
+                                                [ngClass]="{ 'disabled':!forgetPassword.valid}">
+                                                Send E-Mail
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="rightloginimage">
+                            <div class="bg_img1">
+                                <img src="assets/images/login-hospital-image.jpg" class="img-fluid" />
+                            </div>
+                            <div class="col-sm-12">
+                                <h3 class="text-center">
+                                    Digital Recovery System</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </ng-template>
+    </div>
+
+</ng-container>

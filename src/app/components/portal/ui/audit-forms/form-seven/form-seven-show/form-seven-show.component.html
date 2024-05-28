@@ -1,0 +1,697 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Fire Safety and Emergency Response
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go
+                            Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!isBusy && auditForm">
+
+                    <div class="sv-tab-panel info_tab_container">
+                        <div class="care-infotable w-96 mb-3 d-flex">
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.auditor)?((auditForm.auditor.firstName == null || auditForm.auditor.lastName == null)? auditForm.auditor.email:(auditForm.auditor.firstName+" "+auditForm.auditor.lastName) ):'-'}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.locationName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Date of Audit</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <!-- <input type="date" class="form-control" /> -->
+                                                <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">SignOff By</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <label>{{auditForm.signoffByName}}</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="accordion" id="scrolldownbox">
+                            <div id="headingOne">
+                                <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="headingOne">
+                                    <i class="mdi mdi-chevron-down float-right"></i>Part A
+                                </h4>
+                                <!--section 2-->
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#scrolldownbox">
+                                    <div class="care-infotable w-96 mb-3 d-flex">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">S.no</th>
+                                                    <th>Staff on Duty</th>
+                                                    <th>Position</th>
+                                                    <th>Role During Exercise</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let staff of auditForm.staffs;let i= index ">
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            {{i+1}}
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                {{(staff.user)?((staff.user.firstName == null || staff.user.lastName == null)? staff.user.email:(staff.user.firstName+" "+staff.user.lastName)):'-'}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                {{(staff.user)?((staff.user.position)):'-'}}
+
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                {{(staff.roleDuringExercise)}}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="headingtwo">
+                                <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="headingtwo">
+                                    <i class="mdi mdi-chevron-down float-right"></i>Part B
+                                </h4>
+                                <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo" data-parent="#scrolldownbox">
+                                    <div class="care-infotable w-96 mb-3 d-flex">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">S.no</th>
+                                                    <th>Name of Service User</th>
+                                                    <th>Observed Response/Effect on Service User</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let serviceUser of auditForm.serviceUsers;let i= index ">
+                                                    <tr>
+                                                        <td>
+                                                            {{i+1}}
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                {{(serviceUser.patient)?(serviceUser.patient.firstName+" "+serviceUser.patient.lastName):'-'}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                {{serviceUser.observedResponse}}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="headingthree">
+                                <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse" data-target="#collapsethree" aria-expanded="true" aria-controls="headingthree">
+                                    <i class="mdi mdi-chevron-down float-right"></i>Part C
+                                </h4>
+                                <div id="collapsethree" class="collapse" aria-labelledby="headingthree" data-parent="#scrolldownbox">
+                                    <div class="care-infotable w-96 mb-3 d-flex">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Exercise Scenario</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.exerciseScenario}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="headingfour">
+                                <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse" data-target="#collapsefour" aria-expanded="true" aria-controls="headingfour">
+                                    <i class="mdi mdi-chevron-down float-right"></i>Part D - Sequence of Events
+                                </h4>
+                                <div id="collapsefour" class="collapse " aria-labelledby="headingfour" data-parent="#scrolldownbox">
+                                    <div class="care-infotable w-96 mb-3 d-flex">
+                                        <table class="table w-75 mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Time (enter mins)</th>
+                                                    <th>Event</th>
+                                                    <th>Comments</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.alarmActivatedTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Alarm activated (exercise begins)
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.alarmActivatedComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.staffResponseTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Staff member/s responds
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.staffResponseComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.verifiesEmergencyTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Staff member verifies emergency
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.verifiesEmergencyComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.emergencyServiceTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Emergency Services notified
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.emergencyServiceComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.evacuationBeginsTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Evacuation begins
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.evacuationBeginsComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.checkAllAreasTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Staff check all areas
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.checkAllAreasComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.arriveAssemblyAreaTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Arrive at assembly area
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.arriveAssemblyAreaComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.staffCheckOccupantsTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Staff check that all occupants are accounted for (roll call)
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.staffCheckOccupantsComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.reportEmergencyServicesTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Staff provide situation report to Emergency Services
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.reportEmergencyServicesComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.exerciseCompletedTime}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        Exercise completed
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.exerciseCompletedComment}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <label>{{auditForm.totalEvacuationTime}}</label>
+                                                    </th>
+                                                    <th colspan="2">
+                                                        Total Time for Evacuation Exercise
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="headingfive">
+                                <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse" data-target="#collapsefive" aria-expanded="true" aria-controls="headingfive">
+                                    <i class="mdi mdi-chevron-down float-right"></i>Part E - Emergency Response Checklist
+                                </h4>
+                                <div id="collapsefive" class="collapse" aria-labelledby="headingfive" data-parent="#scrolldownbox">
+                                    <div class="care-infotable w-96 mb-3 d-flex">
+                                        <table class="table w-96 mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-50">When the emergency started, were all occupants alerted?
+                                                    </th>
+                                                    <th class="w-25">Yes/No/N/A</th>
+                                                    <th class="w-25">Comments</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Was the alarm activated? (Where appropriate for scenario)
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.wasAlaramActivated]}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.wasAlaramActivatedComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Did staff follow the appropriate emergency procedures for the scenario?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.staffFollowAppropriateEmergencyProcedures]}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.staffFollowAppropriateEmergencyProceduresComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Was emergency confined to area of origin (e.g. doors closed)?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.wasEmergencyConfined]}}
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.wasEmergencyConfinedComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Were the Emergency Services notified promptly?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.emergencyServicesNotified]}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.emergencyServicesNotifiedComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Were all areas of the house searched i.e. toilets, laundries, etc?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.areasOfHouseSearched]}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                             {{auditForm.areasOfHouseSearchedComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td>
+                                                        Did staff wear appropriate identification?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.staffAppropriateIdentification]}}
+                                                           
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                             {{auditForm.staffAppropriateIdentificationComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Was the evacuation of occupants logical and methodical?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.evacuationOfOccupants]}}
+                                                            
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                             {{auditForm.evacuationOfOccupantsComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Were mobility impaired persons assisted to evacuate?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.mobilityImpairedPersons]}}
+                                                           
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                             {{auditForm.mobilityImpairedPersonsComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Did anyone refuse to follow instructions? (Include in comments, reason why.)
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.anyoneRefuseToFollow]}}
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                             {{auditForm.anyoneRefuseToFollowComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Was the most appropriate evacuation route taken?
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.appropriateEvacuationRoute]}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.appropriateEvacuationRouteComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Did occupants proceed to and stay in the assembly area?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.occupantsProceed]}}
+                                                            
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.occupantsProceedComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Were all occupants accounted for (roll call)?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.occupantsAccounted]}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.occupantsAccountedComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Did anyone re-enter the building before the ‘All-Clear’ was given?
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.didAnyoneReenter]}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.didAnyoneReenterComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Did a staff person liaise with the Emergency Services i.e. fire brigade?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.didStaffPersonLiaise]}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.didStaffPersonLiaiseComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Did the Emergency Services receive the correct information?
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                            {{riskEntry[auditForm.emergencyServicesReceive]}}
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{auditForm.emergencyServicesReceiveComments}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="headingsix">
+                                <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100" data-toggle="collapse" data-target="#collapsesix" aria-expanded="true" aria-controls="headingsix">
+                                    <i class="mdi mdi-chevron-down float-right"></i>Part F - Debrief
+                                </h4>
+                                <div id="collapsesix" class="collapse" aria-labelledby="headingsix" data-parent="#scrolldownbox">
+                                    <div class="care-infotable w-96 mb-3 d-flex">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">S.no</th>
+                                                    <th>Difficulties observed during the exercise</th>
+                                                    <th>Areas for further improvement</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let debrief of auditForm.debriefs;let i= index ">
+                                                    <tr>
+                                                        <td>
+                                                            {{i+1}}
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                {{debrief.difficultiesObserved}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                {{debrief.furtherImprovement}}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="care-infotable w-96 mb-3 d-flex">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="3">Additional Comments</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        {{auditForm.additionalComments}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                            <span class="usr_headname"></span><span>
+                                <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back"
+                                    (click)="goBack()">Go
+                                    Back</button>
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>

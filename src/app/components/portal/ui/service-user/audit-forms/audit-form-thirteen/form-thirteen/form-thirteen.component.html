@@ -1,0 +1,485 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 p-0">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 mt-2 ml-0 mb-2">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Service User Medication Audit Tool <button
+                            class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Back</button>
+                    </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div class="horizontal-tabs mb-3 bg-white shadow-sm">
+                <div class="sv-tab-panel info_tab_container">
+                    <ng-container *ngIf="isBusy">
+                        <div class="col-sm-12 text-center">
+                            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                            </mat-spinner>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!isBusy && medicationAuditForm">
+                        <div class="care-infotable w-96 mb-3 d-flex">
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control"
+                                                    [formControl]="medicationAuditForm.locationId" readonly disabled>
+                                                    <ng-container *ngFor="let location of locationList">
+                                                        <option [ngValue]="location.id">{{location.name}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control" (change)="completeForm($event)"
+                                                    [formControl]="medicationAuditForm.auditedBy">
+                                                    <ng-container *ngFor="let user of userList">
+                                                        <option [ngValue]="user.id" *ngIf="user.userType == userType.SuperUser || user.userType == userType.User">
+                                                            {{ (user.firstName == null || user.lastName ==
+                                                            null)?
+                                                            user.email: user.firstName+" "+user.lastName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                   
+                                    <tr>
+                                        <th class="border-top-0">Signoff By</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control"
+                                                    [formControl]="medicationAuditForm.signoffBy">
+                                                    <ng-container *ngFor="let user of userList">
+                                                        <option [ngValue]="user.id"
+                                                            *ngIf="user.userType == userType.SuperUser || user.userType == userType.Admin">
+                                                            {{ (user.firstName ==null || user.lastName == null)?
+                                                            user.email: user.firstName+" "+user.lastName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!--  <tr>
+                                    <th class="border-top-0">DOB:</th>
+                                    <td class="border-top-0">
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <input type="date" class="form-control" />
+                                        </div>
+                                    </td>
+                                </tr> -->
+                                </tbody>
+                            </table>
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Date of Audit</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <!-- <input type="date"  class="form-control" (keydown)="false"
+                                                    [formControl]="medicationAuditForm.auditDate" /> -->
+                                                <label>
+                                                    {{(medicationAuditForm.get('auditDate').value)?(medicationAuditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <ng-container *ngIf="isFilling">
+
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-100 mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0 w-75">Areas of Audit</th>
+                                            <th class="border-top-0 w-25">
+                                                Findings
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Medication Administration Record (MAR) Front Page</td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationAdministrationRecord" id="yes1"
+                                                        [formControl]="medicationAuditForm.medicationAdministrationRecord"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes1" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationAdministrationRecord" id="No1"
+                                                        [formControl]="medicationAuditForm.medicationAdministrationRecord"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No1" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationAdministrationRecord" id="Na1"
+                                                        [formControl]="medicationAuditForm.medicationAdministrationRecord"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na1" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Consent to treatment attached where applicable</td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="treatmentAttached" id="yes2"
+                                                        [formControl]="medicationAuditForm.treatmentAttached"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes2" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="treatmentAttached" id="No2"
+                                                        [formControl]="medicationAuditForm.treatmentAttached"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No2" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="treatmentAttached" id="Na2"
+                                                        [formControl]="medicationAuditForm.treatmentAttached"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na2" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Start and End dates on top of MARs </td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="startAndEndDate" id="yes3"
+                                                        [formControl]="medicationAuditForm.startAndEndDate"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes3" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="startAndEndDate" id="No3"
+                                                        [formControl]="medicationAuditForm.startAndEndDate"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No3" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="startAndEndDate" id="Na3"
+                                                        [formControl]="medicationAuditForm.startAndEndDate"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na3" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Handwritten Medicines has two counter signatures</td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="handwrittenMedicines" id="yes4"
+                                                        [formControl]="medicationAuditForm.handwrittenMedicines"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes4" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="handwrittenMedicines" id="No4"
+                                                        [formControl]="medicationAuditForm.handwrittenMedicines"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No4" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="handwrittenMedicines" id="Na4"
+                                                        [formControl]="medicationAuditForm.handwrittenMedicines"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na4" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Medications administered are signed for </td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationAdministeredSigned" id="yes5"
+                                                        [formControl]="medicationAuditForm.medicationAdministeredSigned"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes5" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationAdministeredSigned" id="No5"
+                                                        [formControl]="medicationAuditForm.medicationAdministeredSigned"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No5" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationAdministeredSigned" id="Na5"
+                                                        [formControl]="medicationAuditForm.medicationAdministeredSigned"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na5" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Medications not given are coded for and reasons signed on the back of
+                                                MAR
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="signedOnBack" id="yes6"
+                                                        [formControl]="medicationAuditForm.signedOnBack"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes6" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="signedOnBack" id="No6"
+                                                        [formControl]="medicationAuditForm.signedOnBack"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No6" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="signedOnBack" id="Na6"
+                                                        [formControl]="medicationAuditForm.signedOnBack"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na6" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Daily counting </td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="dailyCounting" id="yes7"
+                                                        [formControl]="medicationAuditForm.dailyCounting"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes7" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="dailyCounting" id="No7"
+                                                        [formControl]="medicationAuditForm.dailyCounting"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No7" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="dailyCounting" id="Na7"
+                                                        [formControl]="medicationAuditForm.dailyCounting"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na7" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Night counting</td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="nightCounting" id="yes8"
+                                                        [formControl]="medicationAuditForm.nightCounting"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes8" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="nightCounting" id="No8"
+                                                        [formControl]="medicationAuditForm.nightCounting"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No8" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="nightCounting" id="Na8"
+                                                        [formControl]="medicationAuditForm.nightCounting"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na8" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Medication received documented and signed for</td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationReceivedDocument" id="yes9"
+                                                        [formControl]="medicationAuditForm.medicationReceivedDocument"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes9" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationReceivedDocument" id="No9"
+                                                        [formControl]="medicationAuditForm.medicationReceivedDocument"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No9" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationReceivedDocument" id="Na9"
+                                                        [formControl]="medicationAuditForm.medicationReceivedDocument"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na9" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Unwanted or expired medications are disposed / returned and it is
+                                                documented
+                                                and signed for</td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationsDisposed" id="yes10"
+                                                        [formControl]="medicationAuditForm.medicationsDisposed"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes10" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationsDisposed" id="No10"
+                                                        [formControl]="medicationAuditForm.medicationsDisposed"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No10" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationsDisposed" id="Na10"
+                                                        [formControl]="medicationAuditForm.medicationsDisposed"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na10" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-100 mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0 w-75">Individual Medications </th>
+                                            <th class="border-top-0 w-25">
+                                                Findings
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Medications in Date; Expiry date in diary for prompts</td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="expiryDateForPrompts" id="yes11"
+                                                        [formControl]="medicationAuditForm.expiryDateForPrompts"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes11" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="expiryDateForPrompts" id="No11"
+                                                        [formControl]="medicationAuditForm.expiryDateForPrompts"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No11" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="expiryDateForPrompts" id="Na11"
+                                                        [formControl]="medicationAuditForm.expiryDateForPrompts"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na11" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Liquids, creams, ointments & inhalers have Open and End Dates and signed
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="openAndEndDate" id="yes12"
+                                                        [formControl]="medicationAuditForm.openAndEndDate"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes12" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="openAndEndDate" id="No12"
+                                                        [formControl]="medicationAuditForm.openAndEndDate"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No12" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="openAndEndDate" id="Na12"
+                                                        [formControl]="medicationAuditForm.openAndEndDate"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na12" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Medications stored in locked cupboard </td>
+                                            <td>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationsStored" id="yes13"
+                                                        [formControl]="medicationAuditForm.medicationsStored"
+                                                        class="form-check-input mt-0" [value]="riskAction.Yes">
+                                                    <label for="yes13" class="form-check-label">Yes</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationsStored" id="No13"
+                                                        [formControl]="medicationAuditForm.medicationsStored"
+                                                        class="form-check-input mt-0" [value]="riskAction.No">
+                                                    <label for="No13" class="form-check-label">No</label>
+                                                </div>
+                                                <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                    <input type="radio" name="medicationsStored" id="Na13"
+                                                        [formControl]="medicationAuditForm.medicationsStored"
+                                                        class="form-check-input mt-0" [value]="riskAction.NotKnown">
+                                                    <label for="Na13" class="form-check-label">NA</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ng-container>
+
+                        <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3"
+                            *ngIf="medicationAuditForm.get('signoffBy').value == currentUserId ">
+                            <p class=""><strong> Do you want to create form for next review date</strong></p>
+                            <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                <input type="radio" name="confirmation" [(ngModel)]="createFrom" id="yes14" [value]="true"
+                                    class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                <label for="yes14" class="form-check-label">Yes</label>
+                            </div>
+                            <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                <input type="radio" name="confirmation" [(ngModel)]="createFrom" id="No14" [value]="false"
+                                    class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                <label for="No14" class="form-check-label">No</label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                            <ng-container
+                                *ngIf="isEdit && medicationAuditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                <button type="button" [ngClass]="{'disabled': !medicationAuditForm.valid}"
+                                    class="btn btn-sm btn-success rounded-pill"
+                                    [disabled]="!medicationAuditForm.valid" (click)="onSubmit()">
+                                    Submit & SignOff <i class="mdi mdi-content-save"></i>
+                                </button>
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                <button type="button" [ngClass]="{'disabled': !medicationAuditForm.valid}"
+                                    class="btn btn-sm btn-success rounded-pill"
+                                    [disabled]="!medicationAuditForm.valid" (click)="onSubmit()">
+                                    Submit <i class="mdi mdi-content-save"></i>
+                                </button>
+                            </ng-template>
+                        </div>
+
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

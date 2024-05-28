@@ -1,0 +1,102 @@
+<div class="row mt-2 mb-2 px-4">
+    <div class="col-lg-12 no-pad scroller">
+        <div class="box_nav_tab" id="scroll-div">
+            <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                <li class="nav-item">
+                    <div class="nav-link menu-barbox status-user1 " (click)="showTab(1)"
+                        [ngClass]="{'active': tab == 1}" data-toggle="tab" href="#stats" role="tab"
+                        aria-controls="status">
+                        <img src="assets/images/update-log.png">
+                        <h4 class="mb-0">Update Logs</h4>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link menu-barbox status-user2" (click)="showTab(2)" [ngClass]="{'active': tab == 2}"
+                        data-toggle="tab" href="#carePlan" role="tab" aria-controls="carePlan">
+                        <img src="assets/images/user-login.png">
+                        <h4 class="mb-0">User Log-in</h4>
+                    </div>
+                </li>
+                <!-- <li class="nav-item">
+                    <div class="nav-link menu-barbox menu-barbox3" (click)="showTab(3)" [ngClass]="{'active': tab == 3}"
+                        data-toggle="tab" href="#recoveryStar" role="tab" aria-controls="recoveryStar">
+                        <img src="assets/images/system-user.png">
+                        <h4 class="mb-0">System Users</h4>
+                    </div>
+                </li> -->
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12">
+    <div class="tab-content bg-white">
+        <ng-container *ngIf="tab == 1">
+
+            <div class="tab-pane show" [ngClass]="{'active': tab == 1}" id="stats" role="tabpanel">
+                <div class="row m-0 pb-1">
+                    <div class="col-sm-12 mb-2 p-0">
+                        <h4 class="p-2 bg-wine text-white stats-hading mb-0">Service user update logs</h4>
+                        <div class="content p-3">
+                            <div class="box_user_active">
+                                <table class="table table-bordered table-stripped serviceuser-table">
+                                    <thead class="bg-light">
+                                        <th>
+                                            Sno
+                                        </th>
+                                        <th>
+                                            Patient Name
+                                        </th>
+                                        <th>
+                                            User Name
+                                        </th>
+                                        <th>
+                                            Record
+                                        </th>
+                                        <th>
+                                            Date Updated
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let log of updatedLogs;let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{log.patientName}}</td>
+                                            <td>{{log.userName}}</td>
+                                            <td>{{log.entityName}}</td>
+                                            <td>{{log.updatedTime |date:'dd-MM-yyyy'}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tab == 2">
+
+            <div class="tab-pane" [ngClass]="{'active': tab == 2}" id="carePlan" role="tabpanel">
+                <div class="row m-0 pb-1">
+                    <!-- <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block tab-96-imp"> -->
+                        <div class="col-sm-12 mb-2 p-0">
+                            <h4 class="p-2 bg-wine text-white stats-hading mb-0">Users Log-in</h4>
+                            <div class="content p-3">
+                                <div class="wrapper chart_box" id="graph-container-10">
+                                    <div class="col-sm-12 text-center">
+                                        <mat-spinner diameter="40" strokeWidth="5"
+                                            style="stroke: #00a1ff;display:inline">
+                                        </mat-spinner>
+                                    </div>
+                                    <canvas id="chart-10"></canvas>
+                                </div>
+                                <div id="chart-analyser-10" class="analyser"></div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+ul {
+    list-style: none;
+    padding-left: 0;
+    display: inline-block;
+    float: left;
+    width: 100%;
+}
+
+ul li {
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 5px #ecd3d7;
+    background-color: #b16d76 !important;
+    color: #fff !important;
+    padding: 8px 22px;
+    width: auto;
+    margin: 8px 10px;
+    float: left;
+    cursor: pointer;
+}
+
+@media (max-width:1199px) and (min-width:768px) {
+    ul li {
+        font-size: 12px;
+    }
+}

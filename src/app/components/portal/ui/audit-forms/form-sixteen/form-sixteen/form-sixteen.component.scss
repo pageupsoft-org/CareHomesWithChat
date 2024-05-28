@@ -1,0 +1,13 @@
+.table-wd-18{
+    width: 1800px !important;
+}
+.limitheight-form{
+    max-height: 500px;
+    overflow: auto;
+}
+.limitheight-form .table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: #d9ebf9;
+}

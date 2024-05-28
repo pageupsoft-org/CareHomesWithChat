@@ -1,0 +1,307 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Weekly Environmental Tool
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <form [formGroup]="auditForm">
+                        <div class="sv-tab-panel info_tab_container">
+
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control"
+                                                        (change)="getUsers($event.target.value)"
+                                                        formControlName="locationId">
+                                                        <ng-container *ngFor="let location of locationList">
+                                                            <option [value]="location.id">{{location.name}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" (change)="completeForm($event)"
+                                                        name="auditedBy" formControlName="auditedBy">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType != userType.Admin">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{(auditForm.get('auditDate').value)?(auditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy"
+                                                        (change)="changeSignoff()">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-container *ngIf="isFilling">
+                                <div
+                                    class="care-infotable innerwhite-table w-96 mb-3 my-3 pt-0 d-flex overflow-auto limitheight-form">
+                                    <table class="table mb-0 bg-white shadow-sm table-bordered table-wd-18" style="z-index: 1;">
+                                        <thead>
+                                            <tr>
+                                                <th class="bg-light w-10 text-center">#</th>
+                                                <th class="bg-light w-10">Area</th>
+                                                <th class="bg-light w-10">Hazard</th>
+                                                <th class="bg-light w-15">If Yes, what is the hazard</th>
+                                                <th class="bg-light w-15">Have you reported any hazards identified to
+                                                    the Manager?</th>
+                                                <th class="bg-light w-10">Follow-up action</th>
+                                                <th class="bg-light w-15">Date of follow up action</th>
+                                                <th class="bg-light w-10">To be actioned by</th>
+                                                <th class="bg-light w-15">Comments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container formArrayName="form19Records"
+                                                *ngFor="let record of auditForm.get('form19Records')['controls'];let i= index ">
+
+                                                <tr [formGroupName]="i">
+                                                    <td class="text-center">
+                                                        <div class="close float-none mt-2" (click)="remove(i)">
+                                                            <i class="mdi mdi-close"></i>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <input type="text" formControlName="area"
+                                                                class="form-control" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.area.valid && (record.controls.area.dirty )">
+                                                            <small *ngIf="record.controls.area.errors?.required"
+                                                                class="errorText">This field is required</small>
+                                                            <small *ngIf="record.controls.area.errors?.maxlength"
+                                                                class="errorText">Maximum 500 character
+                                                                allowed</small>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <select class="form-control" formControlName="hazard">
+                                                                <option [ngValue]="true">Yes</option>
+                                                                <option [ngValue]="false">No</option>
+                                                            </select>
+
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.hazard.valid && (record.controls.hazard.dirty )">
+                                                            <small *ngIf="record.controls.hazard.errors?.required"
+                                                                class="errorText">This field is required</small>
+                                                            <small *ngIf="record.controls.hazard.errors?.maxlength"
+                                                                class="errorText">Maximum 500 character
+                                                                allowed</small>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <input type="text" formControlName="whatIsHazard"
+                                                                class="form-control" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.whatIsHazard.valid && (record.controls.whatIsHazard.dirty )">
+                                                            <small *ngIf="record.controls.whatIsHazard.errors?.required"
+                                                                class="errorText">This field is required</small>
+                                                            <small
+                                                                *ngIf="record.controls.whatIsHazard.errors?.maxlength"
+                                                                class="errorText">Maximum 500 character
+                                                                allowed</small>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <select class="form-control"
+                                                                formControlName="hazardIdentified">
+                                                                <option [ngValue]="true">Yes</option>
+                                                                <option [ngValue]="false">No</option>
+                                                            </select>
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.hazardIdentified.valid && (record.controls.hazardIdentified.dirty )">
+                                                            <small
+                                                                *ngIf="record.controls.hazardIdentified.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <input type="text" formControlName="followUpAction"
+                                                                class="form-control" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.followUpAction.valid && (record.controls.followUpAction.dirty )">
+                                                            <small
+                                                                *ngIf="record.controls.followUpAction.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="record.controls.followUpAction.errors?.maxlength"
+                                                                class="errorText">Maximum 500
+                                                                character
+                                                                allowed</small>
+                                                        </ng-container>
+                                                    </td>
+
+                                                    <td class="border-left-0 border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <input type="date" formControlName="followUpDate"
+                                                                class="form-control" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.followUpDate.valid && (record.controls.followUpDate.dirty )">
+                                                            <small *ngIf="record.controls.followUpDate.errors?.required"
+                                                                class="errorText">This field is required </small>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-left-0 border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <select class="form-control" formControlName="actionedBy">
+                                                                <ng-container *ngFor="let user of allUserList">
+                                                                    <option [ngValue]="user.id">
+                                                                        {{ (user.firstName ==null ||
+                                                                        user.lastName == null)?
+                                                                        user.email: user.firstName+"
+                                                                        "+user.lastName}}
+                                                                    </option>
+                                                                </ng-container>
+                                                            </select>
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.actionedBy.valid && (record.controls.actionedBy.dirty )">
+                                                            <small *ngIf="record.controls.actionedBy.errors?.required"
+                                                                class="errorText">This field
+                                                                is required </small>
+
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-left-0 border-right-0 border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <input type="text" formControlName="comment"
+                                                                class="form-control" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.comment.valid && (record.controls.comment.dirty )">
+
+                                                            <small *ngIf="record.controls.comment.errors?.required"
+                                                                class="errorText">This field is required </small>
+                                                            <small *ngIf="record.controls.comment.errors?.maxlength"
+                                                                class="errorText">Maximum 500 character allowed</small>
+                                                        </ng-container>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button (click)="addRecordButtonClick()"
+                                        class="btn btn-primary addmore-btn btn-sm ml-3 rounded-pill">
+                                        <span class="mdi mdi-plus"></span>Add more</button>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3"
+                                *ngIf="auditForm.get('signoffBy').value == currentUserId ">
+                                <p class="mr-2"> <strong>Do you want to create form for next review date</strong> </p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes14"
+                                        [value]="true" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="yes14" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false"
+                                        id="No14" [value]="false"
+                                        class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="No14" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container
+                                    *ngIf="auditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" (click)="onSubmit()" [disabled]="!auditForm.valid"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

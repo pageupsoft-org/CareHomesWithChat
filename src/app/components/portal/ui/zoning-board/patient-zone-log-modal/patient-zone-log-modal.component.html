@@ -1,0 +1,51 @@
+<div class="modal fade in" bsModal #patientZoneLog="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <ng-container>Zone Change Action</ng-container>
+                </h5>
+                <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="isBusy">
+                    <div class="col-sm-12 text-center">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!isBusy">
+                    <form>
+                        <div class="form-group">
+                            <label class="star_mandator">Select Criteria</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Criteria'" [settings]="dropdownSettings"
+                                [data]="criteriaList" (onSelect)="onItemSelect($event)"
+                                (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                                (onDeSelectAll)="onDeSelectAll($event)" name="criteria" [(ngModel)]="selectedCriteria">
+                            </ng-multiselect-dropdown>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="star_mandator">Select Action</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Action'" [settings]="actionDropdownSettings"
+                                [data]="locationActionList" (onSelect)="onActionSelect($event)"
+                                (onDeSelect)="OnActionDeSelect($event)" (onSelectAll)="onActionSelectAll($event)" name="action" [(ngModel)]="selectedAction"
+                                (onDeSelectAll)="onActionDeSelectAll($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" (click)="cancel()" data-dismiss="modal">Close</button>
+                <button type="submit" (click)="onSubmit()"
+                    [ngClass]="{ 'disabled':patientZoneForm && !patientZoneForm.valid}"
+                    [disabled]="patientZoneForm && !patientZoneForm.valid" class="btn btn-success">Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>

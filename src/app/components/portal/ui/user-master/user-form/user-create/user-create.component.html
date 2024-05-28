@@ -1,0 +1,290 @@
+<ng-container *ngIf="!isBusy">
+    <ng-container *ngIf="userForm">
+        <form [formGroup]="userForm">
+            <!-- (ngSubmit)="onSubmitUser(userForm.value)" -->
+            <div class="tab-pane" id="userform" role="tabpanel">
+                <div class="sv-tab-panel info_tab_container">
+
+                    <div class="care-infotable d-inline-block float-left">
+                        <table class="table mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="star_mandator">Username</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder=""
+                                                    formControlName="userName" />
+                                            </div>
+                                        </div>
+                                        <ng-container *ngIf="!userForm.controls.userName.valid && userForm.controls.userName.dirty">
+                                            <p *ngIf="userForm.controls.userName.errors?.minlength" class="errorText">
+                                              Minimum 5 characters required
+                                            </p>
+                                            <p *ngIf="userForm.controls.userName.errors?.maxlength" class="errorText">
+                                              Maximum limit reached
+                                            </p>
+                                            <p *ngIf="userForm.controls.userName.errors?.required" class="errorText">
+                                              This field is required
+                                            </p>
+                                            <p *ngIf="userForm.controls.userName.errors?.pattern" class="errorText">
+                                              Only alphabets, numbers, and special characters (_@.0-) are allowed
+                                            </p>
+                                          </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="star_mandator">Email</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder=""
+                                                    formControlName="email" />
+                                            </div>
+                                        </div>
+
+                                        <ng-container
+                                            *ngIf="(userForm.controls.email.valid && userForm.controls.email.touched) || userForm.controls.email.dirty">
+                                            <p *ngIf="userForm.controls.email.errors?.required" class="errorText">Email
+                                                is required
+                                            </p>
+                                            <!--question mark(?) is a safe navigation operator-->
+                                            <p *ngIf="userForm.controls.email.errors?.pattern" class="errorText">Please
+                                                provide a valid email address</p>
+                                        </ng-container>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="star_mandator">Firstname</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder=""
+                                                    formControlName="firstName" />
+                                            </div>
+                                        </div>
+                                        <ng-container *ngIf="!userForm.controls.firstName.valid && 
+                                      (userForm.controls.firstName.dirty )">
+                                            <p *ngIf="userForm.controls.firstName.errors?.pattern && !userForm.controls.firstName.errors?.maxlength " class="text-danger">
+                                                Please provide a valid name
+                                            </p>
+                                            <p *ngIf="userForm.controls.firstName.errors?.required" class="text-danger">
+                                                This Field is Required
+                                            </p>
+                                            <p *ngIf="userForm.controls.firstName.errors?.minlength" class="errorText">
+                                                Minimum 2 character required
+                                            </p>
+
+                                            <p *ngIf="userForm.controls.firstName.errors?.maxlength " class="errorText">
+                                                Maximum limit reached
+                                              </p>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="">Surname</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder=""
+                                                    formControlName="lastName" />
+                                            </div>
+                                        </div>
+                                        <ng-container
+                                            *ngIf="!userForm.controls.lastName.valid && (userForm.controls.lastName.dirty )">
+                                            <p *ngIf="userForm.controls.lastName.errors?.pattern" class="text-danger">
+                                                Please provide a valid surname
+                                            </p>
+                                            <p *ngIf="userForm.controls.lastName.errors?.minlength" class="errorText">
+                                                Minimum 2 character required
+                                            </p>
+
+                                            <p *ngIf="userForm.controls.lastName.errors?.maxlength" class="errorText">
+                                                Maximum limit reached
+                                              </p>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="">Staff no.</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder=""
+                                                    formControlName="staffNumber" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="care-infotable d-inline-block float-left">
+                        <table class="table mb-0">
+                            <tbody>
+                                <tr>
+                                    <th>Date Employed</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="date" class="form-control" placeholder=""
+                                                    formControlName="joiningDate" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="star_mandator">Location</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <ng-multiselect-dropdown [(ngModel)]="selectedItems"
+                                                [ngModelOptions]="{standalone: true}" [placeholder]="'Select Location'"
+                                                [settings]="dropdownSettings" [data]="locationList"
+                                                (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                                                (onSelectAll)="onSelectAll($event)"
+                                                (onDeSelectAll)="onDeSelectAll($event)">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="">Position</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder=""
+                                                    formControlName="position" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="">Training</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder=""
+                                                    formControlName="training" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="star_mandator">User Type</th>
+                                    <td>
+                                        <span class="d-none">N/A</span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <select class="form-control" formControlName="userType">
+                                                    <ng-container *ngFor="let userType of userArray">
+                                                        <option [value]=userType.value>{{userType.key}}</option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="w-100 d-inline-block mt-3">
+                        <button type="button" (click)="addCourseButtonClick()"
+                            class="btn btn-sm btn-primary ml-4 rounded-pill mb-3">Add
+                            Course <i class="mdi mdi-plus ml-2"></i></button>
+                        <div formArrayName="courses"
+                            *ngFor="let userFormCourse of userForm.get('courses')['controls'];let i= index ">
+                            <div [formGroupName]="i" class="care-infotable add_couse_info d-inline-block w-96">
+                                <div class="close_course" (click)="removeCourse(i)">
+                                    <i class="mdi mdi-close"></i>
+                                </div>
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                <span class="star_mandator mb-2 d-inline-block">Course</span>
+                                                <span class="d-none">N/A</span>
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" #courseC formControlName="courseId"
+                                                        (change)="onCourseChange(i,courseC.value)">
+                                                        <ng-container *ngFor="let course of cousresList">
+                                                            <option [value]="course.id">{{course.name}}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <span class="mb-2 d-inline-block">Mandatory</span>
+                                                <span class="d-none">N/A</span>
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <div class="input-group"
+                                                        style="height: 35px; padding: 10px; border-radius: 8px;">
+                                                        <!-- <input type="hidden" class="form-control" value="{{userFormCourse.value.mandatory}}"  formControlName="mandatory" /> -->
+                                                        <label>{{(userFormCourse.value.mandatory
+                                                            =="true" || userFormCourse.value.mandatory == 'Y')?'Y':'N'}}</label>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <span class="star_mandator mb-2 d-inline-block">Date Started</span>
+                                                <span class="d-none">N/A</span>
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control"
+                                                            formControlName="start" (change)="checkDateValidation(i)" />
+                                                    </div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">
+                                                <span class="mb-2 d-inline-block">Expiry Date</span>
+                                                <span class="d-none">N/A</span>
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control" formControlName="expiryDate" (change)="checkDateValidation(i)" />
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="border-top-0">
+                                                <span class="mb-2 d-inline-block">Date Completed</span>
+                                                <span class="d-none">N/A</span>
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control"
+                                                            formControlName="complete" (change)="checkDateValidation(i)" />
+                                                    </div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                        <button type="button" (click)="onSubmitUser(userForm.value)"
+                            [disabled]="!userForm.valid || selectedItems <=0"
+                            [ngClass]="{ 'disabled':!userForm.valid || selectedItems <=0}"
+                            class="btn btn-sm btn-success rounded-pill">
+                            <i class="mdi mdi-content-save-settings mr-2"></i> Save
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</ng-container>

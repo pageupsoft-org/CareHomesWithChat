@@ -1,0 +1,79 @@
+<div class="sv-tab-panel info_tab_container">
+    <h3>{{panelTitle}} <span>
+            <button class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn pull-right"
+                *ngIf="currentUserRole == userType.Admin"
+                (click)="createUsers()"><i class="mdi mdi-account-plus mr-1"></i> {{(!createUser)?"Create User":'Show User'}}</button>
+        </span></h3>
+    <ng-container *ngIf="isBusy">
+        <div class="col-sm-12 text-center">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline-block"></mat-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!createUser; else elseTemplate">
+        
+
+        <ng-container *ngIf="!isBusy && usersList.length > 0">
+
+            <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block">
+                <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="w-5">S.no</th>
+                            <th class="w-20">Name</th>
+                            <th class="w-20">User Name</th>
+                            <th class="w-20">Email</th>
+                            <th class="w-20">User Type</th>
+                            <th class="w-15">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let user of usersList; let i=index">
+                            <td class="w-5">{{i+1}}</td>
+                            <td class="w-20">{{user.firstName}} {{user.lastName}} </td>
+                            <td class="w-20">{{user.userName}}</td>
+                            <td class="w-20">{{user.email}}</td>
+                            <td class="w-20">
+                                <ng-container *ngIf="user.userType == userTypeEnum.User">User</ng-container>
+                                <ng-container *ngIf="user.userType == userTypeEnum.Admin">Admin</ng-container>
+                                <ng-container *ngIf="user.userType == userTypeEnum.Auditor">Auditor</ng-container>
+                                <ng-container *ngIf="user.userType == userTypeEnum.SuperUser">SuperUser
+                                </ng-container>
+                                <ng-container *ngIf="user.userType == userTypeEnum.WECAdmin">WECAdmin</ng-container>
+                            </td>
+                            <td class="w-15">
+                                <ng-container *ngIf="currentUserRole == userType.Admin">
+                                
+                                <div class="actionbox" *ngIf="user.userType != userTypeEnum.Admin">
+                                    <i class="mdi text-primary mdi-pencil mr-2" (click)="editUser(user.id)"
+                                        data-toggle="modal" data-target="#edit-course"></i>
+
+                                    <i class="mdi text-danger mdi-delete mr-2" (click)="remove(user.id)"></i>
+
+                                    <ng-container *ngIf="user.isActive == userStatus.Suspended">
+                                        <i class="mdi text-success mdi-account-check-outline mr-2"
+                                            (click)="activateUser(user.id,userStatus.Active)"></i>
+                                    </ng-container>
+                                    <ng-container *ngIf="user.isActive == userStatus.Active">
+                                        <i class="mdi text-warning mdi-account-remove-outline mr-2"
+                                            (click)="suspendUser(user.id,userStatus.Suspended)"></i>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!isBusy && usersList.length <= 0">
+            <div class="error_Box p-5 m-4">
+                <h4 class="alert alert-danger text-center mb-0">No User Found</h4>
+            </div>
+
+        </ng-container>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <app-user-create [userId]="userId" (getUsers)="getUsers()"></app-user-create>
+    </ng-template>
+</div>

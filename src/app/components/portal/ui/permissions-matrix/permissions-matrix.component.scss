@@ -1,0 +1,25 @@
+.care-infotable .table thead th {
+   
+    position: sticky;
+    top: -1px;
+    z-index: 1;
+    background-color: #d9ebf9;
+}
+.limitheight-form{
+    height: 500px;
+    margin-top: -1px;
+}
+.info_tab_container {
+    padding: 15px 0px;
+    overflow-x: hidden;
+}
+
+.care-infotable {  
+     height: 70vh;
+    background-color: #ecf4fa;
+    margin-bottom: 20px;
+    position: relative;
+    margin-left: 0%;
+    margin-right: 0%;
+    margin-bottom: 0px;
+}

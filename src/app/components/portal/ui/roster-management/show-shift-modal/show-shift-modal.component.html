@@ -1,0 +1,77 @@
+<div class="modal fade in" bsModal #showShiftModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <ng-container>Shift Details</ng-container>
+        </h5>
+        <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="shift">
+        <div class="shiftmodalhead">
+          <div class="actionbox d-inline-block pull-right"
+            *ngIf="userType.User != currentUserRole && userType.Auditor != currentUserRole ">
+            <i class="mdi text-info mdi-pencil mr-2" (click)="edit(shift.id)"></i>
+            <i class="mdi text-danger mdi-delete mr-2" (click)="remove(shift.id)"></i>
+          </div>
+          <h4 class="d-inline-block">{{shift.title}}</h4>
+        </div>
+        <p class="shft_time shft_strttime">
+          <span class="mr-1 d-block"><b>Start Time </b></span>
+          <span>{{shift.startTime|date:'dd-MM-yyyy hh:mm a'}}</span>
+        </p>
+        <p class="shft_time shft_endtime">
+          <span class="mr-2 d-block"><b>End Time </b></span>
+          <span>{{shift.endTime|date:'dd-MM-yyyy hh:mm a'}}</span>
+        </p>
+        <button type="button" (click)="getShiftUsers()" *ngIf="userType.User != currentUserRole && userType.Auditor != currentUserRole " class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn">
+          <i class="mdi mdi-account-plus mr-1 mr-1"></i>
+          Assign User
+        </button>
+        <div class=" mt-4" [ngClass]="{'collapse': isClose}">
+          <div class="row">
+            <ng-container *ngIf="shiftUsers.length ==0  && isBusy">
+              <div class="loader">
+                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="shiftUsers.length > 0  && !isBusy">
+              <div class="col-sm-6" *ngFor="let user of shiftUsers; let i=index">
+                <div class="form-group form-check">
+                  <input type="checkbox" [disabled]="user.isLeaveAllocated ==true || user.isShiftAllocated ==true"
+                    (change)="selectStaff(user.id,$event)" [value]="user.id" [checked]="isSelected(user.id)"
+                    class="form-check-input" [value]="user.id" id="exampleCheck{{i}}">
+                  <label class="form-check-label" for="exampleCheck{{i}}">{{(user.firstName == null || user.lastName ==
+                    null) ? user.email : (user.firstName + " " + user.lastName)}}</label>
+                </div>
+              </div>
+              <div class="col-sm-12 text-center">
+                <div class="form-group form-check">
+                  <button type="button" [disabled]="shiftUsers.length == 0"
+                    [ngClass]="{ 'disabled':shiftUsers.length == 0}" (click)="assignUser()"
+                    class="btn btn-sm btn-success rounded-pill"><i class="mdi mdi-account-plus mr-1 mr-1"></i> submit
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="shiftUsers.length == 0  && !isBusy">
+              <div class="text-center px-3 py-3">
+                <h5 class="alert alert-danger text-center mb-0"> No user available for shift</h5>
+              </div>
+
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-light rounded-pill" (click)="cancel()" data-dismiss="modal"> <i
+            class="mdi mdi-close mr-1"></i> Close</button>
+        <!-- <button type="submit" (click)="onSubmit()" [ngClass]="{ 'disabled':courseForm && !courseForm.valid}"
+          class="btn btn-success rounded-pill"><i class="mdi mdi-content-save mr-1"></i> Save</button> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="horizontal-tabs my-3">
+    <div class="sv-tab-panel info_tab_container  px-0 pt-0">
+
+        <ng-container *ngIf="isBusy">
+            <div class="loader">
+                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="showNotification">
+            <div class="container">
+                <div class="col-sm-12 text-center">
+                    <label class="alert alert-danger mt-3 w-100"> Please complete registration first</label>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="  !showNotification && !isBusy && showTransactionList && !showTransaction">
+            <div class="d-inline-block bg-white p-2 w-100 mb-2">
+                <h3>Finance <span>
+                    <button *ngIf="currentUserRole == userType.Admin || currentUserRole == userType.SuperUser" class="btn btn-sm btn-info rounded-pill mr-4 pull-right my-2"
+                        (click)="createFinance()"><i class="mdi mdi-plus mr-1"></i>Add Finance</button>
+                </span></h3>
+            </div>
+            <ng-container *ngIf="transactionList.length > 0">
+                <div class="d-inline-block bg-white p-3 w-100">
+                    <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="w-10">S.no</th>
+                                <th class="w-10">Completed By</th>
+                                <th class="w-10">Amount</th>
+                                <th class="w-10">Mode/Type</th>
+                                <th class="w-10">Transaction Date</th>
+                                <th class="w-10">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <ng-container *ngFor="let transaction of transactionList; let i = index">
+                                <tr>
+                                    <td class="w-10">{{i+1}}</td>
+                                    <td class="w-10">{{(transaction.userName)?transaction.userName:'-'}}</td>
+                                    <td class="w-10">{{(transaction.amount)}}</td>
+                                    <td class="w-10">{{(transaction.mode == 'W')?"withdraw":'Deposit'}}
+                                    </td>
+                                    <td class="w-10">{{(transaction.transactionDate)?(transaction.transactionDate| date:"dd-MM-Y"):"-"}}
+                                    </td>
+                                    <td class="w-10">
+                                        <div class="actionbox">
+                                            <!-- <i class="mdi text-primary mdi-pencil mr-2" title="Edit"
+                                            (click)="editFinance(transaction)"></i>-->
+                                            <i class="mdi text-info mdi-eye-circle mr-2" title="View" (click)="viewTransaction(transaction)"></i>
+                                            <ng-container *ngIf="i == 0">
+                                                <i class="mdi text-danger mdi-delete mr-2" title="Remove" (click)="removeTransaction(transaction.id)"></i>
+                                            </ng-container>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+            <ng-container *ngIf=" !showNotification && !isBusy && transactionList.length <= 0">
+
+                <div class="text-center w-100 d-inline-block px-3 py-3">
+                    <div class="alert alert-danger" role="alert">
+                        <p class="mb-0"> No Record Found</p>
+                    </div>
+                </div>
+
+            </ng-container>
+
+        </ng-container>
+        <ng-container *ngIf=" !showNotification && !isBusy && !showTransactionList && !showTransaction">
+            <app-finance [userData]="userData" (getAllTransaction)="getAllTransaction()" [transictionData]="transictionData">
+            </app-finance>
+            <!-- (showAllRiskAssessment)="showAllRiskAssessment()" -->
+        </ng-container>
+        <ng-container *ngIf=" !showNotification && !isBusy && !showTransactionList && showTransaction">
+            <app-finance-show [userData]="userData" (getAllTransaction)="getAllTransaction()" [transictionData]="transictionData"></app-finance-show>
+
+            <!-- (showAllRiskAssessment)="showAllRiskAssessment()" -->
+        </ng-container>
+    </div>
+</div>

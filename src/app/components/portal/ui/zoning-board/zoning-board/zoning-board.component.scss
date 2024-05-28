@@ -1,0 +1,164 @@
+.patient-container {
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: RELATIVE;
+    float: left;
+    text-align: center;
+    font-size: 12px;
+    cursor: move;
+    height: 115px;
+    width: 115px;
+    background-color: #ffffff6e;
+    border-radius: 50%;
+}
+
+.head {
+    color: white;
+    width: 95px;
+    left: 10px;
+    position: absolute;
+    bottom: 25px;
+    font-weight: 600;
+    line-height: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.patient-container img {
+    line-height: 60px;
+    color: #d2d2d2;
+    width: 70px;
+    margin-left: -35px;
+    z-index: 100;
+    top: -14px;
+    left: 50%;
+    position: ABSOLUTE;
+    cursor: initial;
+}
+
+.zone {
+    height: 400px;
+    padding: 10px;
+    overflow: auto;
+}
+
+.red {
+    background-color: #ff5050;
+}
+
+.red .head {
+    color: white;
+}
+
+.amber {
+    background-color: #ffcc66;
+}
+
+.amber .head {
+    color: #843b00;
+}
+
+.green {
+    background-color: #00ff00;
+}
+
+.green .head {
+    color: white;
+}
+
+.red_zone_headrbg,
+.amber_zone_headrbg,
+.green_zone_headrbg {
+    margin-bottom: 0px !important;
+    line-height: 35px;
+    color: #fff;
+}
+
+.red_zone_headrbg {
+    background-color: #ff7777;
+}
+
+.amber_zone_headrbg {
+    background-color: #ffe595;
+    color: #333;
+}
+
+.green_zone_headrbg {
+    background-color: #bad486;
+}
+
+.border-red {
+    border: solid 2px #bb1e1e;
+}
+
+.border-amber {
+    border: solid 2px #b98929;
+}
+
+.border-green {
+    border: solid 2px #00bf00;
+}
+
+.zoning-board-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.zoning-board-scroll::-webkit-scrollbar-track {
+    background: #f1f2f3;
+}
+
+.zoning-board-scroll::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 20px;
+    border: 3px solid #ecf4fa;
+}
+
+.zoning-head-com {
+    width: 100%;
+}
+
+@media (max-width:1199px) and (min-width:1024px) {
+    .head {
+        width: 70px;
+        left: 10px;
+        bottom: 12px;
+        font-weight: 600;
+        line-height: 15px;
+        font-size: 10px;
+    }
+    .patient-container img {
+        width: 60px;
+        margin-left: -30px;
+        top: -18px;
+    }
+    .patient-container {
+        font-size: 12px;
+        height: 90px;
+        width: 90px;
+    }
+}
+
+@media (max-width:1023px) and (min-width:768px) {
+    .head {
+        width: 65px;
+        left: 6px;
+        bottom: 15px;
+        font-size: 10px;
+        line-height: 14px;
+    }
+    .patient-container {
+        font-size: 12px;
+        height: 80px;
+        width: 80px;
+    }
+    .patient-container img {
+        width: 54px;
+        margin-left: -27px;
+        top: -20px;
+    }
+}

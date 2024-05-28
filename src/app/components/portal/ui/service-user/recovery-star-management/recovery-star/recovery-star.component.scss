@@ -1,0 +1,433 @@
+.box_patientinfo ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.box_patientinfo ul li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 10px;
+    border-right: 5px solid #fff;
+    background-color: #ecf4fa;
+    border-radius: 50px;
+    border: solid thin #ecf4fa;
+}
+
+.headr_myshare {
+    background-color: #bf838a;
+    margin-left: 2%;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+}
+
+.bg-health-laddr1 {
+    background-color: #b4c6e7 !important;
+}
+
+.bg-health-laddr2 {
+    background-color: #4472c4 !important;
+}
+
+.bg-health-laddr3 {
+    background-color: #70ad47 !important;
+}
+
+.bg-health-laddr4 {
+    background-color: #e4cd8a !important;
+}
+
+.bg-health-laddr5 {
+    background-color: #ffc000 !important;
+}
+
+.bg-health-laddr1 h5,
+.bg-health-laddr2 h5,
+.bg-health-laddr3 h5,
+.bg-health-laddr4 h5,
+.bg-health-laddr5 h5 {
+    color: #fff;
+}
+
+.closemodal {
+    height: 40px;
+    width: 40px;
+    text-align: CENTER;
+    padding: 0;
+    line-height: 40px;
+    border-radius: 50%;
+    opacity: 1;
+    margin-top: -5px;
+    background-color: #fff;
+    margin-right: 0px;
+    outline: none;
+}
+
+.info-score ul {
+    list-style: none;
+    display: flex;
+    margin-bottom: 0 !important;
+}
+
+.info-score ul li {
+    height: 25px;
+    width: 25px;
+    padding: 0;
+    line-height: 25px;
+    text-align: center;
+    background-color: #bf838a;
+    margin: 0px 15px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    position: relative;
+}
+
+.info_modal_box {
+    padding-left: 50px;
+    position: RELATIVE;
+}
+
+.modal-header.bg-health-laddr1,
+.modal-header.bg-health-laddr2,
+.modal-header.bg-health-laddr3,
+.modal-header.bg-health-laddr4,
+.modal-header.bg-health-laddr5 {
+    border-radius: 0px;
+}
+
+.mn-ht650 {
+    height: 650px;
+}
+
+.star {
+    width: 500px;
+    margin: 100px auto;
+    text-align: CENTER;
+    position: relative;
+}
+
+.main-circlestar {
+    position: absolute;
+    height: 500px;
+    width: 500px;
+    background-color: #dbdbcf;
+    left: -250px;
+    border-radius: 50%;
+}
+
+.star ul {
+    list-style: none;
+    padding-left: 0;
+    position: ABSOLUTE;
+    background-color: #dbdbcf;
+    padding-top: 15px;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.list-star-1 {
+    position: ABSOLUTE;
+    left: -1%;
+    margin-top: -10px;
+    transform: rotate(0deg);
+}
+
+.list-star-1 img {
+    position: absolute;
+    height: 150px;
+    width: 160px;
+    background-size: contain;
+    transform: rotate(-36deg);
+    background-repeat: no-repeat;
+    top: -40px;
+    left: -18px;
+}
+
+.list-star-2 {
+    transform: rotate(35deg);
+    position: ABSOLUTE;
+    left: 29%;
+    margin-top: 34px;
+}
+
+.list-star-2 img {
+    position: absolute;
+    height: 180px;
+    width: 180px;
+    background-size: contain;
+    transform: rotate(-38deg);
+    background-repeat: no-repeat;
+    top: -55px;
+    left: -23px;
+}
+
+.list-star-3 {
+    position: ABSOLUTE;
+    left: 50%;
+    margin-top: 165px;
+    transform: rotate(70deg);
+}
+
+.list-star-3 img {
+    position: absolute;
+    height: 160px;
+    width: 170px;
+    background-size: contain;
+    transform: rotate(-35deg);
+    background-repeat: no-repeat;
+    top: -43px;
+    left: -21px;
+}
+
+.list-star-4 {
+    position: ABSOLUTE;
+    left: 51%;
+    margin-top: 325px;
+    transform: rotate(105deg);
+}
+
+.list-star-4 img {
+    position: absolute;
+    height: 163px;
+    width: 159px;
+    background-size: contain;
+    transform: rotate(-39deg);
+    background-repeat: no-repeat;
+    top: -45px;
+    left: -14px;
+}
+
+.list-star-5 {
+    position: ABSOLUTE;
+    left: 34%;
+    margin-top: 460px;
+    transform: rotate(141deg);
+}
+
+.list-star-5 img {
+    position: absolute;
+    height: 170px;
+    width: 159px;
+    background-size: contain;
+    transform: rotate(-34deg);
+    background-repeat: no-repeat;
+    top: -37px;
+    left: -20px;
+}
+
+.list-star-6 {
+    transform: rotate(320deg);
+    position: ABSOLUTE;
+    left: -36%;
+    margin-top: 52px;
+}
+
+.list-star-6 img {
+    position: absolute;
+    height: 165px;
+    width: 180px;
+    background-size: contain;
+    transform: rotate(-36deg);
+    background-repeat: no-repeat;
+    top: -25px;
+    left: -19px;
+}
+
+.list-star-7 {
+    position: ABSOLUTE;
+    left: -54%;
+    margin-top: 210px;
+    transform: rotate(280deg);
+}
+
+.list-star-7 img {
+    position: absolute;
+    height: 184px;
+    width: 185px;
+    background-size: contain;
+    transform: rotate(-33deg);
+    background-repeat: no-repeat;
+    top: -48px;
+    left: -24px;
+}
+
+.list-star-8 {
+    position: ABSOLUTE;
+    left: -46%;
+    margin-top: 390px;
+    transform: rotate(240deg);
+}
+
+.list-star-8 img {
+    position: absolute;
+    height: 190px;
+    width: 186px;
+    background-size: contain;
+    transform: rotate(-34deg);
+    background-repeat: no-repeat;
+    top: -55px;
+    left: -24px;
+}
+
+.list-star-9 {
+    position: ABSOLUTE;
+    left: -27%;
+    margin-top: 490px;
+    transform: rotate(210deg);
+}
+
+.list-star-9 img {
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    background-size: contain;
+    transform: rotate(-36deg);
+    background-repeat: no-repeat;
+    top: -46px;
+    left: -19px;
+}
+
+.list-star-10 {
+    position: ABSOLUTE;
+    left: 2%;
+    margin-top: 520px;
+    transform: rotate(180deg);
+}
+
+.list-star-10 img {
+    position: absolute;
+    height: 142px;
+    width: 150px;
+    background-size: contain;
+    transform: rotate(-38deg);
+    background-repeat: no-repeat;
+    top: -34px;
+    left: -16px;
+}
+
+.star ul li span {
+    background-color: #fff;
+    height: 15px;
+    width: 15px;
+    font-size: 11px;
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+    position: RELATIVE;
+}
+
+.circl_star {
+    height: 50px;
+    width: 50px;
+    background-color: #fff;
+    position: ABSOLUTE;
+    top: 230px;
+    left: -30px;
+    border-radius: 50%;
+}
+
+.box-starblock,
+.box-starblock.box-starblock1 {
+    position: absolute;
+    top: -70px;
+    width: 120px;
+    left: -40px;
+    text-align: center;
+    height: 50px;
+    line-height: 20px;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 0px 10px;
+    border-radius: 20px;
+    border: solid 2px #8c555c;
+}
+
+.box-starblock.box-starblock2 {
+    transform: rotate(-35deg);
+    left: 10px;
+    top: -95px;
+    line-height: 40px;
+    font-size: 14px;
+}
+
+.box-starblock.box-starblock3 {
+    transform: rotate(-70deg);
+    top: -100px;
+    left: -30px;
+    line-height: 40px;
+}
+
+.box-starblock.box-starblock4 {
+    transform: rotate(-105deg);
+    left: -70px;
+    top: -120px;
+}
+
+.box-starblock.box-starblock5 {
+    transform: rotate(-140deg);
+    line-height: 40px;
+    top: -80px;
+    left: -110px;
+}
+
+.box-starblock.box-starblock6 {
+    transform: rotate(40deg);
+    line-height: 40px;
+    top: -90px;
+    left: -90px;
+}
+
+.box-starblock.box-starblock7 {
+    transform: rotate(80deg);
+    left: -60px;
+    top: -120px;
+}
+
+.box-starblock.box-starblock8 {
+    transform: rotate(120deg);
+    left: -20px;
+    top: -130px;
+    line-height: 40px;
+}
+
+.box-starblock.box-starblock9 {
+    transform: rotate(150deg);
+    top: -110px;
+    left: 0px;
+}
+
+.box-starblock.box-starblock10 {
+    transform: rotate(180deg);
+    top: -70px;
+    left: -50px;
+    line-height: 40px;
+}
+
+.deg-180 li {
+    transform: rotate(-180deg)
+}
+
+.patient-radio-score {
+    position: absolute;
+    left: -20px;
+    top: 3px;
+}
+
+.disable {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+@media (max-width:992px) and (min-width:768px) {
+    .recoverybox {
+        overflow-x: auto !important;
+    }
+    .recoverybox ul li {
+        width: 90px !important;
+    }
+    .riskbox-secction li a {
+        padding: 10px 8px !important;
+    }
+}

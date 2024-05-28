@@ -1,0 +1,2267 @@
+<!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1 class="d-inline-block">
+                    <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i> Move-on Functional
+                        Checklist </span> <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div> -->
+
+<ng-container *ngIf="isBusy">
+    <div class="loader">
+        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!isBusy">
+    <div class="bg-white p-3 shadow-sm">
+        <div class="pull-right">
+            <button class="btn btn-sm btn-dark rounded-pill mr-5 mb-2" (click)="getFunctionalityList()">Go Back</button>
+        </div>
+        <div class="box_patientinfo mx-3 mt-1 mb-0 mar-mb-0">
+            <ul class="d-flex mb-0">
+                <li class="mr-2 ">
+                    <span class="mr-2"><b>Service User name: </b></span>
+                    <span>{{userData.firstName}} {{userData.lastName}}</span>
+                </li>
+                <li class="mr-2 ">
+                    <span class="mr-2"><b>Service User no.: </b></span>
+                    <span>{{userData.serviceUserNumber}}</span>
+                </li>
+                <li class="mr-2">
+                    <span class="mr-2"><b>DOB: </b></span>
+                    <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="sv-tab-panel pl-0 info_tab_container">
+            <div class="care-infotable w-96 mb-3 p-3 scorebox">
+                <table class="table table-bordered whitetable mb-0">
+                    <thead>
+                        <tr>
+                            <th colspan="6" class="bg-light"><h4 class="p-0">Score</h4></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Independent</td>
+                            <th class="bg-lightwine">5</th>
+                            <td>Functional with Prompting</td>
+                            <th class="bg-lightwine">4</th>
+                            <td>Functional with Assistance</td>
+                            <th class="bg-lightwine">3</th>
+                        </tr>
+                        <tr>
+                            <td>Unable to Perform </td>
+                            <th class="bg-lightwine">2</th>
+                            <td>OT Assessment Required</td>
+                            <th class="bg-lightwine">1</th>
+                            <td>Not Applicable</td>
+                            <th class="bg-lightwine">0</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="care-infotable w-96 mb-3 p-3 scorebox">
+                <table class="table table-bordered whitetable mb-0">
+                    <thead>
+                        <tr>
+                            <th colspan="6" class="bg-light"><h4 class="p-0">Score</h4></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Total Score</th>
+                            <!-- <th class="bg-lightwine">{{getTotalScore()}}</th> -->
+                            <th style="color:#000" [ngStyle]="{'background-color': getTotalScore()| colorSetter:getMaxScore(): formName.MoveOnFunctional }">
+                                {{getTotalScore()}}</th>
+                            <th>Maximum Score</th>
+                            <th>{{getMaxScore()}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="care-infotable w-96 mb-3 p-3 scorebox">
+                <table class="table table-bordered whitetable mb-0">
+                    <thead>
+                        <tr>
+                            <th colspan="6" class="bg-light"><h4>Score</h4></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color:#000;background-color:#FF5050">
+                                {{getCalculation(1)}}</td>
+                            <td style="color:#000;background-color:#FF99CC">
+                                {{getCalculation(2)}}</td>
+                            <td style="color:#000;background-color:#FFCC66">
+                                {{getCalculation(3)}}</td>
+                            <td style="color:#000;background-color:#CCFF66">
+                                {{getCalculation(4)}}</td>
+                            <td style="color:#000;background-color:#00FF00">
+                                {{getCalculation(5)}}</td>
+                           
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class=" care-infotable w-96 mb-3 p-3">
+                <table class="table table-bordered whitetable mb-0">
+                    <thead>
+                        <tr>
+                            <th class="bg-lightwine">Areas of Occupation</th>
+                            <th class="bg-lightwine">Independent</th>
+                            <th class="bg-lightwine">Functional with Prompting</th>
+                            <th class="bg-lightwine">Functional with Assistance</th>
+                            <th class="bg-lightwine"> Unable to Perform </th>
+                            <th class="bg-lightwine">OT Assessment Required </th>
+                            <th class="bg-lightwine">Not Applicable</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="bg-light">1) Activities of Daily Living
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Bathing/Showering
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.bathingShowering" name="radio1" (change)="changeScore('bathingShowering',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.bathingShowering" name="radio1" (change)="changeScore('bathingShowering',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.bathingShowering" name="radio1" (change)="changeScore('bathingShowering',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.bathingShowering" name="radio1" (change)="changeScore('bathingShowering',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.bathingShowering" name="radio1" (change)="changeScore('bathingShowering',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.bathingShowering" name="radio1" (change)="changeScore('bathingShowering',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Bowel and Bladder Management
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.bowelBladderManagement" name="radio2" (change)="changeScore('bowelBladderManagement',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.bowelBladderManagement" name="radio2" (change)="changeScore('bowelBladderManagement',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.bowelBladderManagement" name="radio2" (change)="changeScore('bowelBladderManagement',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.bowelBladderManagement" name="radio2" (change)="changeScore('bowelBladderManagement',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.bowelBladderManagement" name="radio2" (change)="changeScore('bowelBladderManagement',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.bowelBladderManagement" name="radio2" (change)="changeScore('bowelBladderManagement',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Dressing
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.dressing" name="radio3" (change)="changeScore('dressing',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.dressing" name="radio3" (change)="changeScore('dressing',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.dressing" name="radio3" (change)="changeScore('dressing',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.dressing" name="radio3" (change)="changeScore('dressing',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.dressing" name="radio3" (change)="changeScore('dressing',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.dressing" name="radio3" (change)="changeScore('dressing',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Eating
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.eating" name="radio56" (change)="changeScore('eating',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.eating" name="radio56" (change)="changeScore('eating',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.eating" name="radio56" (change)="changeScore('eating',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.eating" name="radio56" (change)="changeScore('eating',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.eating" name="radio56" (change)="changeScore('eating',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.eating" name="radio56" (change)="changeScore('eating',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Feeding
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.feeding" name="radio4" (change)="changeScore('feeding',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.feeding" name="radio4" (change)="changeScore('feeding',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.feeding" name="radio4" (change)="changeScore('feeding',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.feeding" name="radio4" (change)="changeScore('feeding',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.feeding" name="radio4" (change)="changeScore('feeding',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.feeding" name="radio4" (change)="changeScore('feeding',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Functional Mobility
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.functionalMobility" name="radio5" (change)="changeScore('functionalMobility',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.functionalMobility" name="radio5" (change)="changeScore('functionalMobility',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.functionalMobility" name="radio5" (change)="changeScore('functionalMobility',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.functionalMobility" name="radio5" (change)="changeScore('functionalMobility',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.functionalMobility" name="radio5" (change)="changeScore('functionalMobility',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.functionalMobility" name="radio5" (change)="changeScore('functionalMobility',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Personal Device Care
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.personalDeviceCare" name="radio6" (change)="changeScore('personalDeviceCare',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.personalDeviceCare" name="radio6" (change)="changeScore('personalDeviceCare',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.personalDeviceCare" name="radio6" (change)="changeScore('personalDeviceCare',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.personalDeviceCare" name="radio6" (change)="changeScore('personalDeviceCare',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.personalDeviceCare" name="radio6" (change)="changeScore('personalDeviceCare',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.personalDeviceCare" name="radio6" (change)="changeScore('personalDeviceCare',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Personal Hygiene and Grooming
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.personalHygieneGrooming" name="radio7" (change)="changeScore('personalHygieneGrooming',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.personalHygieneGrooming" name="radio7" (change)="changeScore('personalHygieneGrooming',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.personalHygieneGrooming" name="radio7" (change)="changeScore('personalHygieneGrooming',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.personalHygieneGrooming" name="radio7" (change)="changeScore('personalHygieneGrooming',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.personalHygieneGrooming" name="radio7" (change)="changeScore('personalHygieneGrooming',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.personalHygieneGrooming" name="radio7" (change)="changeScore('personalHygieneGrooming',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Sleep/Rest
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.sleepRest" name="radio8" (change)="changeScore('sleepRest',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.sleepRest" name="radio8" (change)="changeScore('sleepRest',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.sleepRest" name="radio8" (change)="changeScore('sleepRest',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.sleepRest" name="radio8" (change)="changeScore('sleepRest',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.sleepRest" name="radio8" (change)="changeScore('sleepRest',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.sleepRest" name="radio8" (change)="changeScore('sleepRest',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Sexual Activity
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.sexualActivity" name="radio9" (change)="changeScore('sexualActivity',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.sexualActivity" name="radio9" (change)="changeScore('sexualActivity',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.sexualActivity" name="radio9" (change)="changeScore('sexualActivity',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.sexualActivity" name="radio9" (change)="changeScore('sexualActivity',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.sexualActivity" name="radio9" (change)="changeScore('sexualActivity',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.sexualActivity" name="radio9" (change)="changeScore('sexualActivity',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Toilet Hygiene
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.toiletHygiene" name="radio10" (change)="changeScore('toiletHygiene',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.toiletHygiene" name="radio10" (change)="changeScore('toiletHygiene',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.toiletHygiene" name="radio10" (change)="changeScore('toiletHygiene',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.toiletHygiene" name="radio10" (change)="changeScore('toiletHygiene',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.toiletHygiene" name="radio10" (change)="changeScore('toiletHygiene',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.toiletHygiene" name="radio10" (change)="changeScore('toiletHygiene',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="bg-light">2) Instrumental ADL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Care of Others
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.careOfOthers" name="radio11" (change)="changeScore('careOfOthers',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.careOfOthers" name="radio11" (change)="changeScore('careOfOthers',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.careOfOthers" name="radio11" (change)="changeScore('careOfOthers',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.careOfOthers" name="radio11" (change)="changeScore('careOfOthers',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.careOfOthers" name="radio11" (change)="changeScore('careOfOthers',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.careOfOthers" name="radio11" (change)="changeScore('careOfOthers',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Care of Pets
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.careOfPets" name="radio12" (change)="changeScore('careOfPets',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.careOfPets" name="radio12" (change)="changeScore('careOfPets',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.careOfPets" name="radio12" (change)="changeScore('careOfPets',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.careOfPets" name="radio12" (change)="changeScore('careOfPets',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.careOfPets" name="radio12" (change)="changeScore('careOfPets',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.careOfPets" name="radio12" (change)="changeScore('careOfPets',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Parenting
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.parenting" name="radio13" (change)="changeScore('parenting',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.parenting" name="radio13" (change)="changeScore('parenting',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.parenting" name="radio13" (change)="changeScore('parenting',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.parenting" name="radio13" (change)="changeScore('parenting',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.parenting" name="radio13" (change)="changeScore('parenting',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.parenting" name="radio13" (change)="changeScore('parenting',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Communication
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.communication" name="radio14" (change)="changeScore('communication',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.communication" name="radio14" (change)="changeScore('communication',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.communication" name="radio14" (change)="changeScore('communication',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.communication" name="radio14" (change)="changeScore('communication',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.communication" name="radio14" (change)="changeScore('communication',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.communication" name="radio14" (change)="changeScore('communication',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Public Transport Use
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.publicTransportUse" name="radio15" (change)="changeScore('publicTransportUse',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.publicTransportUse" name="radio15" (change)="changeScore('publicTransportUse',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.publicTransportUse" name="radio15" (change)="changeScore('publicTransportUse',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.publicTransportUse" name="radio15" (change)="changeScore('publicTransportUse',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.publicTransportUse" name="radio15" (change)="changeScore('publicTransportUse',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.publicTransportUse" name="radio15" (change)="changeScore('publicTransportUse',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Financial Management
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.financialManagement" name="radio16" (change)="changeScore('financialManagement',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.financialManagement" name="radio16" (change)="changeScore('financialManagement',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.financialManagement" name="radio16" (change)="changeScore('financialManagement',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.financialManagement" name="radio16" (change)="changeScore('financialManagement',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.financialManagement" name="radio16" (change)="changeScore('financialManagement',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.financialManagement" name="radio16" (change)="changeScore('financialManagement',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Health Management
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.healthManagement" name="radio17" (change)="changeScore('healthManagement',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.healthManagement" name="radio17" (change)="changeScore('healthManagement',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.healthManagement" name="radio17" (change)="changeScore('healthManagement',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.healthManagement" name="radio17" (change)="changeScore('healthManagement',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.healthManagement" name="radio17" (change)="changeScore('healthManagement',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.healthManagement" name="radio17" (change)="changeScore('healthManagement',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Home Management
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.homeManagement" name="radio18" (change)="changeScore('homeManagement',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.homeManagement" name="radio18" (change)="changeScore('homeManagement',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.homeManagement" name="radio18" (change)="changeScore('homeManagement',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.homeManagement" name="radio18" (change)="changeScore('homeManagement',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.homeManagement" name="radio18" (change)="changeScore('homeManagement',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.homeManagement" name="radio18" (change)="changeScore('homeManagement',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Meal Preparation and Clean-up
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.mealPreparationCleanup" name="radio19" (change)="changeScore('mealPreparationCleanup',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.mealPreparationCleanup" name="radio19" (change)="changeScore('mealPreparationCleanup',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.mealPreparationCleanup" name="radio19" (change)="changeScore('mealPreparationCleanup',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.mealPreparationCleanup" name="radio19" (change)="changeScore('mealPreparationCleanup',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.mealPreparationCleanup" name="radio19" (change)="changeScore('mealPreparationCleanup',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.mealPreparationCleanup" name="radio19" (change)="changeScore('mealPreparationCleanup',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Medication Management
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.medicationManagement" name="radio20" (change)="changeScore('medicationManagement',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.medicationManagement" name="radio20" (change)="changeScore('medicationManagement',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.medicationManagement" name="radio20" (change)="changeScore('medicationManagement',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.medicationManagement" name="radio20" (change)="changeScore('medicationManagement',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.medicationManagement" name="radio20" (change)="changeScore('medicationManagement',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.medicationManagement" name="radio20" (change)="changeScore('medicationManagement',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Safety Procedures
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.safetyProcedures" name="radio21" (change)="changeScore('safetyProcedures',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.safetyProcedures" name="radio21" (change)="changeScore('safetyProcedures',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.safetyProcedures" name="radio21" (change)="changeScore('safetyProcedures',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.safetyProcedures" name="radio21" (change)="changeScore('safetyProcedures',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.safetyProcedures" name="radio21" (change)="changeScore('safetyProcedures',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.safetyProcedures" name="radio21" (change)="changeScore('safetyProcedures',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Shopping
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.shopping" name="radio22" (change)="changeScore('shopping',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.shopping" name="radio22" (change)="changeScore('shopping',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.shopping" name="radio22" (change)="changeScore('shopping',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.shopping" name="radio22" (change)="changeScore('shopping',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.shopping" name="radio22" (change)="changeScore('shopping',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.shopping" name="radio22" (change)="changeScore('shopping',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="bg-light">3) Education</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Educational Exploration
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.educationalExploration" name="radio23" (change)="changeScore('educationalExploration',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.educationalExploration" name="radio23" (change)="changeScore('educationalExploration',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.educationalExploration" name="radio23" (change)="changeScore('educationalExploration',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.educationalExploration" name="radio23" (change)="changeScore('educationalExploration',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.educationalExploration" name="radio23" (change)="changeScore('educationalExploration',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.educationalExploration" name="radio23" (change)="changeScore('educationalExploration',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Formal Educational Participation
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.formalEducationalParticipation" name="radio24" (change)="changeScore('formalEducationalParticipation',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.formalEducationalParticipation" name="radio24" (change)="changeScore('formalEducationalParticipation',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.formalEducationalParticipation" name="radio24" (change)="changeScore('formalEducationalParticipation',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.formalEducationalParticipation" name="radio24" (change)="changeScore('formalEducationalParticipation',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.formalEducationalParticipation" name="radio24" (change)="changeScore('formalEducationalParticipation',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.formalEducationalParticipation" name="radio24" (change)="changeScore('formalEducationalParticipation',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Informal Educational Participation
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.informalEducationalParticipation" name="radio25" (change)="changeScore('informalEducationalParticipation',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.informalEducationalParticipation" name="radio25" (change)="changeScore('informalEducationalParticipation',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.informalEducationalParticipation" name="radio25" (change)="changeScore('informalEducationalParticipation',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.informalEducationalParticipation" name="radio25" (change)="changeScore('informalEducationalParticipation',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.informalEducationalParticipation" name="radio25" (change)="changeScore('informalEducationalParticipation',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.informalEducationalParticipation" name="radio25" (change)="changeScore('informalEducationalParticipation',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="bg-light">4) Work</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Employment Interests & Pursuits
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.employmentInterestsPursuits" name="radio26" (change)="changeScore('employmentInterestsPursuits',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.employmentInterestsPursuits" name="radio26" (change)="changeScore('employmentInterestsPursuits',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.employmentInterestsPursuits" name="radio26" (change)="changeScore('employmentInterestsPursuits',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.employmentInterestsPursuits" name="radio26" (change)="changeScore('employmentInterestsPursuits',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.employmentInterestsPursuits" name="radio26" (change)="changeScore('employmentInterestsPursuits',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.employmentInterestsPursuits" name="radio26" (change)="changeScore('employmentInterestsPursuits',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Seeking Employment
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.seekingEmployment" name="radio27" (change)="changeScore('seekingEmployment',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.seekingEmployment" name="radio27" (change)="changeScore('seekingEmployment',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.seekingEmployment" name="radio27" (change)="changeScore('seekingEmployment',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.seekingEmployment" name="radio27" (change)="changeScore('seekingEmployment',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.seekingEmployment" name="radio27" (change)="changeScore('seekingEmployment',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.seekingEmployment" name="radio27" (change)="changeScore('seekingEmployment',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Job Performance
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.jobPerformance" name="radio28" (change)="changeScore('jobPerformance',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.jobPerformance" name="radio28" (change)="changeScore('jobPerformance',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.jobPerformance" name="radio28" (change)="changeScore('jobPerformance',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.jobPerformance" name="radio28" (change)="changeScore('jobPerformance',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.jobPerformance" name="radio28" (change)="changeScore('jobPerformance',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.jobPerformance" name="radio28" (change)="changeScore('jobPerformance',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Capacity
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.capacity" name="radio29" (change)="changeScore('capacity',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.capacity" name="radio29" (change)="changeScore('capacity',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.capacity" name="radio29" (change)="changeScore('capacity',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.capacity" name="radio29" (change)="changeScore('capacity',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.capacity" name="radio29" (change)="changeScore('capacity',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.capacity" name="radio29" (change)="changeScore('capacity',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Retirement Adjustment
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.retirementAdjustment" name="radio30" (change)="changeScore('retirementAdjustment',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.retirementAdjustment" name="radio30" (change)="changeScore('retirementAdjustment',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.retirementAdjustment" name="radio30" (change)="changeScore('retirementAdjustment',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.retirementAdjustment" name="radio30" (change)="changeScore('retirementAdjustment',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.retirementAdjustment" name="radio30" (change)="changeScore('retirementAdjustment',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.retirementAdjustment" name="radio30" (change)="changeScore('retirementAdjustment',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Seeking Volunteer Employment
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.seekingVolunteerEmployment" name="radio31" (change)="changeScore('seekingVolunteerEmployment',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.seekingVolunteerEmployment" name="radio31" (change)="changeScore('seekingVolunteerEmployment',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.seekingVolunteerEmployment" name="radio31" (change)="changeScore('seekingVolunteerEmployment',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.seekingVolunteerEmployment" name="radio31" (change)="changeScore('seekingVolunteerEmployment',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.seekingVolunteerEmployment" name="radio31" (change)="changeScore('seekingVolunteerEmployment',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.seekingVolunteerEmployment" name="radio31" (change)="changeScore('seekingVolunteerEmployment',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Volunteer
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.volunteer" name="radio32" (change)="changeScore('volunteer',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.volunteer" name="radio32" (change)="changeScore('volunteer',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.volunteer" name="radio32" (change)="changeScore('volunteer',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.volunteer" name="radio32" (change)="changeScore('volunteer',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.volunteer" name="radio32" (change)="changeScore('volunteer',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.volunteer" name="radio32" (change)="changeScore('volunteer',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Participation
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.participation" name="radio33" (change)="changeScore('participation',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.participation" name="radio33" (change)="changeScore('participation',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.participation" name="radio33" (change)="changeScore('participation',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.participation" name="radio33" (change)="changeScore('participation',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.participation" name="radio33" (change)="changeScore('participation',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.participation" name="radio33" (change)="changeScore('participation',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="bg-light">5) Leisure</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Leisure Exploration
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.leisureExploration" name="radio34" (change)="changeScore('leisureExploration',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.leisureExploration" name="radio34" (change)="changeScore('leisureExploration',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.leisureExploration" name="radio34" (change)="changeScore('leisureExploration',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.leisureExploration" name="radio34" (change)="changeScore('leisureExploration',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.leisureExploration" name="radio34" (change)="changeScore('leisureExploration',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.leisureExploration" name="radio34" (change)="changeScore('leisureExploration',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Leisure Participation
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.leisureParticipation" name="radio35" (change)="changeScore('leisureParticipation',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.leisureParticipation" name="radio35" (change)="changeScore('leisureParticipation',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.leisureParticipation" name="radio35" (change)="changeScore('leisureParticipation',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.leisureParticipation" name="radio35" (change)="changeScore('leisureParticipation',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.leisureParticipation" name="radio35" (change)="changeScore('leisureParticipation',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.leisureParticipation" name="radio35" (change)="changeScore('leisureParticipation',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="bg-light">6) Social Participation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Family
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.family" name="radio36" (change)="changeScore('family',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.family" name="radio36" (change)="changeScore('family',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.family" name="radio36" (change)="changeScore('family',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.family" name="radio36" (change)="changeScore('family',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.family" name="radio36" (change)="changeScore('family',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.family" name="radio36" (change)="changeScore('family',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Peer/Friend
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.peerFriend" name="radio37" (change)="changeScore('peerFriend',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.peerFriend" name="radio37" (change)="changeScore('peerFriend',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.peerFriend" name="radio37" (change)="changeScore('peerFriend',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.peerFriend" name="radio37" (change)="changeScore('peerFriend',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.peerFriend" name="radio37" (change)="changeScore('peerFriend',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.peerFriend" name="radio37" (change)="changeScore('peerFriend',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Community
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.community" name="radio38" (change)="changeScore('community',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.community" name="radio38" (change)="changeScore('community',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.community" name="radio38" (change)="changeScore('community',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.community" name="radio38" (change)="changeScore('community',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.community" name="radio38" (change)="changeScore('community',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.community" name="radio38" (change)="changeScore('community',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Religion
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.religion" name="radio39" (change)="changeScore('religion',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.religion" name="radio39" (change)="changeScore('religion',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.religion" name="radio39" (change)="changeScore('religion',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.religion" name="radio39" (change)="changeScore('religion',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.religion" name="radio39" (change)="changeScore('religion',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.religion" name="radio39" (change)="changeScore('religion',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Violence and Aggression
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.violenceAggression" name="radio40" (change)="changeScore('violenceAggression',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.violenceAggression" name="radio40" (change)="changeScore('violenceAggression',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.violenceAggression" name="radio40" (change)="changeScore('violenceAggression',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.violenceAggression" name="radio40" (change)="changeScore('violenceAggression',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.violenceAggression" name="radio40" (change)="changeScore('violenceAggression',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.violenceAggression" name="radio40" (change)="changeScore('violenceAggression',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Suicide
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.suicide" name="radio41" (change)="changeScore('suicide',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.suicide" name="radio41" (change)="changeScore('suicide',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.suicide" name="radio41" (change)="changeScore('suicide',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.suicide" name="radio41" (change)="changeScore('suicide',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.suicide" name="radio41" (change)="changeScore('suicide',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.suicide" name="radio41" (change)="changeScore('suicide',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Self-Neglect
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.selfNeglect" name="radio42" (change)="changeScore('selfNeglect',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.selfNeglect" name="radio42" (change)="changeScore('selfNeglect',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.selfNeglect" name="radio42" (change)="changeScore('selfNeglect',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.selfNeglect" name="radio42" (change)="changeScore('selfNeglect',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.selfNeglect" name="radio42" (change)="changeScore('selfNeglect',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.selfNeglect" name="radio42" (change)="changeScore('selfNeglect',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Wandering
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.wandering" name="radio43" (change)="changeScore('wandering',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.wandering" name="radio43" (change)="changeScore('wandering',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.wandering" name="radio43" (change)="changeScore('wandering',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.wandering" name="radio43" (change)="changeScore('wandering',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.wandering" name="radio43" (change)="changeScore('wandering',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.wandering" name="radio43" (change)="changeScore('wandering',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Sexual Offences
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.sexualOffences" name="radio44" (change)="changeScore('sexualOffences',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.sexualOffences" name="radio44" (change)="changeScore('sexualOffences',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.sexualOffences" name="radio44" (change)="changeScore('sexualOffences',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.sexualOffences" name="radio44" (change)="changeScore('sexualOffences',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.sexualOffences" name="radio44" (change)="changeScore('sexualOffences',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.sexualOffences" name="radio44" (change)="changeScore('sexualOffences',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Inappropriate Sexual Behaviour
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.inappropriateSexualBehaviour" name="radio45" (change)="changeScore('inappropriateSexualBehaviour',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.inappropriateSexualBehaviour" name="radio45" (change)="changeScore('inappropriateSexualBehaviour',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.inappropriateSexualBehaviour" name="radio45" (change)="changeScore('inappropriateSexualBehaviour',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.inappropriateSexualBehaviour" name="radio45" (change)="changeScore('inappropriateSexualBehaviour',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.inappropriateSexualBehaviour" name="radio45" (change)="changeScore('inappropriateSexualBehaviour',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.inappropriateSexualBehaviour" name="radio45" (change)="changeScore('inappropriateSexualBehaviour',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Deliberate Fire Setting
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.deliberateFireSetting" name="radio46" (change)="changeScore('deliberateFireSetting',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.deliberateFireSetting" name="radio46" (change)="changeScore('deliberateFireSetting',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.deliberateFireSetting" name="radio46" (change)="changeScore('deliberateFireSetting',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.deliberateFireSetting" name="radio46" (change)="changeScore('deliberateFireSetting',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.deliberateFireSetting" name="radio46" (change)="changeScore('deliberateFireSetting',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.deliberateFireSetting" name="radio46" (change)="changeScore('deliberateFireSetting',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Deliberate Self-Harm
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.deliberateSelfHarm" name="radio47" (change)="changeScore('deliberateSelfHarm',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.deliberateSelfHarm" name="radio47" (change)="changeScore('deliberateSelfHarm',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.deliberateSelfHarm" name="radio47" (change)="changeScore('deliberateSelfHarm',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.deliberateSelfHarm" name="radio47" (change)="changeScore('deliberateSelfHarm',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.deliberateSelfHarm" name="radio47" (change)="changeScore('deliberateSelfHarm',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.deliberateSelfHarm" name="radio47" (change)="changeScore('deliberateSelfHarm',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Other Self-Harm(e.g. eating disorder)
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.otherSelfHarm" name="radio48" (change)="changeScore('otherSelfHarm',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.otherSelfHarm" name="radio48" (change)="changeScore('otherSelfHarm',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.otherSelfHarm" name="radio48" (change)="changeScore('otherSelfHarm',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.otherSelfHarm" name="radio48" (change)="changeScore('otherSelfHarm',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.otherSelfHarm" name="radio48" (change)="changeScore('otherSelfHarm',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.otherSelfHarm" name="radio48" (change)="changeScore('otherSelfHarm',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Abuse/ Exploitation From Others
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.abuseExploitationFromOthers" name="radio49" (change)="changeScore('abuseExploitationFromOthers',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.abuseExploitationFromOthers" name="radio49" (change)="changeScore('abuseExploitationFromOthers',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.abuseExploitationFromOthers" name="radio49" (change)="changeScore('abuseExploitationFromOthers',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.abuseExploitationFromOthers" name="radio49" (change)="changeScore('abuseExploitationFromOthers',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.abuseExploitationFromOthers" name="radio49" (change)="changeScore('abuseExploitationFromOthers',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.abuseExploitationFromOthers" name="radio49" (change)="changeScore('abuseExploitationFromOthers',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accidental Injury
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.accidentalInjury" name="radio50" (change)="changeScore('accidentalInjury',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.accidentalInjury" name="radio50" (change)="changeScore('accidentalInjury',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.accidentalInjury" name="radio50" (change)="changeScore('accidentalInjury',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.accidentalInjury" name="radio50" (change)="changeScore('accidentalInjury',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.accidentalInjury" name="radio50" (change)="changeScore('accidentalInjury',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.accidentalInjury" name="radio50" (change)="changeScore('accidentalInjury',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Substance Misuse
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.substanceMisuse" name="radio51" (change)="changeScore('substanceMisuse',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.substanceMisuse" name="radio51" (change)="changeScore('substanceMisuse',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.substanceMisuse" name="radio51" (change)="changeScore('substanceMisuse',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.substanceMisuse" name="radio51" (change)="changeScore('substanceMisuse',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.substanceMisuse" name="radio51" (change)="changeScore('substanceMisuse',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.substanceMisuse" name="radio51" (change)="changeScore('substanceMisuse',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Other
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.other" name="radio52" (change)="changeScore('other',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.other" name="radio52" (change)="changeScore('other',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.other" name="radio52" (change)="changeScore('other',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.other" name="radio52" (change)="changeScore('other',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.other" name="radio52" (change)="changeScore('other',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.other" name="radio52" (change)="changeScore('other',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="bg-light">7) Disengagement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Non-contact with Services
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.nonContactWithServices" name="radio53" (change)="changeScore('nonContactWithServices',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.nonContactWithServices" name="radio53" (change)="changeScore('nonContactWithServices',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.nonContactWithServices" name="radio53" (change)="changeScore('nonContactWithServices',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.nonContactWithServices" name="radio53" (change)="changeScore('nonContactWithServices',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.nonContactWithServices" name="radio53" (change)="changeScore('nonContactWithServices',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.nonContactWithServices" name="radio53" (change)="changeScore('nonContactWithServices',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Non-engagement with Care Plan
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.nonEngagementWithCarePlan" name="radio54" (change)="changeScore('nonEngagementWithCarePlan',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.nonEngagementWithCarePlan" name="radio54" (change)="changeScore('nonEngagementWithCarePlan',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.nonEngagementWithCarePlan" name="radio54" (change)="changeScore('nonEngagementWithCarePlan',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.nonEngagementWithCarePlan" name="radio54" (change)="changeScore('nonEngagementWithCarePlan',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.nonEngagementWithCarePlan" name="radio54" (change)="changeScore('nonEngagementWithCarePlan',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.nonEngagementWithCarePlan" name="radio54" (change)="changeScore('nonEngagementWithCarePlan',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Non-compliance with Medication
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="5" [(ngModel)]="functionalChecklist.nonComplianceWithMedication" name="radio55" (change)="changeScore('nonComplianceWithMedication',5)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="4" [(ngModel)]="functionalChecklist.nonComplianceWithMedication" name="radio55" (change)="changeScore('nonComplianceWithMedication',4)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="3" [(ngModel)]="functionalChecklist.nonComplianceWithMedication" name="radio55" (change)="changeScore('nonComplianceWithMedication',3)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="2" [(ngModel)]="functionalChecklist.nonComplianceWithMedication" name="radio55" (change)="changeScore('nonComplianceWithMedication',2)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="1" [(ngModel)]="functionalChecklist.nonComplianceWithMedication" name="radio55" (change)="changeScore('nonComplianceWithMedication',1)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="form-group form-check mb-0">
+                                    <input type="radio" [value]="0" [(ngModel)]="functionalChecklist.nonComplianceWithMedication" name="radio55" (change)="changeScore('nonComplianceWithMedication',0)" id="bathingshowering" class="form-check-input mt-1">
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <h4>Additional notes</h4>
+            <div class="care-infotable w-96 mb-3">
+                <div class="form-group">
+                    <textarea maxlength="5000" rows="4" cols="4" class="form-control" [(ngModel)]="functionalChecklist.additionalNotes"></textarea>
+                </div>
+            </div>
+
+            <div class="bg_lightblue d-inline-block w-100">
+                <div class="care-infotable d-inline-block float-left mb-0 p-3">
+                    <table class="table mb-0">
+                        <tbody>
+                            <!-- <tr>
+                                <th class="border-top-0">
+                                    Completed by
+                                </th>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <select class="form-control" [(ngModel)]="functionalChecklist.completedBy" (ngModelChange)="setPosition($event)" id="completedBy" name="compeletedBy">
+                                        <ng-container *ngFor="let user of usersList;">
+                                            <option [attr.data-somedata]="user.position" [ngValue]="user.id">
+                                                {{ (user.firstName ==null || user.lastName ==
+                                                null)? user.email: user.firstName+"
+                                                "+user.lastName}}
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                    </div>
+                                </td>
+                            </tr> -->
+                            <tr>
+                                <th class="border-top-0">
+                                    Date completed
+                                </th>
+                                <td class="border-top-0">
+                                    <input type="date" [ngModel]="functionalChecklist.completedDate|date:'yyyy-MM-dd'" (ngModelChange)="functionalChecklist.completedDate = $event" class="form-control" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="border-top-0">
+                                    Location
+                                </th>
+                                <td class="border-top-0">
+                                    {{getLocationName(userData.locationId)}}
+                                </td>
+                            </tr>
+                            <tr [ngClass]="{'d-none':isEdit}">
+                                <th class="border-top-0">
+                                    Sign-off by
+                                </th>
+                                <td class="border-top-0">
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <select class="form-control" [disabled]="currentUserRole == userType.SuperUser || currentUserRole == userType.Admin" [(ngModel)]="functionalChecklist.signOffBy" id="signOffBy" name="signOffBy">
+                                        <ng-container *ngFor="let user of usersList;">
+                                            <option
+                                                *ngIf="user.userType == userType.SuperUser || user.userType == userType.Admin"
+                                                [ngValue]="user.id">
+                                                {{ (user.firstName ==null || user.lastName
+                                                == null)? user.email: user.firstName+"
+                                                "+user.lastName}}
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="care-infotable d-inline-block float-left mb-0 p-3">
+                    <table class="table mb-0">
+                        <tbody>
+                            <!-- <tr>
+                                <th class="border-top-0">
+                                    Position
+                                </th>
+                                <td class="border-top-0">
+                                    <label>{{positon}} </label>
+                                </td>
+                            </tr> -->
+                            <tr>
+                                <th class="border-top-0">
+                                    Date of next review
+                                </th>
+                                <td class="border-top-0">
+                                    <input type="date" [ngModel]="functionalChecklist.nextReviewDate|date:'yyyy-MM-dd'" (ngModelChange)="functionalChecklist.nextReviewDate = $event" class="form-control" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="border-top-0">
+                                    Circulated to
+                                </th>
+                                <td class="border-top-0">
+                                    <span class="d-none">N/A</span>
+                                    <ng-container *ngFor="let circulated of circulatedToArray">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="checkbox" class="form-check-input mt-0" name="circulated{{circulated.value}}" [checked]="isCirculatedChecked(circulated.value)" (change)="changeCirculated(circulated,$event)" id="circulated{{circulated.value}}">
+                                            <ng-container *ngIf="circulated.value == circulatedToEnum.Psychiatrist">
+                                                <label class="form-check-label" for="circulated{{circulated.value}}">Psychiatrist</label>
+                                            </ng-container>
+                                            <ng-container *ngIf="circulated.value == circulatedToEnum.CareCoordinator">
+                                                <label class="form-check-label" for="circulated{{circulated.value}}">Care
+                                                coordinator</label>
+                                            </ng-container>
+                                            <ng-container *ngIf="circulated.value == circulatedToEnum.Patient">
+                                                <label class="form-check-label" for="circulated{{circulated.value}}">Patient</label>
+                                            </ng-container>
+                                            <ng-container *ngIf="circulated.value == circulatedToEnum.Family">
+                                                <label class="form-check-label" for="circulated{{circulated.value}}">Family</label>
+                                            </ng-container>
+                                            <ng-container *ngIf="circulated.value == circulatedToEnum.Other">
+                                                <label class="form-check-label" for="circulated{{circulated.value}}">Other</label>
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                <button type="button" (click)="onSubmit()" class="btn btn-sm btn-success rounded-pill">
+                Submit <i class="mdi mdi-content-save"></i>
+            </button>
+            </div>
+        </div>
+    </div>
+</ng-container>

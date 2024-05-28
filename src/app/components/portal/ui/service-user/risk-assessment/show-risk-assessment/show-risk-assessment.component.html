@@ -1,0 +1,1842 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <ng-container *ngIf="showLabel">
+                <div class="container">
+                    <div class="col-sm-12 text-center">
+                        <label class="alert alert-danger mt-3 w-100 w-100"> Please complete registration first</label>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!showLabel && !showLogDetail">
+                <div class="horizontal-tabs my-3 bg-white shadow-sm">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12 no-pad scroller">
+                                <div class="left-btn-scroller left-scroll ">
+                                    <i class="mdi mdi-chevron-left"></i>
+                                </div>
+                                <div class="right-btn-scroller right-scroll ">
+                                    <i class="mdi mdi-chevron-right"></i>
+                                </div>
+                                <div class="box_nav_tab riskbox-secction" id="scroll-div">
+                                    <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#section-1" role="tab"
+                                                aria-controls="section-1" [ngClass]="{ 'active':active ==1}"
+                                                (click)="onTabChange(1)">
+                                                <span>SECTION 1</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#section-2" role="tab"
+                                                aria-controls="section-2" [ngClass]="{ 'active':active ==2}"
+                                                (click)="onTabChange(2)">
+                                                <span>SECTION 2</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#section-3" role="tab"
+                                                aria-controls="section-3" [ngClass]="{ 'active':active ==3}"
+                                                (click)="onTabChange(3)">
+                                                <span>SECTION 3</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#section-4" role="tab"
+                                                aria-controls="section-4" [ngClass]="{ 'active':active ==4}"
+                                                (click)="onTabChange(4)">
+                                                <span>SECTION 4</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#section-5" role="tab"
+                                                aria-controls="section-5" [ngClass]="{ 'active':active ==5}"
+                                                (click)="onTabChange(5)">
+                                                <span>AUDIT LOG</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form #riskAss>
+                        <div class="tab-content">
+                            <div class="tab-pane " [ngClass]="{ 'active':active ==1}" id="section-1" role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="pull-right">
+                                            <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2"
+                                                (click)="getRiskAssessments()">Go Back</button>
+                                        </div>
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                                </li>
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User no.: </b></span>
+                                                    <span>{{userData.serviceUserNumber}}</span>
+                                                </li>
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <h4>Other agencies involved (tick as appropriate and detail below)</h4>
+                                    <div class="care-infotable w-75 float-left">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <div class="form-group form-check mb-0">
+                                                        <label>{{getOtherAgency(riskAssessmentData.otherAgenciesInvolved)}}</label>
+                                                    </div>
+                                                </tr>
+                                                <tr *ngIf="riskAssessmentData.otherAgenciesInvolvedSpecification">
+                                                    <th class="border-top-0 ">
+                                                        Other (specify)
+                                                    </th>
+                                                    <td class="border-top-0 ">
+                                                        <div class="form-group">
+                                                            <span class="form-control"
+                                                                name="otherAgenciesInvolvedSpecification" readonly
+                                                                readonly
+                                                                [(ngModel)]="riskAssessmentData.otherAgenciesInvolvedSpecification"
+                                                                cols="5" rows="2"></span>
+                                                        </div>
+                                                    </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <h4 class="mb-0 py-3 bg-white">Assessment Details</h4>
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="">
+                                                        Assessment type
+                                                    </th>
+                                                    <td>
+                                                        <span class="d-none"></span>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <div class="input-group">
+                                                                <input type="text" name="assessmentType" readonly
+                                                                    [(ngModel)]="riskAssessmentData.assessmentType"
+                                                                    class="form-control mb-1">
+                                                            </div>
+                                                            <span class="d-block">Repeat/Discharge/Follow up</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        CPA status at time of assessment
+                                                    </th>
+                                                    <td>
+                                                        <span class="d-none">N/A</span>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            {{cpaStatusEnum[riskAssessmentData.cpaStatus]}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        Legal status
+                                                    </th>
+                                                    <td>
+                                                        <span class="d-none">N/A</span>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <label>
+                                                                {{legalStatusRiskEnum[riskAssessmentData.legalStatus]}}</label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        Was the person assessed in a crisis situation?
+                                                    </th>
+                                                    <td>
+                                                        <span class="d-none">N/A</span>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <select class=" form-control" disabled name="isAssessed"
+                                                                [(ngModel)]="riskAssessmentData.isAssessed"
+                                                                id="crisis-situation">
+                                                                <option [ngValue]="true">Yes</option>
+                                                                <option [ngValue]="false">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <h4 class="mb-0 py-3 bg-white">Assessment Summary</h4>
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="">
+                                                        Is there any evidence of a history of significant risk
+                                                        behaviour?
+                                                    </th>
+                                                    <td>
+                                                        <span class="d-none">N/A</span>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <select class=" form-control" disabled
+                                                                name="riskBehaviourEvidence"
+                                                                [(ngModel)]="riskAssessmentData.riskBehaviourEvidence"
+                                                                id="history-significant">
+                                                                <option [ngValue]="true">Yes</option>
+                                                                <option [ngValue]="false">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Involved in serious incident in past 3 months?
+                                                    </th>
+                                                    <td>
+                                                        <span class="d-none">N/A</span>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <span>{{seriousIncidentEnum[riskAssessmentData.pastSeriousIncident]}}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="w-100 d-inline-block mt-2 mb-3">
+                                        <div class="care-infotable d-inline-block float-left d-block">
+                                            <h4 class="mb-0 py-3 bg-white">Current Risk Status</h4>
+                                            <table class="table mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>
+                                                            Risk of violence to others
+                                                        </th>
+                                                        <td>
+                                                            <span>{{(riskAssessmentData.riskOfVioleance==5)?9:riskAssessmentData.riskOfVioleance}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Risk of suicide
+                                                        </th>
+                                                        <td>
+                                                            <span>{{(riskAssessmentData.riskOfSuicide ==
+                                                                5)?9:riskAssessmentData.riskOfSuicide}} </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Risk of deliberate self-harm
+                                                        </th>
+                                                        <td>
+                                                            <span>{{(riskAssessmentData.riskDeliberateSelfHarm ==
+                                                                5)?9:riskAssessmentData.riskDeliberateSelfHarm}} </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Risk of severe self-neglect
+                                                        </th>
+                                                        <td>
+                                                            <span>{{(riskAssessmentData.riskSevereSelfNeglect ==
+                                                                5)?9:riskAssessmentData.riskSevereSelfNeglect}} </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Risk of accidental self-harm
+                                                        </th>
+                                                        <td>
+                                                            <span>{{(riskAssessmentData.accidentalSelfHarm ==
+                                                                5)?9:riskAssessmentData.accidentalSelfHarm}} </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Risk of abuse/exploitation by others
+                                                        </th>
+                                                        <td>
+                                                            <span>{{(riskAssessmentData.abuseExploitationByOthers ==
+                                                                5)?9:riskAssessmentData.abuseExploitationByOthers}}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Risk related to physical condition
+                                                        </th>
+                                                        <td>
+                                                            <span>{{(riskAssessmentData.riskPhysicalCondition ==
+                                                                5)?9:riskAssessmentData.riskPhysicalCondition}} </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            High risk of relapse?
+                                                        </th>
+                                                        <td>
+                                                            <span>{{(riskAssessmentData.highRiskOfRelapse)?'Yes':"No"}}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="care-infotable d-inline-block float-left d-block mt-5">
+                                            <h4 class="mb-0 py-3">Note</h4>
+                                            <ul>
+                                                <li>
+                                                    Rate all items using the scale shown (9=not known):
+                                                </li>
+                                                <li>
+                                                    0 = No apparent risk. No history/warning signs indicative of risk.
+                                                </li>
+                                                <li>
+                                                    1 = Low apparent risk. No current indication of risk, but person’s
+                                                    history and/or warning signs indicate possible risk. Required
+                                                    precautions covered by standard care plan i.e. no special risk
+                                                    prevention measures or plan required.
+                                                </li>
+                                                <li>
+                                                    2 = Significant risk. Person’s history and condition indicate the
+                                                    presence of risk and this is considered to be a significant issue at
+                                                    present. Requires a contingency risk management plan.
+                                                </li>
+                                                <li>
+                                                    3 = Serious risk. Substantial current risk. Circumstances are such
+                                                    that a risk management plan should be/has been drawn up and
+                                                    implemented.
+                                                </li>
+                                                <li>
+                                                    4 = Serious and imminent risk. Person’s history and/or warning signs
+                                                    indicate the presence of risk and this is considered imminent.
+                                                    Highest priority to be given to risk prevention.
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <h4>Persons potentially at risk (tick as appropriate and detail on section 3)</h4>
+
+                                    <div class="care-infotable ovrflow-auto w-96 ">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span>{{personsAtRiskEnum[riskAssessmentData.potentialRisk]}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="care-infotable ovrflow-auto w-96">
+                                        <table class="table w-100">
+                                            <tbody>
+                                                <tr *ngIf="riskAssessmentData.potentialRisk == personsAtRiskEnum.Child">
+                                                    <th class="border-top-0 w-50">
+                                                        Is there a dependent child?
+                                                    </th>
+                                                    <td class="border-top-0 w-50">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <select name="isDependentChild" readonly
+                                                                [(ngModel)]="riskAssessmentData.isDependentChild"
+                                                                class=" form-control" id="involvedserious">
+                                                                <option [ngValue]="true">Yes</option>
+                                                                <option [ngValue]="false">No</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="riskAssessmentData.potentialRisk == personsAtRiskEnum.Other">
+                                                    <th class="border-top-0 w-25">
+                                                        Other (specify)
+                                                    </th>
+                                                    <td class="border-top-0 w-75">
+                                                        <div class="form-group">
+                                                            <span class="form-control" name="potentialRiskSpecification"
+                                                                readonly
+                                                                [(ngModel)]="riskAssessmentData.potentialRiskSpecification"
+                                                                rows="2" cols="4"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h4>Further actions recommended/required (tick as appropriate and detail below)</h4>
+                                    <div class="care-infotable w-96 mb-3">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        {{furtherActionsEnum[riskAssessmentData.futherAction]}}
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h4>Additional notes</h4>
+                                    <div class="care-infotable w-96 mb-3">
+                                        <div class="form-group">
+                                            <span>{{riskAssessmentData.additionalNote1}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+
+                                        <button type="button" (click)="onTabChange(2)"
+                                            class="btn btn-sm btn-info btn-next rounded-pill">
+                                            Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active ==2}" id="section-2" role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="pull-right">
+                                            <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2"
+                                                (click)="getRiskAssessments()">Go Back</button>
+                                        </div>
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                                </li>
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User no.: </b></span>
+                                                    <span>{{userData.serviceUserNumber}}</span>
+                                                </li>
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <h4 data-toggle="collapse" href="#collapseone" role="button" aria-expanded="true"
+                                        aria-controls="collapseExample" class="drop-collapse w-75 mb-0 pr-2 tab-w-100">
+                                        <i class="mdi mdi-chevron-down float-right"></i>Clinical symptoms indicative of
+                                        risk
+                                    </h4>
+                                    <div id="collapseone" class="care-infotable w-75 float-left collapse">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>History</th>
+                                                    <th>Current</th>
+                                                    <th>Notes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th class="">
+                                                        Early warning signs of relapse
+                                                    </th>
+                                                    <td>
+                                                        {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.earlyWarningSign]):"N/A"}}
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{riskEntryEnum[riskAssessmentData.earlyWarningSign]}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{riskAssessmentData.earlyWarningSignNote}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        Ideas of harming others
+                                                    </th>
+                                                    <td>
+                                                        {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.ideaHarmingOthers]):"N/A"}}
+                                                    </td>
+                                                    <td>
+                                                        {{riskEntryEnum[riskAssessmentData.ideaHarmingOthers]}}
+
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{riskAssessmentData.ideaHarmingOthersNote}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        Ideas of self-harm/suicidal ideation
+                                                    </th>
+                                                    <td>
+                                                        {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.ideaSelfHarm]):"N/A"}}
+                                                    </td>
+                                                    <td>
+                                                        {{riskEntryEnum[riskAssessmentData.ideaSelfHarm]}}
+
+                                                    </td>
+                                                    <td>
+                                                        <span class="">{{riskAssessmentData.ideaSelfHarmNote}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        Delusions
+                                                    </th>
+                                                    <td>
+                                                        {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.delusions]):"N/A"}}
+                                                    </td>
+                                                    <td>
+                                                        <span class="">
+                                                            {{riskEntryEnum[riskAssessmentData.ideaHarmingOthers]}}</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <span class="">{{riskAssessmentData.delusionsNote}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        Command hallucinations
+                                                    </th>
+                                                    <td>
+                                                        {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.commandHallucinations]):"N/A"}}
+                                                    </td>
+                                                    <td>
+                                                        <span class="">
+                                                            {{riskEntryEnum[riskAssessmentData.commandHallucinations]}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="">
+                                                            {{riskAssessmentData.commandHallucinationsNote}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        Morbid jealousy
+                                                    </th>
+                                                    <td>
+                                                        {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.morbidJealousy]):"N/A"}}
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{riskEntryEnum[riskAssessmentData.morbidJealousy]}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="">{{riskAssessmentData.morbidJealousyNote}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="">
+                                                        Impulsivity / lack of impulse control
+                                                    </th>
+                                                    <td>
+                                                        {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.impulsivity]):"N/A"}}
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="">{{riskEntryEnum[riskAssessmentData.impulsivity]}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="">{{riskAssessmentData.impulsivityNote}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="w-100 d-inline-block mt-3">
+                                        <h4 data-toggle="collapse" href="#collapsetwo" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i>Behaviour indicative of
+                                            risk
+                                        </h4>
+                                        <div id="collapsetwo" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>History</th>
+                                                        <th>Current</th>
+                                                        <th>Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="">
+                                                            Physical harm to others
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.pysicalHarm]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.pysicalHarm]}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.physicalHarmNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Threats/intimidation (inc. verbal abuse)
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.intimidation]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.intimidation]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            {{riskAssessmentData.intimidationNote}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Preparation to harm others inc. carrying weapons
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.preparationHarmingOthers]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.preparationHarmingOthers]}}</span>
+                                                            <div class="form-group mb-0 input-txtbox">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.preparationHarmingOthersNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Evidence of targeting (children/females/males)
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.evidenceOfTargeting]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.evidenceOfTargeting]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.evidenceOfTargetingNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Child protection issues
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.childProtectionIssue]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.childProtectionIssue]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.childProtectionIssueNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Suicide attempts
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.suicideAttempts]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.suicideAttempts]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.suicideAttemptsNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Plans or preparations to commit suicide
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.plansToCommitSuicide]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.plansToCommitSuicide]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.plansToCommitSuicideNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Deliberate self-harm (w. no evident suicidal intent)
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.deliberateSelfHarm]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.deliberateSelfHarm]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.deliberateSelfHarmNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Domestic risk (falling, unsafe use of appliances, fire)
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.domesticRisk]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.domesticRisk]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.domesticRiskNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Drug/alcohol abuse
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.drugAlcoholAbuse]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.drugAlcoholAbuse]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.drugAlcoholAbuseNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Fire-setting
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.fireSetting]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.fireSetting]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">{{riskAssessmentData.fireSettingNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Damage to property
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.damageToProperty]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.damageToProperty]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.damageToPropertyNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Reckless or unsafe behaviour (e.g. unsafe driving)
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.recklessUnsafeBehaviour]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.recklessUnsafeBehaviour]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="">{{riskAssessmentData.recklessUnsafeBehaviourNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Severe self-neglect
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.severeSelfNeglect]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.severeSelfNeglect]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.severeSelfNeglectNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Absconding
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.absconding]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.absconding]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class=""> {{riskAssessmentData.abscondingNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Wandering
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.wandering]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.wandering]}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class=""> {{riskAssessmentData.wanderingNote}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 d-inline-block mt-3">
+
+                                        <h4 data-toggle="collapse" href="#collapsethree" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i>Treatment-related
+                                            indicators
+                                        </h4>
+                                        <div id="collapsethree" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>History</th>
+                                                        <th>Current</th>
+                                                        <th>Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="">
+                                                            Discontinuation of medication/poor compliance
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.discontinuationMedication]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.discontinuationMedication]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.discontinuationMedicationNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Failure to attend appointments
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.failureToAttendAppointment]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.failureToAttendAppointment]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.failureToAttendAppointmentNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Unplanned disengagement from services
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.unplannedDisengagmentFromService]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.unplannedDisengagmentFromService]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.unplannedDisengagmentFromServiceNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Compulsory admission
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.compulsoryAdmission]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.compulsoryAdmission]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.compulsoryAdmissionNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Admission to intensive care ward
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.intensiveCareWard]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.intensiveCareWard]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.intensiveCareWardNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 d-inline-block mt-3">
+                                        <h4 data-toggle="collapse" href="#collapsefour" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i>Forensic history</h4>
+                                        <div id="collapsefour" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>History</th>
+                                                        <th>Current</th>
+                                                        <th>Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="">
+                                                            Conviction for violent offences
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.convictionViolentOffences]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.convictionViolentOffences]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.convictionViolentOffencesNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Conviction for sexual offences
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.convictionSexualOffences]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.convictionSexualOffences]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.convictionSexualOffencesNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Admission to special hospital
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.admissionToSpecialHospital]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.admissionToSpecialHospital]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.admissionToSpecialHospitalNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Admission to secure unit
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.admissionToSecureUnit]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.admissionToSecureUnit]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.admissionToSecureUnitNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Restriction order
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.restrictionOrder]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.restrictionOrder]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.restrictionOrderNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Supervised Discharge
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.supervisedDischarge]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.supervisedDischarge]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.supervisedDischargeNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Conditional discharge
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.conditionalDischarge]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.conditionalDischarge]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.conditionalDischargeNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Other involvement suggesting risk (e.g. injunctions)
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.otherInvolvementRisk]):"N/A"}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.otherInvolvementRisk]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.otherInvolvementRiskNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 d-inline-block mt-3 mb-3">
+                                        <h4 data-toggle="collapse" href="#collapsefive" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i>Personal circumstances
+                                            indicative of risk</h4>
+                                        <div id="collapsefive" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>History</th>
+                                                        <th>Current</th>
+                                                        <th>Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="">
+                                                            Family history of suicide
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.familyHistoryOfSuicide]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.familyHistoryOfSuicide]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.familyHistoryOfSuicideNote}}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Physical problems/frailty (e.g. risk of falling, illness)
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.physicalProblems]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.physicalProblems]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.physicalProblemsNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Recent severe stress/life event
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.recentSevereStress]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.recentSevereStress]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.recentSevereStressNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Lack of meaningful employment/occupation
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.lackOfEmployment]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.lackOfEmployment]}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.lackOfEmploymentNote}}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Financial difficulties
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.financialDifficulties]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.financialDifficulties]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.financialDifficultiesNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Concern expressed by others (relatives, carers)
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.concernExpressedByOthers]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.concernExpressedByOthers]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.concernExpressedByOthersNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Recurrence of circumstances associated with risk
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.recurrenceOfCircumstances]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.recurrenceOfCircumstances]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.recurrenceOfCircumstancesNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Abuse/victimisation by others
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.abuseByOthers]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.abuseByOthers]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.abuseByOthersNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Social isolation
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.socialIsolation]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.socialIsolation]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.socialIsolationNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Homelessness/rootlessness
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.homelessness]):"N/A"}}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskEntryEnum[riskAssessmentData.homelessness]}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskAssessmentData.homelessnessNote}}</span>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="">
+                                                            Other risk factor(s) (specify):
+                                                        </th>
+                                                        <td>
+                                                            {{(lastRiskAsssessment)?(riskEntryEnum[lastRiskAsssessment.otherRiskFactors]):"N/A"}}
+
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <span
+                                                                class="">{{riskAssessmentData.otherRiskFactors}}</span>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <h4>Additional notes</h4>
+                                    <div class="care-infotable w-75 mb-3">
+                                        <div class="form-group">
+                                            <span rows="4" cols="4" name="additionalNote2" readonly
+                                                [(ngModel)]="riskAssessmentData.additionalNote2"
+                                                class="form-control"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                        <button type="button" (click)="onTabChange(1)"
+                                            class="btn btn-sm btn-secondary rounded-pill">
+                                            <i class="mdi mdi-arrow-left mr-2"></i>
+                                            Back
+                                        </button>
+                                        <button type="button" (click)="onTabChange(3)"
+                                            class="btn btn-sm btn-info btn-next rounded-pill">
+                                            Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active ==3}" id="section-3" role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="pull-right">
+                                            <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2"
+                                                (click)="getRiskAssessments()">Go Back</button>
+                                        </div>
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                                </li>
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User no.: </b></span>
+                                                    <span>{{userData.serviceUserNumber}}</span>
+                                                </li>
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="w-100 d-inline-block mt-3">
+                                        <h4 data-toggle="collapse" href="#collapsethree1" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i> Descriptive Summary of
+                                            Main Risks Identified</h4>
+                                        <div id="collapsethree1" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>
+                                                            <div class="form-group mb-0">
+                                                                <span>{{riskAssessmentData.summaryOfMainRisks}}</span>
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="w-100 d-inline-block mt-3">
+                                        <h4 data-toggle="collapse" href="#collapsethree2" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i> Have actions been taken in
+                                            the past to reduce risk?</h4>
+                                        <div id="collapsethree2" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="border-bottom-0">
+                                                            <span>{{riskActionEnum[riskAssessmentData.actionToReduceRisk]}}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-group p-1 px-1 mb-0">
+                                                                <span>{{riskAssessmentData.actionToReduceRiskDesc}}</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 d-inline-block mt-3">
+                                        <h4 data-toggle="collapse" href="#collapsethree3" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i> Service user’s view of
+                                            risk </h4>
+                                        <div id="collapsethree3" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>
+                                                            Is service user aware of possible risks?
+                                                        </th>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskActionEnum[riskAssessmentData.isUserAwareOfRisks]}}</span>
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                            <div class="form-group p-3">
+                                                <span>{{riskAssessmentData.userAwareOfRisksDesc}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 d-inline-block mt-3">
+                                        <h4 data-toggle="collapse" href="#collapsethree4" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i> Carer’s view of risk</h4>
+                                        <div id="collapsethree4" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>
+                                                            Are the person’s carer(s)/family aware of possible risks?
+                                                        </th>
+                                                        <td>
+                                                            <span class="">
+                                                                {{riskActionEnum[riskAssessmentData.isFamilyAwareOfRisks]}}</span>
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                            <div class="form-group p-3">
+                                                <span>{{riskAssessmentData.isFamilyAwareOfRisksDesc}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 d-inline-block mt-3">
+                                        <h4 data-toggle="collapse" href="#collapsethree5" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i> Protective factors (e.g.
+                                            self-monitoring, social support)</h4>
+                                        <div id="collapsethree5" class="care-infotable ml-3 w-75 float-left collapse">
+                                            <div class="w-96 mb-3 ml-3">
+                                                <div class="form-group">
+                                                    <span>{{riskAssessmentData.protectiveFactor}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                        <button type="button" (click)="onTabChange(2)"
+                                            class="btn btn-sm btn-secondary rounded-pill">
+                                            <i class="mdi mdi-arrow-left mr-2"></i>
+                                            Back
+                                        </button>
+                                        <button type="button" (click)="onTabChange(4)"
+                                            class="btn btn-sm btn-info btn-next rounded-pill">
+                                            Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active ==4}" id="section-4" role="tabpanel">
+                                <div class="sv-tab-panel info_tab_container">
+                                    <div class="col-sm-12">
+                                        <div class="pull-right">
+                                            <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2"
+                                                (click)="getRiskAssessments()">Go Back</button>
+                                        </div>
+                                        <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                            <ul class="d-flex mb-0">
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User name: </b></span>
+                                                    <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                                </li>
+                                                <li class="mr-2 ">
+                                                    <span class="mr-2"><b>Service User no.: </b></span>
+                                                    <span>{{userData.serviceUserNumber}}</span>
+                                                </li>
+                                                <li class="mr-2">
+                                                    <span class="mr-2"><b>DOB: </b></span>
+                                                    <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="w-100 d-inline-block mt-3">
+                                        <div class="care-infotable w-75 d-inline-block float-left mb-0">
+                                            <h4 data-toggle="collapse" href="#collapsefour1" role="button"
+                                                aria-expanded="true" aria-controls="collapseExample"
+                                                class="drop-collapse mb-0 pr-2 ml-0 tab-w-100"><i
+                                                    class="mdi mdi-chevron-down float-right"></i> Areas of concern to be
+                                                addressed by plan</h4>
+                                            <div id="collapsefour1" class="ml-3 mb-3 w-96 float-left collapse">
+                                                <div class="form-group mb-0 mt-2">
+                                                    <span>{{riskAssessmentData.areasOfConcern}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-100 d-inline-block mt-3 mb-3">
+                                        <h4 data-toggle="collapse" href="#collapsefour2" role="button"
+                                            aria-expanded="true" aria-controls="collapseExample"
+                                            class="drop-collapse w-75 mb-0 pr-2 tab-w-100"><i
+                                                class="mdi mdi-chevron-down float-right"></i> Actions to be taken</h4>
+                                        <div id="collapsefour2" class="care-infotable w-75 float-left collapse">
+                                            <table class="table mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="d-none">N/A</span>
+                                                            <div class="form-group mb-0 input-txtbox d-inline-block">
+                                                                <select name="actionsToBeTaken" readonly
+                                                                    [(ngModel)]="riskAssessmentData.actionsToBeTaken"
+                                                                    class=" form-control" id="action-taken">
+                                                                    <option [ngValue]="0">None</option>
+                                                                    <option [ngValue]="1">Send further appointment
+                                                                    </option>
+                                                                    <option [ngValue]="2">Contact care co-ordinator
+                                                                    </option>
+                                                                    <option [ngValue]="3">Telephone</option>
+                                                                    <option [ngValue]="4">Discuss with Consultant
+                                                                    </option>
+                                                                    <option [ngValue]="5">Contact care manager</option>
+                                                                    <option [ngValue]="6">Visit home</option>
+                                                                    <option [ngValue]="7">Contact GP</option>
+                                                                    <option [ngValue]="8">Contact nominated carer
+                                                                    </option>
+                                                                    <option [ngValue]="9">Other (specify).</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="border-top-0">
+                                                            <div class="form-group py-2 px-1">
+                                                                <span>{{actionToBeTakenSpecification}}</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <h4>Information sources available / accessed in completing risk profile (Tick all
+                                        sources used)</h4>
+                                    <div class="care-infotable w-75 mb-3">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <label>{{getInformationSources(riskAssessmentData.informationSource)}}</label>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="riskAssessmentData.informationSourceSpecification">
+                                                    <th class="border-top-0 ">
+                                                        Other (specify)
+                                                    </th>
+                                                    <td class="border-top-0 ">
+                                                        <div class="form-group">
+                                                            <span>{{riskAssessmentData.informationSourceSpecification}}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="care-infotable d-inline-block float-left">
+                                        <h4 class="mb-0 py-3 bg-white">Assessment Details</h4>
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        Completed by
+                                                    </th>
+                                                    <td>
+                                                        <span class="d-none"></span>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <div class="input-group">
+                                                                <select class="form-control" disabled id="cpa_select"
+                                                                    name="completedBy"
+                                                                    [(ngModel)]="riskAssessmentData.completedBy">
+                                                                    <ng-container *ngFor="let user of usersList">
+                                                                        <option [ngValue]="user.id">
+                                                                            {{ (user.firstName ==null || user.lastName
+                                                                            == null)? user.email: user.firstName+"
+                                                                            "+user.lastName}}
+                                                                        </option>
+                                                                    </ng-container>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- <tr>
+                                                <th>
+                                                    Position
+                                                </th>
+                                                <td>
+                                                    <span class="d-none"></span>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <div class="input-group">
+                                                            <input type="text" name="position"readonly [(ngModel)]="riskAssessmentData.position" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr> -->
+                                                <tr>
+                                                    <th>
+                                                        Date completed
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{riskAssessmentData.completedDate |
+                                                            date:'yyyy-MM-dd'}}</span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Date of next review
+                                                    </th>
+                                                    <td>
+                                                        <span class="">{{riskAssessmentData.nextReviewDate |
+                                                            date:'yyyy-MM-dd'}}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Location
+                                                    </th>
+                                                    <td>
+                                                        <!-- <span class="d-none">{{userData.locationId}}</span> -->
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Circulated to
+                                                    </th>
+                                                    <td>
+                                                        <span
+                                                            class="">{{getCirculateToString(riskAssessmentData.circulatedTo)}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                        <button type="button" (click)="onTabChange(3)"
+                                            class="btn btn-sm btn-secondary rounded-pill">
+                                            <i class="mdi mdi-arrow-left mr-2"></i>
+                                            Back
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" [ngClass]="{ 'active':active ==5}" id="section-5" role="tabpanel">
+                                <h4 class="w-96 mt-4 mb-0 pl-2 mb-3 headr_myshare"> Audit log</h4>
+                                <div class="col-sm-12">
+                                    <div class="pull-right">
+                                        <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2"
+                                            (click)="getRiskAssessments()">Go Back</button>
+                                    </div>
+                                    <div class="box_patientinfo mx-3 mt-1 mb-3">
+                                        <ul class="d-flex mb-0">
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User name: </b></span>
+                                                <span>{{userData.firstName}} {{userData.lastName}}</span>
+                                            </li>
+                                            <li class="mr-2 ">
+                                                <span class="mr-2"><b>Service User no.: </b></span>
+                                                <span>{{userData.serviceUserNumber}}</span>
+                                            </li>
+                                            <li class="mr-2">
+                                                <span class="mr-2"><b>DOB: </b></span>
+                                                <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="care-infotable w-96 w-96-imp tab-wd-96 mb-0">
+                                    <table class="table w-75">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">
+                                                    SNo.
+                                                </th>
+                                                <th class="w-25">
+                                                    Date
+                                                </th>
+                                                <th class="w-25">
+                                                    Changed by
+                                                </th>
+                                                <th class="w-25">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngIf="logList.length > 0">
+                                            
+                                                <ng-container *ngFor="let log of logList; let i = index">
+                                                    <tr>
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{log.updatedTime|date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{(log.userName)?log.userName:'-'}}</td>
+                                                        <td>
+                                                            <div class="actionbox">
+                                                                <i class="mdi text-info mdi-eye-circle mr-2" title="Show Details"
+                                                                    (click)="showLogDetails(log.previousValue)"></i>
+                                            
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-container *ngIf="logList.length <= 0">
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <div class="text-center w-100 d-inline-block px-3 py-3">
+                                                            <div class="alert alert-danger" role="alert">
+                                                                <p class="mb-0"> No Record Found</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="showLogDetail">
+                <app-update-assessmentlog [previourValues]="previousValues" (showAllLogs)="showAllLogs()">
+                </app-update-assessmentlog>
+            </ng-container>
+
+        </div>
+    </div>
+
+</div>

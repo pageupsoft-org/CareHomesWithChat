@@ -1,0 +1,141 @@
+<div class="container-fluid">
+    <div class="row mt-3">
+        <ng-container *ngIf="isBusy">
+            <div class="loader">
+                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+            </div>
+        </ng-container>
+        <div class="col-sm-12 d-inline-block mb-2 mt-2" *ngIf="!isBusy">
+            <select class="form-control d-inline-block pull-right bg-wine" (change)="getLocation($event)" id="location">
+                <option value="" selected> Select Location</option>
+                <ng-container *ngIf="locationList">
+                    <ng-container *ngFor="let location of locationList">
+                        <option [value]="location.id">{{location.name}}</option>
+                    </ng-container>
+                </ng-container>
+            </select>
+        </div>
+        <div class="col-sm-12">
+            <ng-container *ngIf="!isBusy">
+                <div class="horizontal-tabs my-3 user-form-container bg-white shadow-sm">
+
+                    <ng-container *ngIf="locationId">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12 no-pad scroller">
+                                    <div class="left-btn-scroller left-scroll ">
+                                        <i class="mdi mdi-chevron-left"></i>
+                                    </div>
+                                    <div class="right-btn-scroller right-scroll ">
+                                        <i class="mdi mdi-chevron-right"></i>
+                                    </div>
+                                    <div class="box_nav_tab" id="scroll-div">
+                                        <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':activeTab ==1}"
+                                                    (click)="onTabChange(1)" data-toggle="tab" href="#CRITERIA"
+                                                    role="tab" aria-controls="CRITERIA">
+                                                    <span>CRITERIA</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':activeTab ==2}"
+                                                    (click)="onTabChange(2)" data-toggle="tab" href="#ACTION" role="tab"
+                                                    aria-controls="ACTION">
+                                                    <span>ACTION</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':activeTab ==3}"
+                                                    (click)="onTabChange(3)" data-toggle="tab" href="#ZONINGBOARD"
+                                                    role="tab" aria-controls="ZONING BOARD">
+                                                    <span>ZONING BOARD</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':activeTab ==4}"
+                                                    (click)="onTabChange(4)" data-toggle="tab" href="#DIARY" role="tab"
+                                                    aria-controls="DIARY">
+                                                    <span>DIARY</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':activeTab ==5}"
+                                                    (click)="onTabChange(5)" data-toggle="tab" href="#PATIENTSALERTS"
+                                                    role="tab" aria-controls="PATIENTSALERTS">
+                                                    <span>PATIENTS ALERTS</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':activeTab ==6}"
+                                                    (click)="onTabChange(6)" data-toggle="tab" href="#ALERTS" role="tab"
+                                                    aria-controls="ALERTS">
+                                                    <span>ALERTS</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':activeTab ==7}"
+                                                    (click)="onTabChange(7)" data-toggle="tab" href="#CHARTS" role="tab"
+                                                    aria-controls="CHARTS">
+                                                    <span>CHARTS</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" [ngClass]="{ 'active':activeTab ==8}"
+                                                    (click)="onTabChange(8)" data-toggle="tab" href="#MOVINGLOGS"
+                                                    role="tab" aria-controls="MOVINGLOGS">
+                                                    <span>MOVING LOGS</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane" [ngClass]="{ 'active':activeTab ==1}" id="CRITERIA" role="tabpanel"
+                                *ngIf="activeTab ==1">
+                                <app-criteria-list [locationId]="locationId"></app-criteria-list>
+                            </div>
+                            <div class="tab-pane" [ngClass]="{ 'active':activeTab ==2}" id="ACTION" role="tabpanel"
+                                *ngIf="activeTab ==2">
+                                <app-action-master [locationId]="locationId"></app-action-master>
+                            </div>
+                            <div class="tab-pane" [ngClass]="{ 'active':activeTab ==3}" id="ZONINGBOARD" role="tabpanel"
+                                *ngIf="activeTab ==3">
+                                <app-zoning-board [locationId]="locationId"></app-zoning-board>
+                            </div>
+                            <div class="tab-pane" [ngClass]="{ 'active':activeTab ==4}" id="DIARY" role="tabpanel"
+                                *ngIf="activeTab ==4">
+                                <app-dairy-master [locationId]="locationId"></app-dairy-master>
+                            </div>
+                            <div class="tab-pane" [ngClass]="{ 'active':activeTab ==5}" id="PATIENTSALERTS"
+                                role="tabpanel" *ngIf="activeTab ==5">
+                                <app-patient-alerts-master [locationId]="locationId"></app-patient-alerts-master>
+                            </div>
+                            <div class="tab-pane" [ngClass]="{ 'active':activeTab ==6}" id="ALERTS" role="tabpanel"
+                                *ngIf="activeTab ==6">
+                                <app-alert-master [locationId]="locationId"></app-alert-master>
+                            </div>
+                            <div class="tab-pane" [ngClass]="{ 'active':activeTab ==7}" id="CHARTS" role="tabpanel"
+                                *ngIf="activeTab ==7">
+                                <app-zoning-board-chart [locationId]="locationId"></app-zoning-board-chart>
+                            </div>
+                            <div class="tab-pane" [ngClass]="{ 'active':activeTab ==8}" id="CHARTS" role="tabpanel"
+                                *ngIf="activeTab ==8">
+                                <app-patient-zone-log [locationId]="locationId"></app-patient-zone-log>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!locationId">
+                        <div class="error_Box p-5 m-4">
+                            <h4 class="alert alert-danger text-center mb-0">Please Select Location</h4>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+
+        </div>
+    </div>
+</div>

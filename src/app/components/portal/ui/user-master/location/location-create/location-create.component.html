@@ -1,0 +1,198 @@
+<div class="tab-pane" id="location-1" role="tabpanel">
+    <ng-container *ngIf="isBusy">
+        <div class="col-sm-12 text-center">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!showLocations && !isBusy">
+        <form>
+            <div class="sv-tab-panel info_tab_container">
+                <h3>
+                    <ng-container *ngIf="!isEdit">Creating Location</ng-container>
+                    <ng-container *ngIf="isEdit">Edit Location</ng-container> <span>
+                        <button class="btn btn-sm btn-info rounded-pill mb-3 mr-4 pull-right"
+                            *ngIf="currentUserRole == userType.Admin"
+                            (click)="showLocation()">
+                            <i class="mdi mdi-eye-outline mr-1"></i> Show Locations</button>
+                    </span>
+                </h3>
+
+                <div class="care-infotable d-inline-block float-left mt-2">
+                    <table class="table mb-0">
+                        <tbody>
+                            <tr>
+                                <th class="star_mandator">Name of Location</th>
+                                <td>
+                                    <span class="d-none">N/A</span>
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Location Name"
+                                                [formControl]="locationForm.name" />
+                                        </div>
+                                        <ng-container *ngIf="!locationForm.controls.name.valid && 
+                    (locationForm.controls.name.dirty )">
+                                            <p *ngIf="locationForm.controls.name.errors?.pattern && !locationForm.controls.name.errors?.maxlength" class="text-danger">
+                                                Please provide a valid name
+                                            </p>
+                                            <p *ngIf="locationForm.controls.name.errors?.required" class="text-danger">
+                                                This field is required
+                                            </p>
+                                            <p *ngIf="locationForm.controls.name.errors?.maxlength" class="text-danger">
+                                               Maximum
+                                                    {{locationForm.get('name').errors.maxlength.requiredLength}}
+                                                    character allowed
+                                            </p>
+                                        </ng-container>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="star_mandator">Address 1</th>
+                                <td>
+                                    <span class="d-none">N/A</span>
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <textarea cols="1" rows="1" class="form-control" placeholder="Address 1"
+                                            spellcheck="false" [formControl]="locationForm.address1">
+                    </textarea>
+                                    </div>
+                                    <ng-container *ngIf="!locationForm.controls.address1.valid && 
+                                        (locationForm.controls.address1.dirty )">
+                                        <p *ngIf="locationForm.controls.address1.errors?.minlength" class="errorText">
+                                            Minimum {{locationForm.get('address1').errors.minlength.requiredLength}}
+                                            character required</p>
+                                        <p *ngIf="locationForm.controls.address1.errors?.maxlength" class="text-danger">
+                                            Maximum
+                                            {{locationForm.get('address1').errors.maxlength.requiredLength}}
+                                            character allowed
+                                        </p>
+                                        <!-- <p class="errorText">This field is required</p> -->
+                                    </ng-container>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Address 2</th>
+                                <td>
+                                    <span class="d-none">N/A</span>
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <textarea maxlength="5000" cols="1" rows="1" class="form-control" placeholder="Address 2"
+                                            spellcheck="false" [formControl]="locationForm.address2">
+                    </textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="care-infotable d-inline-block float-left">
+                    <table class="table mb-0">
+                        <tbody>
+
+                            <tr>
+                                <th>City</th>
+                                <td>
+                                    <span class="d-none">N/A</span>
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <textarea cols="1" rows="1" class="form-control" placeholder="City"
+                                            spellcheck="false" [formControl]="locationForm.address3">
+                    </textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>County</th>
+                                <td>
+                                    <span class="d-none">N/A</span>
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <textarea cols="1" rows="1" class="form-control" placeholder="County"
+                                            spellcheck="false" [formControl]="locationForm.address4">
+                    </textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="star_mandator">Post Code</th>
+                                <td>
+                                    <span class="d-none">N/A</span>
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Postal Code"
+                                                [formControl]="locationForm.postalCode" />
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="!locationForm.controls.postalCode.valid && 
+                  (locationForm.controls.postalCode.dirty )">
+                                        <p *ngIf="locationForm.controls.postalCode.errors?.maxlength" class="errorText">
+                                            Maximum 20 character allowed</p>
+                                    </ng-container>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                    <!-- <button type="button" class="btn btn-sm btn-dark rounded-pill">
+            <i class="mdi mdi-arrow-left mr-2"></i> Back
+          </button> -->
+                    <button type="submit" class="btn btn-sm btn-info btn-next rounded-pill" (click)="onSubmitNext()"
+                        [ngClass]="{ 'disabled':!locationForm.valid}" [disabled]="!locationForm.valid">
+                        Save Next <i class="mdi mdi-arrow-right ml-2"></i>
+                    </button>
+                    <button type="submit" [ngClass]="{ 'disabled':!locationForm.valid}" (click)="onSubmit()"
+                        class="btn btn-sm btn-success rounded-pill" [disabled]="!locationForm.valid">
+                        <i class="mdi mdi-content-save-settings mr-2"></i> Save
+                    </button>
+
+                </div>
+            </div>
+        </form>
+    </ng-container>
+    <ng-container *ngIf="showLocations && !isBusy">
+
+        <div class="sv-tab-panel info_tab_container">
+            <h3>Location List <span>
+                    <button *ngIf="currentUserRole == userType.Admin"
+                        class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn pull-right"
+                        (click)="showLocation()"><i class="mdi mdi-map-marker-plus mr-1"></i>Create Locations</button>
+                </span></h3>
+            <ng-container *ngIf="locationList.length > 0">
+
+                <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block">
+                    <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="w-10">S.no</th>
+                                <th class="w-50">Location</th>
+                                <th class="w-50">Postal Code</th>
+                                <th class="w-10">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let location of locationList; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{location.name}}</td>
+                                <td>{{location.postalCode}}</td>
+                                <td>
+                                    <div class="actionbox" *ngIf="currentUserRole == userType.Admin">
+                                        <i class="mdi text-primary mdi-pencil mr-2" (click)="edit(location)"
+                                            data-toggle="modal" data-target="#edit-course"></i>
+                                        <!-- <i class="mdi text-danger mdi-delete mr-2" (click)="remove(location.id)"></i> -->
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="locationList.length <= 0">
+                <div class="error_Box p-5 m-4">
+                    <h4 class="alert alert-danger text-center mb-0">No Location Found</h4>
+                </div>
+
+            </ng-container>
+
+        </div>
+
+    </ng-container>
+</div>

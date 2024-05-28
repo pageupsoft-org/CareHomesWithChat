@@ -1,0 +1,82 @@
+<div class="horizontal-tabs my-3">
+    <div class="sv-tab-panel info_tab_container p-0">
+        <ng-container *ngIf="isBusy">
+            <div class="loader">
+                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="showNotification">
+            <div class="container">
+                <div class="col-sm-12 text-center">
+                    <label class="alert alert-danger mt-3 w-100"> Please complete registration first</label>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf=" !showNotification && !isBusy && functionalChecklistList && !showFunctionalChecklist">
+            <div class="d-inline-block bg-white p-2 w-100 mb-2">
+                <h3>Move-On Assessments <span>
+                    <button *ngIf="currentUserRole != userType.Auditor" class="btn btn-sm btn-info rounded-pill mr-4 pull-right my-2"
+                        (click)="createFunctionality()"><i class="mdi mdi-plus mr-1"></i> Add Assessment</button>
+                </span></h3>
+            </div>
+            <ng-container *ngIf="functionalities.length > 0">
+                <div class="d-inline-block bg-white p-3 w-100">
+                    <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="w-10">S.no</th>
+                                <th class="w-10">Completed By</th>
+                                <th class="w-10">Completed Date</th>
+                                <th class="w-10">Next Review Date</th>
+                                <th class="w-10">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <ng-container *ngFor="let functionality of functionalities; let i = index">
+                                <tr>
+                                    <td class="w-10">{{i+1}}</td>
+                                    <td class="w-10">{{getCompletedBy(functionality.completedBy)}}</td>
+                                    <td class="w-10">{{(functionality.completedDate)?(functionality.completedDate| date :"dd-MM-Y"):"-"}}
+                                    </td>
+                                    <td class="w-10">{{(functionality.nextReviewDate)?(functionality.nextReviewDate| date :"dd-MM-Y"):'-'}}
+                                    </td>
+                                    <td class="w-10">
+                                        <div class="actionbox">
+                                            <ng-container *ngIf="!functionality.isSignOff">
+                                                <i class="mdi text-primary mdi-pencil mr-2" title="Edit" *ngIf="currentUserRole != userType.Auditor" (click)="editFunctionality(functionality)"></i>
+                                             </ng-container>
+
+                                            <i class="mdi text-danger mdi-delete mr-2" title="Remove" *ngIf="currentUserRole != userType.Auditor" (click)="removeFunctionalty(functionality.id)"></i>
+                                            <i class="mdi text-info mdi-eye-circle mr-2" title="View" (click)="viewMedication(functionality)"></i>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isBusy && functionalities.length <= 0">
+
+
+                <div class="text-center w-100 d-inline-block px-3 py-3">
+                    <div class="alert alert-danger" role="alert">
+                        <p class="mb-0"> No Record Found</p>
+                    </div>
+                </div>
+            </ng-container>
+
+        </ng-container>
+        <ng-container *ngIf="!isBusy && !functionalChecklistList && !showFunctionalChecklist">
+            <app-functional-checklist [userData]="userData" (getFunctionalities)="getFunctionalities()" [functionalityData]="functionalityData"></app-functional-checklist>
+            <!-- (showAllRiskAssessment)="showAllRiskAssessment()" -->
+        </ng-container>
+        <ng-container *ngIf="!isBusy && !functionalChecklistList && showFunctionalChecklist">
+            <app-functional-checklist-show [userData]="userData" (getFunctionalities)="getFunctionalities()" [functionalityData]="functionalityData"></app-functional-checklist-show>
+
+            <!-- (showAllRiskAssessment)="showAllRiskAssessment()" -->
+        </ng-container>
+    </div>
+</div>

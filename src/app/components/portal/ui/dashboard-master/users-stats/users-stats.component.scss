@@ -1,0 +1,90 @@
+.content {
+    box-shadow: 2px 3px 10px #d4d4d4;
+  }
+  .menu-barbox {
+    color: #fff;
+    text-align: CENTER;
+    border-radius: 8px;
+    background: linear-gradient(4deg, #bf616c, #864049);
+    height: 80px;
+    line-height: 40px;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    color: #fff !important;
+  }
+  .status-user1 {
+    background: linear-gradient(4deg, #54966f, #44af5d);
+  }
+  .status-user2 {
+    background: linear-gradient(4deg, #ceb68b, #d4ab60);
+  }
+  .menu-barbox img {
+    height: 25px;
+  }
+  .menu-barbox h4 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .prof_info_tabs {
+    width: 100%;
+    text-align: center;
+    border-bottom: none;
+    display: inline-block;
+  }
+  
+  .prof_info_tabs li {
+    width: 15%;
+    margin: 0 1%;
+    display: inline-block;
+  }
+  
+  .num_user span {
+    float: right;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .num_user {
+    line-height: 35px;
+  }
+  .bg-wine {
+    background-color: #cf9ea4 !important;
+  }
+  .num_user h4 i {
+    font-size: 24px;
+    color: #8c555c;
+  }
+  .red {
+    background-color: #ff5050;
+  }
+  .amber {
+    background-color: #ffcc66;
+  }
+  .green_zone_headrbg {
+    background-color: #bad486;
+  }
+  .serviceuser-table th, .serviceuser-table td {
+    padding: .35rem .5rem;
+  }
+  .zoning-head-com{
+    font-size: 20px;
+  }
+  
+  .tbl-search-button{
+  padding: 5px 30px 5px 10px;
+  }
+  @media (max-width:1365px) and (min-width:768px){
+    .prof_info_tabs li {
+      width: 20%;
+      height: auto;
+    }
+    .menu-barbox img {
+      height: 20px;
+  }
+  .menu-barbox{
+    padding: 5px;
+  }
+  .menu-barbox h4 {
+    font-size: 14px;
+  }
+  }

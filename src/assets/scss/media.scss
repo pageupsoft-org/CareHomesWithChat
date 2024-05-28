@@ -1,0 +1,667 @@
+// @media (max-width: 575px) and (min-width: 320px) {
+//     .navbar-brand,
+//     .container_prof_notify ul li {
+//         font-size: 18px;
+//     }
+//     .navbar-brand {
+//         margin-right: 0px;
+//     }
+//     .icon_menu {
+//         width: 20px;
+//         margin-left: 0px !important;
+//     }
+//     .container_prof_notify ul li {
+//         padding: 0px 5px;
+//     }
+//     .profile_icon {
+//         height: 25px;
+//         width: 25px;
+//         line-height: 25px;
+//         margin-top: 2px;
+//     }
+//     .container_searchbox,
+//     .table_user_infotabs {
+//         display: none !important;
+//     }
+//     .left_menu {
+//         transform: translateX(-100%);
+//     }
+//     .com-container-list {
+//         padding-left: 0px;
+//         padding-top: 50px;
+//     }
+//     .heading_page {
+//         margin-top: 20px;
+//         margin-left: 0;
+//     }
+//     .usr_headleft,
+//     .usr_headname,
+//     .figure-caption {
+//         font-size: 14px;
+//     }
+//     .usr_headleft i {
+//         font-size: 16px;
+//     }
+//     .profile_user_box {
+//         margin-left: 0 !important;
+//     }
+//     .com-container-broad {
+//         padding-left: 0px !important;
+//     }
+//     .left_menu_broad {
+//         transform: translateX(00%);
+//     }
+//     .profile_user_box .figure {
+//         width: 90px;
+//         padding: 10px 0px;
+//     }
+//     .add_user_detail,
+//     .btn-completeprof {
+//         font-size: 12px;
+//         float: none;
+//     }
+//     .mob-d-block {
+//         display: inline-block !important;
+//         width: 100%;
+//         text-align: center;
+//     }
+//     .horizontal-tabs {
+//         overflow: auto;
+//     }
+//     .prof_info_tabs {
+//         width: 700px;
+//     }
+// }
+@media (max-width: 767px) {
+  .notSupported {
+    height: 100%;
+    position: fixed;
+    z-index: 12;
+    left: 0;
+    width: 100%;
+    background-color: #d8f2fb;
+    top: 0;
+    text-align: center;
+    padding: 100px;
+    font-size: 40px;
+    display: block;
+  }
+  .supported {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .container_searchbox {
+    flex-basis: auto;
+  }
+  .left_menu li.active::before {
+    display: none;
+  }
+  .left_menu li.active {
+    background-color: #8c555c;
+  }
+  .info_tab_container h3,
+  .heading_page h1,
+  .usr_headleft,
+  h4.alert {
+    font-size: 18px;
+  }
+  .left_menu {
+    transform: translateX(-100%);
+    width: 140px !important;
+  }
+  .left_menu li {
+    margin-bottom: 10px;
+    padding-bottom: 12px;
+  }
+  .left_menu ul {
+    padding-top: 70px;
+  }
+  .box_brics_head {
+    padding: 7px;
+    border-radius: 30px;
+    margin-bottom: 15px !important;
+  }
+  .left_menu_broad {
+    transform: translateX(00%);
+  }
+  .com-container-list {
+    padding-left: 0px;
+    padding-top: 70px;
+  }
+  .com-container-broad {
+    padding-left: 0px !important;
+  }
+  .heading_page,
+  .profile_user_box {
+    margin-left: 0px !important;
+  }
+  .profile_user_box .figure {
+    width: 90px;
+    padding: 10px 0px;
+  }
+  .figure-caption,
+  .right_text_brics p {
+    font-size: 14px;
+  }
+  .mob-d-block {
+    display: inline-block !important;
+    width: 100%;
+    text-align: center;
+  }
+  .add_user_detail {
+    float: none;
+    font-size: 12px;
+  }
+  .btn-completeprof {
+    font-size: 12px;
+  }
+  .tab_pd_15_0 {
+    padding: 15px 0px !important;
+  }
+  .prof_info_tabs {
+    width: 1080px;
+  }
+  .prof_info_tabs li {
+    width: 150px;
+    height: 60px;
+  }
+  .prof_info_tabs li a {
+    height: 100%;
+    padding: 12px 10px;
+    display: flex;
+  }
+  .prof_info_tabs li a img {
+    width: 30px;
+  }
+  .prof_info_tabs li a span {
+    font-size: 11px;
+    margin-left: 10px;
+    margin-top: 5px;
+    text-align: left;
+  }
+  .count-num {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 0px;
+  }
+  .table_user_infotabs li a {
+    padding: 6px 8px 6px 15px !important;
+  }
+  .box_txt_abtuser p,
+  .care-infotable table,
+  .user_info_table table,
+  .table_user_infotabs li a span,
+  .btn-go-back {
+    font-size: 12px;
+  }
+  .table_user_infotabs li {
+    width: 200px;
+  }
+  .table_user_infotabs {
+    width: 1020px;
+  }
+  .care-infotable {
+    width: 100% !important;
+    margin-bottom: 0px;
+  }
+  .top_head_tabs .nav-item .nav-link {
+    margin-left: 2px;
+    margin-right: 2px;
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+  .top_head_tabs {
+    width: 900px;
+    margin-left: 15px;
+  }
+  .box_nav_tab {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .riskbox-secction {
+    overflow-x: hidden !important;
+    overflow-y: hidden;
+  }
+  .riskbox-secction ul li {
+    width: 120px;
+    height: 50px;
+  }
+  .riskbox-secction li a {
+    padding: 10px 12px;
+  }
+  .box_patientinfo {
+    margin: 15px 12px !important;
+  }
+  .box_patientinfo ul {
+    display: inline-block !important;
+    width: 100%;
+  }
+  .mar-mb-0 {
+    margin-bottom: 0px !important;
+  }
+  .box_patientinfo ul li {
+    padding: 0px 5px;
+    font-size: 12px;
+    height: auto;
+    float: left;
+    margin-bottom: 10px;
+    line-height: 40px;
+    width: 48%;
+  }
+  .info_tab_container h4 {
+    font-size: 14px;
+  }
+  .ovrflow-auto {
+    overflow: auto;
+  }
+  .input-txtbox input,
+  .input-txtbox select,
+  .input-txtbox textarea {
+    height: 35px;
+    font-size: 12px;
+  }
+  .add_couse_info {
+    margin-bottom: 20px;
+    padding: 0px 0px 50px;
+  }
+  .info_tab_container {
+    padding: 20px 30px 20px 15px;
+  }
+  .info_tab_container h3 {
+    font-size: 16px;
+  }
+  .health-laddr ul li a {
+    height: 50px;
+    line-height: 50px;
+    font-size: 12px;
+    letter-spacing: 0px;
+  }
+  .tabwd100 {
+    width: 100%;
+  }
+  .score-laddr {
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    top: 0px;
+  }
+  .tab-96-imp {
+    width: 96% !important;
+  }
+  .care-infotable .table td,
+  .care-infotable .table th {
+    padding: 5px 11px;
+  }
+  .actionbox i,
+  .actionbox a {
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    font-size: 12px;
+  }
+  .star_mandator::before {
+    left: 5px;
+  }
+  .form-control {
+    padding: 5px 15px;
+    font-size: 12px;
+    height: 35px !important;
+    line-height: 35px !important;
+  }
+  .add_new_user {
+    border-radius: 15px;
+    height: 30px;
+    font-size: 12px;
+  }
+  .add-dependents {
+    margin-left: 10px !important;
+    margin-top: 0px !important;
+    font-size: 12px;
+  }
+  .skip_btn {
+    float: right;
+    position: inherit;
+  }
+  .addmore-btn {
+    height: 30px !important;
+    font-size: 12px;
+  }
+  .tab-w-100 {
+    width: 100% !important;
+  }
+  .close_course,
+  .close {
+    height: 22px !important;
+    line-height: 22px !important;
+    width: 22px !important;
+    font-size: 14px !important;
+    top: -4px !important;
+  }
+  .btn {
+    font-size: 12px;
+    padding: 4px 7px;
+  }
+  .table td,
+  .table th {
+    font-size: 12px !important;
+    padding: 0.5rem;
+  }
+  .tab-wd-96 {
+    width: 96% !important;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+  .care-infotable {
+    width: 100% !important;
+  }
+  select.form-control {
+    height: 35px;
+    font-size: 12px;
+  }
+  .box_txt_abtuser p,
+  .care-infotable table,
+  .user_info_table table,
+  .btn-completeprof,
+  .tab_pd_15_0 span,
+  .table_scroll_diary,
+  .zoning_table,
+  table,
+  .btn {
+    font-size: 12px;
+  }
+  .mob-d-block {
+    display: inline-block !important;
+    width: 100%;
+    text-align: center;
+  }
+  .add_user_detail {
+    display: inline-block;
+    font-size: 12px;
+    padding: 0px 10px;
+    height: 30px;
+    width: auto;
+    float: none;
+    line-height: 30px;
+    box-shadow: 2px 1px 8px #00000026;
+  }
+  .tab_pd_15_0 {
+    padding: 15px 10px !important;
+  }
+  .table_user_infotabs li a {
+    padding: 6px 8px 6px 20px !important;
+  }
+  .table_user_infotabs li {
+    width: 250px;
+  }
+  .table_user_infotabs {
+    width: 1270px;
+  }
+  .table_user_infotabs li a span,
+  .cont-searchbox input,
+  .info_tab_container h4 {
+    font-size: 14px;
+  }
+  .count-num {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 5px;
+  }
+  .figure-caption {
+    font-size: 15px;
+  }
+  .profile_user_box .figure {
+    width: 100px;
+    padding: 10px 0px;
+  }
+  .top_head_tabs .nav-item .nav-link {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .prof_info_tabs li a {
+    padding: 8px 12px;
+  }
+  .prof_info_tabs li a span {
+    font-size: 11px;
+    margin-left: 4px;
+    margin-top: 6px;
+  }
+  .box_patientinfo {
+    margin: 10px 12px !important;
+  }
+  .box_patientinfo ul li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 5px;
+    font-size: 12px;
+    border-right: 2px solid #fff;
+  }
+  .ovrflow-auto {
+    overflow: auto;
+  }
+  .score-laddr {
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    top: 0px;
+  }
+  .health-laddr ul li a {
+    height: 50px;
+    line-height: 50px;
+    font-size: 12px;
+    letter-spacing: 0px;
+  }
+  .tab-96-imp {
+    width: 96% !important;
+  }
+  .actionbox i,
+  .actionbox a {
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    font-size: 12px;
+  }
+  .care-infotable .table td,
+  .care-infotable .table th {
+    padding: 5px 12px;
+  }
+  .star_mandator::before {
+    left: 5px;
+  }
+  .tab-w-100 {
+    width: 100% !important;
+  }
+  .prof_info_tabs {
+    width: 1100px;
+  }
+  .box_nav_tab {
+    overflow-x: auto;
+  }
+  .min-desk-w-100 {
+    width: 100% !important;
+  }
+  .table-bordered td,
+  .table-bordered th {
+    padding: 0.5rem;
+  }
+  .info_tab_container h3,
+  .usr_headleft {
+    font-size: 18px;
+  }
+  .usr_headleft i {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1599px) and (min-width: 1200px) {
+  .add_user_detail {
+    width: 130px;
+    margin-top: 5px;
+  }
+  .box_txt_abtuser p,
+  .care-infotable table,
+  .user_info_table table {
+    font-size: 12px;
+  }
+  .table_user_infotabs li a {
+    padding: 0px 24px !important;
+  }
+  .form-check-input {
+    margin-top: 0.1rem;
+  }
+}
+@media (min-width: 768px) {
+  .profile_user_box,
+  .heading_page {
+    margin-left: 10px !important;
+  }
+}
+
+@media (max-width: 767px) and (min-width: 320px) {
+  .box_nav_tab {
+    overflow-x: auto;
+  }
+  .top_head_tabs {
+    margin-top: 10px;
+  }
+  .top_head_tabs .nav-item .nav-link {
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 6px 8px;
+    width: auto;
+  }
+  .left-btn-scroller,
+  .right-btn-scroller {
+    font-size: 18px;
+    height: 45px;
+  }
+  .prof_info_tabs {
+    width: 860px;
+  }
+  .prof_info_tabs li a {
+    padding: 6px 10px;
+  }
+  .prof_info_tabs li a img {
+    width: 15px;
+  }
+  .prof_info_tabs li a span {
+    font-size: 10px;
+    margin-left: 7px;
+    margin-top: 6px;
+  }
+  .info_tab_container h3 {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+  .care-infotable {
+    width: 100% !important;
+    margin-left: 0%;
+    overflow: AUTO;
+    margin-right: 0%;
+    margin-bottom: 5px;
+  }
+  .box_txt_abtuser p,
+  .care-infotable table,
+  .user_info_table table {
+    font-size: 12px;
+  }
+  .care-infotable .table td,
+  .care-infotable .table th {
+    line-height: 25px;
+    padding: 6px 9px;
+  }
+  .star_mandator::before {
+    font-size: 12px;
+    left: 2px;
+  }
+  .input-txtbox input,
+  .input-txtbox select,
+  .input-txtbox textarea {
+    font-size: 12px;
+    width: auto;
+    height: 35px;
+  }
+  .btn-go-back {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+  .info_tab_container {
+    padding: 6px 8px;
+  }
+  .com-container-list {
+    padding-left: 0px;
+    padding-top: 70px;
+  }
+  mob-block-regstr {
+    padding: 0px 10px;
+    overflow: hidden;
+  }
+  .mob-pd-0 {
+    padding: 0px;
+  }
+  .input-txtbox textarea {
+    width: 100% !important;
+  }
+  .info_tab_container h4 {
+    font-size: 14px;
+  }
+  .btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .box_patientinfo {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+  .box_patientinfo ul {
+    display: inline-block !important;
+  }
+  .box_patientinfo ul li {
+    padding: 0px 7px !important;
+    display: inline-block;
+    width: 100%;
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-right: 0 !important;
+    overflow: auto;
+  }
+  .care-infotable {
+    font-size: 12px;
+  }
+  .care-infotable ul li {
+    font-size: 12px;
+  }
+  .care-infotable ul {
+    padding-left: 25px;
+  }
+  .care-infotable .form-group {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 1350px) and (min-width: 1200px) {
+  .prof_info_tabs li a {
+    padding: 10px 8px;
+  }
+  .prof_info_tabs li a span {
+    font-size: 11px;
+  }
+  .care-infotable .table td,
+  .care-infotable .table th {
+    padding: 6px 15px;
+  }
+  .actionbox i,
+  .actionbox a {
+    height: 22px;
+    width: 22px;
+    line-height: 22px;
+    font-size: 14px;
+  }
+}

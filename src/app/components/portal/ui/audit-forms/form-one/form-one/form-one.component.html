@@ -1,0 +1,364 @@
+<div class="container-fluid">
+  <!-- <div class="row">
+    <div class="col-sm-12">
+      <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+        <h1 class="d-inline-block">
+          <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i>Quarterly Incident
+            Audit Form
+          </span>
+          <span class="usr_headname"></span>
+        </h1>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="horizontal-tabs my-3 bg-white shadow-sm">
+        <div class="sv-tab-panel info_tab_container">
+          <div class="care-infotable w-96 mb-3 d-flex">
+            <table class="table w-50 mb-0">
+              <tbody>
+                <tr>
+                  <th class="border-top-0">Audited by</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <select class="form-control">
+                        <ng-container *ngFor="let user of usersList">
+                          <option [ngValue]="user.id">
+                            {{ (user.firstName ==null || user.lastName == null)? user.email: user.firstName+" "+user.lastName}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-top-0">Date of Audit</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="date" class="form-control" [min]="today|date:'yyyy-MM-dd'" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table w-50 mb-0">
+              <tbody>
+                <tr>
+                  <th class="border-top-0">Location</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <select class="form-control">
+                        <ng-container *ngIf="locationList">
+                          <ng-container *ngFor="let location of locationList">
+                            <option [ngValue]="location.id">{{location.name}}</option>
+                          </ng-container>
+                        </ng-container>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">General</h4>
+          <div class="care-infotable w-96 mb-3 d-flex">
+            <table class="table w-50 mb-0">
+              <tbody>
+                <tr>
+                  <th class="border-top-0">Date of Event</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="date" class="form-control" [min]="today|date:'yyyy-MM-dd'"/>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-top-0">No. of incidents</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="text" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+                <div class="w-96 p-4">
+                  <div class="buttonbox">
+                    <button type="button" class="btn btn-sm btn-primary rounded-pill">
+                      <i class="mdi mdi-plus mr-2"></i>Add more
+                    </button>
+                  </div>
+                  </div>
+                  <!-- </td>
+                  </tr> -->
+                  <!-- <tr>
+                    <th class="border-top-0">No. of incidents</th>
+                    <td class="border-top-0">
+                      <div class="form-group mb-0 input-txtbox">
+                        <input type="text" class="form-control" />
+                      </div>
+                    </td>
+                  </tr>
+                  <div class="w-96 p-4">
+                    <div class="buttonbox">
+                      <button type="button" class="btn btn-sm btn-primary rounded-pill">
+                        <i class="mdi mdi-plus mr-2"></i> + Add more
+                      </button>
+                    </div>
+                  </div> -->
+              </tbody>
+            </table>
+            <table class="table w-50 mb-0">
+              <tbody>
+                <tr>
+                  <th>Service users involved</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="text" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="care-infotable w-96 mb-3 d-flex">
+            <table class="table w-50 mb-0">
+              <tbody>
+                <tr>
+                  <th class="border-top-0">Service User Name & Surname</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="text" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-top-0">Service User no.</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="number" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-top-0">Legal Status</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="text" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-top-0">Number of Staff on Duty</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="number" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table w-50 mb-0">
+              <tbody>
+                <tr>
+                  <th class="border-top-0">Name & Surname of Staf</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="text" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-top-0">Staff ID</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="number" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-top-0">Category of incident</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="number" class="form-control" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="mt-3">Type of Incident</h4>
+          <div class="care-infotable w-96 mb-3">
+            <div class="container">
+              <div class="row">
+                <ng-container *ngFor="let incident of incidents; let i= index">
+                  <div class="col-sm-3 pull-left">
+                    <div class="form-group form-check mb-0">
+                      <input type="checkbox" class="form-check-input mt-1" name="incident{{incident.value}}"
+                        [checked]="isIncidentChecked(incident.value)" (change)="changeIncident(incident,$event)"
+                        id="incident{{incident.value}}" />
+
+                      <ng-container *ngIf="incident.value == incidentEnum.Accident">
+                        <label class="form-check-label" for="incident{{incident.value}}">Accident</label>
+                      </ng-container>
+
+                      <ng-container *ngIf="incident.value == incidentEnum.VerbalAbuse">
+                        <label class="form-check-label" for="incident{{incident.value}}">Verbal abuse (Threatening
+                          behavior)</label>
+                      </ng-container>
+                      <ng-container *ngIf="incident.value == incidentEnum.PhysicalViolenceToStaff">
+                        <label class="form-check-label" for="incident{{incident.value}}">Physical violence to
+                          staff</label>
+                      </ng-container>
+                      <ng-container *ngIf="incident.value == incidentEnum.PhysicalViolenceToServiceUser">
+                        <label class="form-check-label" for="incident{{incident.value}}">Physical violence to service
+                          user</label>
+                      </ng-container>
+                      <ng-container *ngIf="incident.value == incidentEnum.SelfHarm">
+                        <label class="form-check-label" for="incident{{incident.value}}">Self Harm</label>
+                      </ng-container>
+                      <ng-container *ngIf="incident.value == incidentEnum.DrugError">
+                        <label class="form-check-label" for="incident{{incident.value}}">Drug Error</label>
+                      </ng-container>
+                      <ng-container *ngIf="incident.value == incidentEnum.SecurityIncident">
+                        <label class="form-check-label" for="incident{{incident.value}}">Security Incident</label>
+                      </ng-container>
+                      <ng-container *ngIf="incident.value == incidentEnum.Trip">
+                        <label class="form-check-label" for="incident{{incident.value}}">Trip/fall</label>
+                      </ng-container>
+                      <ng-container *ngIf="incident.value == incidentEnum.Vandalism">
+                        <label class="form-check-label" for="incident{{incident.value}}">Vandalism</label>
+                      </ng-container>
+                      <ng-container *ngIf="incident.value == incidentEnum.Fire">
+                        <label class="form-check-label" for="incident{{incident.value}}">Fire</label>
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-3">Medication refusal</h4>
+
+          <div class="care-infotable w-96 mb-3">
+            <div class="container">
+              <div class="row">
+                <ng-container *ngFor="let refusal of medicationRefusals; let i= index">
+                  <div class="col-sm-3 pull-left">
+                    <div class="form-group form-check mb-0">
+                      <input type="checkbox" class="form-check-input mt-1" name="medicalRefusalEnum{{refusal.value}}"
+                        [checked]="isMedicationRefusalEnumChecked(refusal.value)"
+                        (change)="changeMedicationRefusalEnum(refusal,$event)"
+                        id="medicalRefusalEnum{{refusal.value}}" />
+
+                      <ng-container *ngIf="refusal.value == medicationRefusalEnum.DischargeAgainstAdvice">
+                        <label class="form-check-label" for="medicalRefusalEnum{{refusal.value}}">Discharge against
+                          advice</label>
+                      </ng-container>
+
+                      <ng-container *ngIf="refusal.value == medicationRefusalEnum.AbscondingAWOL">
+                        <label class="form-check-label"
+                          for="medicalRefusalEnum{{refusal.value}}">Absconding/AWOL</label>
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-3">Medical incident</h4>
+          <div class="care-infotable w-96 mb-3">
+            <div class="container">
+              <div class="row">
+                <ng-container *ngFor="let refusal of medicalIncidents; let i= index">
+                  <div class="col-sm-3 pull-left">
+                    <div class="form-group form-check mb-0">
+                      <input type="checkbox" class="form-check-input mt-1" name="medicalIncidents{{refusal.value}}"
+                        [checked]="isMedicalIncidentEnumChecked(refusal.value)"
+                        (change)="changeMedicalIncidentEnum(refusal,$event)" id="medicalIncidents{{refusal.value}}" />
+
+                      <ng-container *ngIf="refusal.value == medicalIncidentEnum.DangerousOccurrence">
+                        <label class="form-check-label" for="medicalIncidents{{refusal.value}}">Dangerous
+                          occurrence</label>
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-3">Other</h4>
+          <div class="care-infotable w-96 mb-3">
+            <div class="container">
+              <div class="row">
+                <ng-container *ngFor="let other of formOneOthers; let i= index">
+                  <div class="col-sm-3 pull-left">
+                    <div class="form-group form-check mb-0">
+                      <input type="checkbox" class="form-check-input mt-1" name="formOneOther{{other.value}}"
+                        [checked]="isOthEnumChecked(other.value)" (change)="changeOtherEnum(other,$event)"
+                        id="formOneOther{{other.value}}" />
+
+                      <ng-container *ngIf="other.value == formOneOtherEnum.WeaponInvolved">
+                        <label class="form-check-label" for="formOneOther{{other.value}}">Wepon Involved</label>
+                      </ng-container>
+                      <ng-container *ngIf="other.value == formOneOtherEnum.Other">
+                        <label class="form-check-label" for="formOneOther{{other.value}}">Other
+                          occurrence</label>
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="w-96 mt-4 mb-0 pl-2 headr_myshare tabwd100">Lessons learnt</h4>
+          <div class="care-infotable w-96 mb-3">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    Date Lessons completed
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border-top-0">
+                    <div class="form-group">
+                      <textarea class="form-control" cols="4" rows="4"></textarea>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="care-infotable w-96 mb-3 d-flex">
+            <table class="table w-50 mb-0">
+              <tbody>
+                <tr>
+                  <th class="border-top-0">Next review date</th>
+                  <td class="border-top-0">
+                    <div class="form-group mb-0 input-txtbox">
+                      <input type="date" class="form-control" [min]="today|date :'yyyy-MM-dd'" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+            <button type="button" class="btn btn-sm btn-info btn-next rounded-pill">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

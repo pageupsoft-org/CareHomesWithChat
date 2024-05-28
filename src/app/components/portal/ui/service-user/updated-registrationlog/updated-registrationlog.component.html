@@ -1,0 +1,473 @@
+<html>
+
+<body>
+
+    <table cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
+        <tbody>
+            <tr>
+                <th style="text-align:center;color: #fff;background-color: #b16d76 !important;">
+                    <span class="ln-40">Registration Log</span>
+                    <div class="pull-right">
+                        <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2 mt-2" (click)="goBack()">Go Back</button>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <table style="background-color: #fff; padding: 20px;display: inline-block;">
+        <tr>
+            <td colspan='2'>
+                <h3 style="font-size: 20px;color: #b16d76;">Record information</h3>
+            </td>
+        </tr>
+
+        <tr>
+            <th class='label' width='30%'>Date of admission :</th>
+            <td class='value'>{{previousValues.DateOfAdmission | date:'dd-MM-yyyy' }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Reason for admission :</th>
+            <td class='value'>{{previousValues.ReasonForAdmission }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Referral date :</th>
+            <td class='value'>{{previousValues.ReferralDate| date:'dd-MM-yyyy' }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Source of Referral :</th>
+            <td class='value'>{{previousValues.SourceOfReferral }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Authority :</th>
+            <td class='value'>{{previousValues.Authority }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Location :</th>
+            <td class='value'>{{getLocationName(previousValues.LocationId)}}</td>
+        </tr>
+        <tr>
+            <th class='label'>Staff / Care co-ordinator :</th>
+            <td class='value'>{{getUserNameList(previousValues.CareCoordinators)}}</td>
+        </tr>
+        <tr>
+            <th class='label'>Status :</th>
+            <td class='value'>{{admissionStatusArray[previousValues.Status] }}</td>
+        </tr>
+
+        <tr>
+            <th class='label'>Date of leaving :</th>
+            <td class='value'>{{previousValues.DateOfLeaving| date:'dd-MM-yyyy' }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Legal Status :</th>
+            <td class='value'>{{legalStatusArray[previousValues.LegalStatus] }}</td>
+        </tr>
+        <tr>
+            <th class='label'>MHA Status :</th>
+            <td class='value'>{{mahStatus[previousValues.MHAStatus]}}</td>
+        </tr>
+        <tr>
+            <th class='label'>Responsible clinician :</th>
+            <td class='value'>{{previousValues.ResponsibleClinician }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Responsible phychiatrist :</th>
+            <td class='value'>{{previousValues.ResponsiblePhychiatrist }}</td>
+        </tr>
+        <tr>
+            <th colspan='2' class='label'>Upload forms :</th>
+        </tr>
+        <ng-container *ngFor="let document of previousValues.PatientDocuments; let i = index">
+            <tr>
+                <td>{{i+1}}</td>
+                <td>
+                    Name: {{ document.DocumentName}}
+                </td>
+            </tr>
+        </ng-container>
+        <tr>
+            <td colspan='2'><br>
+                <h3 style="font-size: 20px; color: #b16d76;">Personal details</h3>
+            </td>
+        </tr>
+
+        <tr>
+            <th class='label'>Title :</th>
+            <td class='value'>{{nameTitle[previousValues.Title] }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Forename :</th>
+            <td class='value'>{{previousValues.FirstName }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Middle names :</th>
+            <td class='value'>{{previousValues.MiddleName }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Surname :</th>
+            <td class='value'>{{previousValues.LastName }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Preferred name :</th>
+            <td class='value'>{{previousValues.PreferredName }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Service User no: :</th>
+            <td class='value'>{{previousValues.ServiceUserNumber }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Address line 1 :</th>
+            <td class='value'>{{previousValues.Address1 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Address line 2 :</th>
+            <td class='value'>{{previousValues.Address2 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Address line 3 :</th>
+            <td class='value'>{{previousValues.Address3 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Address line 4 :</th>
+            <td class='value'>{{previousValues.Address4 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Post Code :</th>
+            <td class='value'>{{previousValues.PostCode }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Date of Birth :</th>
+            <td class='value'>{{previousValues.Dob | date:'dd-MM-yyyy'}}</td>
+        </tr>
+        <tr>
+            <th class='label'>Age (years) :</th>
+            <td class='value'>{{previousValues.Age }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Gender :</th>
+            <td class='value'>{{genderArr[previousValues.Gender] }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Marital Status :</th>
+            <td class='value'>{{(previousValues.MaritalStatus==1)?"Merried":"Not Merried" }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Ethnic Origin :</th>
+            <td class='value'>{{ethinicArray[previousValues.EthnicOrigin] }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Weight :</th>
+            <td class='value'>{{previousValues.Weight }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Height :</th>
+            <td class='value'>{{previousValues.Height }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Religion :</th>
+            <td class='value'>{{previousValues.Religion }}</td>
+        </tr>
+        <tr>
+            <th class='label'>NI Number :</th>
+            <td class='value'>{{previousValues.NINumber }}</td>
+        </tr>
+        <tr>
+            <th class='label'>NHS Number :</th>
+            <td class='value'>{{previousValues.NHSNumber }}</td>
+        </tr>
+        <tr>
+            <th class='label'>DWP number :</th>
+            <td class='value'>{{previousValues.DWPNumber }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Telephone number :</th>
+            <td class='value'>{{previousValues.TelePhone }}</td>
+        </tr>
+
+        <tr>
+            <td colspan='2'><br>
+                <h3 style="font-size: 20px; color: #b16d76;">Dependents</h3>
+            </td>
+        </tr>
+
+        <tr>
+            <th class='label'>Next of kin name :</th>
+            <td class='value'>{{ previousValues.KinName }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Next of kin address line 1 :</th>
+            <td class='value'>{{ previousValues.KinAddress1 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Next of kin address line 2 :</th>
+            <td class='value'>{{ previousValues.KinAddress2 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Next of kin address line 3 :</th>
+            <td class='value'>{{ previousValues.KinAddress3 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Next of kin address line 4 :</th>
+            <td class='value'>{{ previousValues.KinAddress4 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Next of kin address line 5 :</th>
+            <td class='value'>{{ previousValues.KinAddress5 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Next of kin contact no. :</th>
+            <td class='value'>{{ previousValues.KinContact }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Relationship to next of kin :</th>
+            <td class='value'>{{ previousValues.KinRelationship }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Nearest relative :</th>
+            <td class='value'>{{ previousValues.NearestRelative }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Emergency Contact (Nearest relative) :</th>
+            <td class='value'>{{ previousValues.EmergencyContact }}</td>
+        </tr>
+        <ng-container *ngFor="let dependent of previousValues.PatientDependents; let i=index">
+            <tr>
+                <td colspan='2'>
+                    <br>Dependent {{ i+1 }}
+                </td>
+            </tr>
+            <tr>
+                <th class='label'>Dependent name :</th>
+                <td class='value'>{{ dependent.DependentName }}</td>
+            </tr>
+            <tr>
+                <th class='label'>Dependent Address line 1 :</th>
+                <td class='value'>{{ dependent.Address1 }}</td>
+            </tr>
+            <tr>
+                <th class='label'>Dependent Address line 2 :</th>
+                <td class='value'>{{ dependent.Address2 }}</td>
+            </tr>
+            <tr>
+                <th class='label'>Dependent Address line 3 :</th>
+                <td class='value'>{{ dependent.Address3 }}</td>
+            </tr>
+            <tr>
+                <th class='label'>Dependent Address line 4 :</th>
+                <td class='value'>{{ dependent.Address4 }}</td>
+            </tr>
+            <tr>
+                <th class='label'>Dependent Address line 5 :</th>
+                <td class='value'>{{ dependent.Address5 }}</td>
+            </tr>
+            <tr>
+                <th class='label'>Relationship to dependent :</th>
+                <td class='value'>{{ dependent.DependentRelationship }}}</td>
+            </tr>
+        </ng-container>
+
+        <tr>
+            <td colspan='2'><br>
+                <h3 style="font-size: 20px; color: #b16d76;">Medical records</h3>
+            </td>
+        </tr>
+
+        <tr>
+            <th class='label'>GP Surgery name :</th>
+            <td class='value'>{{previousValues.GPSurgeryName }}</td>
+        </tr>
+        <tr>
+            <th class='label'>GP address line 1 :</th>
+            <td class='value'>{{previousValues.GPAddress1 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>GP address line 2 :</th>
+            <td class='value'>{{previousValues.GPAddress2 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>GP address line 3 :</th>
+            <td class='value'>{{previousValues.GPAddress3 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>GP address line 4 :</th>
+            <td class='value'>{{previousValues.GPAddress4 }}</td>
+        </tr>
+        <tr>
+            <th class='label'>GP Post Code :</th>
+            <td class='value'>{{previousValues.GPPostCode }}</td>
+        </tr>
+        <tr>
+            <th class='label'>GP contact no: :</th>
+            <td class='value'>{{previousValues.GPContactNo }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Type of Facility :</th>
+            <td class='value'>{{previousValues.TypeOfFacility }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Diagnosis :</th>
+            <td class='value'>{{previousValues.Diagnosis }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Are there any safeguarding concerns? :</th>
+            <td class='value'>{{(previousValues.IsSafeGuard ? previousValues.SafeGuardDetail : "No") }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Is the person on DOLS? :</th>
+            <td class='value'>{{(previousValues.IsDOLs ? previousValues.DOLsDetails : "No") }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Is there a Legal Power of Attorney for? :</th>
+            <td class='value'>{{(previousValues.IsPowerOfAttorney ? previousValues.PowerOfAttorneyDetail : "No") }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Assessment Details :</th>
+            <td class='value'>Date: {{previousValues.AssessmentDate }} (Location: {{previousValues.AssessmentLocation }})</td>
+        </tr>
+        <tr>
+            <th class='label'>COVID-19 Screening :</th>
+            <td class='value'>{{covidScreeningArray[previousValues.COVID19] }} Test Date {{(previousValues.coviD19TestDate)?(previousValues.coviD19TestDate|date:'dd-MM-Y'):"-"}}
+            </td>
+        </tr>
+        <tr>
+            <th class='label'>Professional(s) consulted :</th>
+            <td class='value'>{{previousValues.ProfessionalConsulted }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Report(s) consulted :</th>
+            <td class='value'>{{previousValues.ReportsConsulted }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Presenting Problems :</th>
+            <td class='value'>{{previousValues.PresentingProblem }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Personal History :</th>
+            <td class='value'>{{previousValues.PersonalHistory }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Past Medical History :</th>
+            <td class='value'>{{previousValues.PastMedicalHistory }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Drug and Alcohol History :</th>
+            <td class='value'>{{previousValues.DrugAndAlcoholHistory }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Forensic History (alleged offence) :</th>
+            <td class='value'>{{previousValues.ForensicHistory }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Current Medication :</th>
+            <td class='value'>{{previousValues.CurrentMedication }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Allergies :</th>
+            <td class='value'>{{previousValues.Allergies }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Mental State :</th>
+            <td class='value'>{{previousValues.MentalState }}</td>
+        </tr>
+
+        <tr>
+            <td colspan='2'><br>
+                <h3 style="font-size: 20px; color: #b16d76;">Provisional Care Plan</h3>
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2'>
+
+                <table width='100%' border=1 cellspacing=0 cellpadding=4>
+                    <tr>
+                        <td style="font-size: 18px;color: #8c555c;font-weight: 600;">Identified Needs</td>
+                        <td style="font-size: 18px;color: #8c555c;font-weight: 600;">Action/Interventions to Meet need</td>
+                        <td style="font-size: 18px;color: #8c555c;font-weight: 600;">Professionals Responsible</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>My Mental Health :</th>
+                        <td>{{previousValues.MyMentalHealth1 }}</td>
+                        <td>{{previousValues.MyMentalHealth2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>Medications :</th>
+                        <td>{{previousValues.Medications1 }}</td>
+                        <td>{{previousValues.Medications2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>Nutrition :</th>
+                        <td>{{previousValues.Nutrition1 }}</td>
+                        <td>{{previousValues.Nutrition2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>Physical Health :</th>
+                        <td>{{previousValues.PhysicalHealth1 }}</td>
+                        <td>{{previousValues.PhysicalHealth2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>Behaviour :</th>
+                        <td>{{previousValues.Behaviour1 }}</td>
+                        <td>{{previousValues.Behaviour2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>My Safety and Risk to Others :</th>
+                        <td>{{previousValues.MySafetyAndRisk1 }}</td>
+                        <td>{{previousValues.MySafetyAndRisk2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>Personal Hygiene :</th>
+                        <td>{{previousValues.PersonalHygiene1 }}</td>
+                        <td>{{previousValues.PersonalHygiene2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>My Relationships :</th>
+                        <td>{{previousValues.MyRelationship1 }}</td>
+                        <td>{{previousValues.MyRelationship2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>Activities of Daily Living (ADL) :</th>
+                        <td>{{previousValues.ActivitiesOfDailyLiving1 }}</td>
+                        <td>{{previousValues.ActivitiesOfDailyLiving2 }}</td>
+                    </tr>
+                    <tr>
+                        <th class='label'>My Recovery :</th>
+                        <td>{{previousValues.MyRecovery1 }}</td>
+                        <td>{{previousValues.MyRecovery2 }}</td>
+                    </tr>
+                </table><br>
+
+            </td>
+        </tr>
+
+        <tr>
+            <th width='25%' class='label'>CPA Status :</th>
+            <td class='value'>{{previousValues.CPAStatus }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Is Observation requried & agreed :</th>
+            <td class='value'>{{previousValues.IsObservation }}</td>
+        </tr>
+        <tr>
+            <th class='label'>If above Yes, then select one :</th>
+            <td class='value'>{{previousValues.ObservationDuration }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Overall Conclusions and Further Actions :</th>
+            <td class='value'>{{previousValues.FurtherAction }}</td>
+        </tr>
+        <tr>
+            <th class='label'>Based on the evidence during our assessment, please identify most appropriate service for the person: :</th>
+            <td class='value'>{{previousValues.AppropriateService }}</td>
+        </tr>
+        <tr>
+            <th class='label'>If not suitable, please provide reasons for rejection :</th>
+            <td class='value'>{{previousValues.ReasonForRejection }}</td>
+        </tr>
+
+
+
+    </table>
+</body>
+
+</html>

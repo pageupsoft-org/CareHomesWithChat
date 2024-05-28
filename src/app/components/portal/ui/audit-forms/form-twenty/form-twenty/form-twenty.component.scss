@@ -1,0 +1,9 @@
+.limitheight-form{
+    max-height: 500px;
+}
+.limitheight-form .table thead th {
+        position: sticky;
+        top: -1px;
+        z-index: 100;
+        background-color: #d9ebf9 !important;
+}

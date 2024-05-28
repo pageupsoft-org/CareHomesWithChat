@@ -1,0 +1,238 @@
+<div class="">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 mb-2 mt-1 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Weekly Medication Stock Check Record <button
+                            class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Back</button>
+                    </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mb-3 bg-white shadow-sm">
+                <div class="sv-tab-panel info_tab_container">
+                    <ng-container *ngIf="!isBusy && weeklyMedication; else elseTemplate">
+
+                        <form>
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{(weeklyMedication.auditor)?((weeklyMedication.auditor.firstName == null ||
+                                                        weeklyMedication.auditor.lastName == null)?
+                                                        weeklyMedication.auditor.email:(weeklyMedication.auditor.firstName+"
+                                                        "+weeklyMedication.auditor.lastName) ):'-'}}
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <lable>{{weeklyMedication.locationName}}</lable>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <lable>
+                                                        {{(weeklyMedication.auditDate)?(weeklyMedication.auditDate|date:'yyyy-MM-dd'):'-'}}
+                                                    </lable>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <lable>{{weeklyMedication.signoffByName}}</lable>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="care-infotable w-96 overflow-auto scrollthin">
+                                <div class="innerwhite-table p-3 d-flex" style="width: 1700px;">
+                                    <table class="table mb-0 bg-white shadow-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th class="w-8">Date-Time</th>
+                                                <th class="w-8">Medication & Strength</th>
+                                                <th class="w-8">Expiry Date</th>
+                                                <th class="p-0 w-36">
+                                                    <table class="table mb-0 bg-transparent">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th colspan="4"
+                                                                    class="text-center border-left-0 border-right-0">
+                                                                    Monthly Stock
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="border-left-0 border-right-0">
+                                                                    Tablet
+                                                                </th>
+                                                                <th class="border-left-0 border-right-0">
+                                                                    Inhale
+                                                                </th>
+                                                                <th class="border-left-0 border-right-0">
+                                                                    Liquid
+                                                                </th>
+                                                                <th class="border-left-0 border-right-0">
+                                                                    Depot
+                                                                </th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </th>
+                                                <th class="w-8">Total Amount</th>
+                                                <th class="w-8">Sign</th>
+                                                <th class="w-8">Counter sign</th>
+                                                <th class="w-8">Comments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <ng-container
+                                                *ngFor="let medicationStock of weeklyMedication.medicationStockRecords;let i= index ">
+                                                <tr>
+                                                    <td>
+                                                        {{i+1}}
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <lable>{{medicationStock.recordDateTime|date:'dd-MM-yyyy hh:mm a'}}</lable>
+
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <lable>{{medicationStock.medicationAndStrength}}</lable>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <lable>
+                                                                {{(medicationStock.expiryDate)?(medicationStock.expiryDate|date:'yyyy-MM-dd'):'-'}}
+                                                            </lable>
+
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-0">
+
+                                                        <table class="table mb-0 bg-transparent">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td
+                                                                        class="border-left-0 border-right-0 border-top-0">
+                                                                        <div class="form-group mb-0 input-txtbox">
+                                                                            <lable>{{medicationStock.tablets}}</lable>
+
+                                                                        </div>
+
+                                                                    </td>
+                                                                    <td
+                                                                        class="border-left-0 border-right-0 border-top-0">
+                                                                        <div class="form-group mb-0 input-txtbox">
+                                                                            <lable>{{medicationStock.inhaler}}</lable>
+
+                                                                        </div>
+
+                                                                    </td>
+                                                                    <td
+                                                                        class="border-left-0 border-right-0 border-top-0">
+                                                                        <div class="form-group mb-0 input-txtbox">
+                                                                            <lable>{{medicationStock.liquid}}</lable>
+
+                                                                        </div>
+
+                                                                    </td>
+                                                                    <td
+                                                                        class="border-left-0 border-right-0 border-top-0">
+                                                                        <div class="form-group mb-0 input-txtbox">
+                                                                            <lable>{{medicationStock.depot}}</lable>
+
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <lable>{{medicationStock.totalAmount}}</lable>
+
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <lable>{{medicationStock.sign}}</lable>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <lable>{{getName(medicationStock.counterSign)}}</lable>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <lable>{{medicationStock.comments}}</lable>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+
+                                <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back"
+                                    (click)="goBack()">Back</button>
+                            </div>
+                        </form>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <ng-container *ngIf="isBusy">
+                            <div class="loader">
+                                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                                </mat-spinner>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

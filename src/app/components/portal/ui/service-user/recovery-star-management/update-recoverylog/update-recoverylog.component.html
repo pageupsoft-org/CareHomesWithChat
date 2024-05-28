@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recovery Star</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ecf4fa;
+        }
+
+        .table {
+            width: 1000px;
+            margin: 0px auto;
+            border: solid thin #eaeaea;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="table">
+
+        <!--Part 1-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2" style="text-align:center;color: #fff;background-color: #b16d76 !important;">Recovery Star
+                        <div class="pull-right">
+                            <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2" (click)="goBack()">Go Back</button>
+                        </div>
+                    </th>
+                </tr>
+                <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                    <th colspan="2">
+                        Part 1
+                    </th>
+                </tr>
+
+                <!-- <tr>
+                    <td>
+                        Service User name
+                    </td>
+                    <td>
+                        Mark Maker
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Service User no.
+                    </td>
+                    <td>
+                        COG001
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        DOB
+                    </td>
+                    <td>
+                        16-06-1993
+                    </td>
+                </tr> -->
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        1. Managing mental health ladder
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        Patient SCORE
+                    </td>
+                    <td>
+                        {{recoveryStar.ManagingMentalHealthScorePatient}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Staff SCORE
+                    </td>
+                    <td>
+                        {{recoveryStar.ManagingMentalHealthScoreStaff}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        Reasons for choosing the score - Client
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{recoveryStar.ReasonsForChoosingScore1Client}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        Reasons for choosing the score - Staff
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{recoveryStar.ReasonsForChoosingScore1Staff}}
+                    </td>
+                </tr>
+                <!--1-->
+                <tr>
+                    <th>
+                        Reasons for disagreement
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{recoveryStar.ReasonsForDisagreement1}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+            <!--Part 2-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 2
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            2. Self-care
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.SelfCareScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.SelfCareScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                           {{recoveryStar.ReasonsForChoosingScore2Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore2Staff}}
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                           {{recoveryStar.ReasonsForDisagreement2}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 3-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 3
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            3. Living skills
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.LivingSkillsScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.LivingSkillsScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore3Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore3Staff}}
+                            
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForDisagreement3}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 4-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 4
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            4. Social networks
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                        {{recoveryStar.SocialNetworksScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.SocialNetworksScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                           {{recoveryStar.ReasonsForChoosingScore4Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore4Staff}}
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForDisagreement4}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 5-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 5
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            5. Work
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                        {{recoveryStar.WorkScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                        {{recoveryStar.WorkScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            
+                            {{recoveryStar.ReasonsForChoosingScore5Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore5Staff}}
+                            
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForDisagreement5}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 6-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 6
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            6. Relationships
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.RelationshipsScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.RelationshipsScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore6Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore6Staff}}
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForDisagreement6}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 7-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 7
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            7. Addictive Behaviour
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.AddictiveBehaviourScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.AddictiveBehaviourScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore7Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore7Staff}}
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>{{recoveryStar.ReasonsForDisagreement7}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 8-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 8
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            8. Responsibilities
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.ResponsibilitiesScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.ResponsibilitiesScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore8Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore8Staff}}
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForDisagreement8}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 9-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 9
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            9. Identity and self-esteem
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.IdentityAndSelfEsteemScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.IdentityAndSelfEsteemScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore9Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore9Staff}}
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForDisagreement9}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 10-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 10
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            10. Trust and Hope
+                        </th>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Patient SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.TrustAndHopeScorePatient}}
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            Staff SCORE
+                        </td>
+                        <td>
+                            {{recoveryStar.TrustAndHopeScoreStaff}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Client
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore10Client}}
+                        </td>
+                    </tr>
+                    <!--2-->
+                    <tr>
+                        <th>
+                            Reasons for choosing the score - Staff
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForChoosingScore10Staff}}
+                        </td>
+                    </tr>
+                    <!--1-->
+                    <tr>
+                        <th>
+                            Reasons for disagreement
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{recoveryStar.ReasonsForDisagreement10}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <!--Part 11-->
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr style="background-color: #ececec;border-bottom: solid thin #eaeaea;">
+                        <th colspan="2">
+                            Part 11
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th>
+                            Summary
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Other agencies involved
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{getOtherAgencyString(recoveryStar.areasToWorkOn)}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            What are you aiming to do between now and the next review meeting
+    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                           {{recoveryStar.NextReviewMeetingTodo}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>     
+                    <tr>
+                        <td>
+                            Total score Patient
+                        </td>
+                        <td>
+                            {{getPatientTotal()}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Total score Staff
+                        </td>
+                        <td>
+                            {{getUserTotal()}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Date done
+                        </td>
+                        <td>
+                            {{recoveryStar.CompletedDate|date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Next review date
+                        </td>
+                        <td>
+                            {{recoveryStar.NextReviewDate|date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Completed by	
+                        </td>
+                        <td>
+                            <select class="form-control" style="border: none;" disabled [(ngModel)]="recoveryStar.CompletedBy"
+                            id="completedBy" name="compeletedBy">
+                            <ng-container *ngFor="let user of usersList">
+                              <option [ngValue]="user.id">
+                                {{ (user.firstName ==null || user.lastName == null)? user.email: user.firstName+"
+                                "+user.lastName}}
+                              </option>
+                            </ng-container>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Circulated to	
+                        </td>
+                        <td>
+                            {{getCirculateToString(recoveryStar.CirculatedTo)}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+    
+
+    </div>
+</body>
+
+</html>

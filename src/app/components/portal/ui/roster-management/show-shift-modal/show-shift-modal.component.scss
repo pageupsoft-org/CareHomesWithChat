@@ -1,0 +1,55 @@
+.shft_time{
+    padding: 15px;
+    position: relative;
+    display: inline-block;
+    background-color: #a55e66;
+    background: linear-gradient( 
+45deg
+ , #c77f87, #8a3d46);
+    width: 48%;
+    color: #fff;
+    border-radius: 20px;
+    margin: 1% 2% 3% 0;
+}
+.shft_endtime{
+    background-color: #168ea3;
+    background: linear-gradient(
+45deg
+, #37968c, #248685);
+}
+.shiftmodalhead{
+    background: #f5d1d5;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    box-shadow: 2px 1px 3px #d29198;
+    border-radius: 15px;
+    width: 95%;
+    margin: 0px auto 12px;
+}
+.actionbox {
+    margin-top: 5px; 
+}
+.shiftmodalhead h4{
+    text-transform: capitalize;
+    margin-bottom: 0;
+    line-height: 40px;
+    font-size: 20px;
+}
+// .shft_strttime::after{
+//     content: '';
+//     border-top: 47px solid transparent;
+//     border-bottom: 47px solid transparent;
+//     border-left: 80px solid #ffd5d9;
+//     position: absolute;
+//     right: -80px;
+//     top: -11px;
+// }
+// .shft_endtime::before{
+//     content: '';
+//     border-top: 47px solid transparent;
+//     border-bottom: 47px solid transparent;
+//     border-right: 80px solid #ffd5d9;
+//     position: absolute;
+//     left: -80px;
+//     top: -11px;
+// }

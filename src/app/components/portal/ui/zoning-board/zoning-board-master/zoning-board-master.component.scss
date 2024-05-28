@@ -1,0 +1,18 @@
+.bg-wine {
+    width: auto;
+    color: #fff;
+    background-color: #cf9ea4;
+}
+
+.error_Box {
+    line-height: 350px;
+}
+
+@media (max-width:1023px) and (min-width:768px) {
+    .prof_info_tabs li a {
+        padding: 13px 8px !important;
+    }
+    .prof_info_tabs li {
+        width: 130px !important;
+    }
+}

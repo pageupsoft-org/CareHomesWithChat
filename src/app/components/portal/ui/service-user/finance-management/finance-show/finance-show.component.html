@@ -1,0 +1,188 @@
+<!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1 class="d-inline-block">
+                    <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i> Finace </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div> -->
+<ng-container *ngIf="isBusy">
+    <div class="loader">
+        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+    </div>
+</ng-container>
+<ng-container *ngIf="!isBusy && userData && patientTransaction">
+    <div class="bg-white py-3">
+        <div class="box_patientinfo mx-3 mt-1 mb-0">
+            <div class="pull-right">
+                <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2" (click)="getTransactions()">Go Back</button>
+            </div>
+            <ul class="d-flex mb-0">
+                <li class="mr-2 ">
+                    <span class="mr-2"><b>Service User name: </b></span>
+                    <span>{{userData.firstName}} {{userData.lastName}}</span>
+                </li>
+                <li class="mr-2 ">
+                    <span class="mr-2"><b>Service User no.: </b></span>
+                    <span>{{userData.serviceUserNumber}}</span>
+                </li>
+                <li class="mr-2">
+                    <span class="mr-2"><b>DOB: </b></span>
+                    <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="sv-tab-panel pl-0 info_tab_container">
+
+            <div class="care-infotable d-inline-block float-left">
+                <table class="table mb-0">
+                    <tbody>
+                        <tr>
+                            <th>
+                                Type
+                            </th>
+                            <td>
+                                <span class="">{{(patientTransaction.mode == 'W')?"Withdraw":"Deposit"}}</span>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Amount
+                            </th>
+                            <td>
+                                <span>{{patientTransaction.amount}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Date
+                            </th>
+                            <td>
+                                <span>{{patientTransaction.transactionDate |date:'dd-MM-yyyy'}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="care-infotable d-inline-block float-left">
+                <table class="table mb-0">
+                    <tbody>
+                        <tr>
+                            <th>
+                                Completed by
+                            </th>
+                            <td>
+                                <div class="form-group mb-0 input-txtbox">
+                                    <select class="form-control" id="completedBy" name="compeletedBy" disabled readonly [(ngModel)]="patientTransaction.completedBy">
+                                    <ng-container *ngFor="let user of usersList">
+                                        <option [ngValue]="user.id">
+                                            {{ (user.firstName ==null || user.lastName ==
+                                            null)? user.email: user.firstName+"
+                                            "+user.lastName}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Cleint signature:
+                            </th>
+                            <td>
+                                <span class="d-none"></span>
+                                <div class="form-group mb-0 input-txtbox">
+                                    <div class="input-group">
+                                        <textarea cols="3" rows="2" class="form-control" disabled readonly [(ngModel)]="patientTransaction.clientSignature"></textarea>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Total amount
+                            </th>
+                            <td>
+                                <span>{{userData.totalAmount}}</span>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="care-infotable d-inline-block float-left">
+                <table class="table mb-0">
+                    <tbody>
+                        <tr>
+                            <th>
+                                Additional Note
+                            </th>
+                            <td> <span>{{patientTransaction.additionalNote}}</span></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Circulated to
+                            </th>
+                            <td>
+                                <span>{{this.patientTransaction.circulatedTo}}</span>
+                                <!-- <ng-container *ngFor="let circulated of circulatedToArray">
+                            <div class="form-group form-check mb-0">
+                                <input type="checkbox" class="form-check-input mt-0"
+                                    name="circulated{{circulated.value}}"
+                                    [checked]="isCirculatedChecked(circulated.value)"
+                                    (change)="changeCirculated(circulated,$event)" id="circulated{{circulated.value}}">
+                                <ng-container *ngIf="circulated.value == circulatedToEnum.Psychiatrist">
+                                    <label class="form-check-label"
+                                        for="circulated{{circulated.value}}">Psychiatrist</label>
+                                </ng-container>
+                                <ng-container *ngIf="circulated.value == circulatedToEnum.CareCoordinator">
+                                    <label class="form-check-label" for="circulated{{circulated.value}}">Care
+                                        coordinator</label>
+                                </ng-container>
+                                <ng-container *ngIf="circulated.value == circulatedToEnum.Patient">
+                                    <label class="form-check-label" for="circulated{{circulated.value}}">Patient</label>
+                                </ng-container>
+                                <ng-container *ngIf="circulated.value == circulatedToEnum.Family">
+                                    <label class="form-check-label" for="circulated{{circulated.value}}">Family</label>
+                                </ng-container>
+                                <ng-container *ngIf="circulated.value == circulatedToEnum.Other">
+                                    <label class="form-check-label" for="circulated{{circulated.value}}">Other</label>
+                                </ng-container>
+                            </div>
+                        </ng-container> -->
+                            </td>
+                        </tr>
+                        <tr class="d-none">
+                            <th>
+                                Sign-off by
+                            </th>
+                            <td>
+                                <span class="d-none"></span>
+                                <div class="form-group mb-0 input-txtbox">
+                                    <div class="input-group">
+                                        <select class="form-control" id="completedBy" name="compeletedBy" disabled readonly [(ngModel)]="patientTransaction.signOffBy">
+                                        <ng-container *ngFor="let user of usersList">
+                                            <option [ngValue]="user.id">
+                                                {{ (user.firstName ==null || user.lastName ==
+                                                null)? user.email: user.firstName+"
+                                                "+user.lastName}}
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+
+</ng-container>

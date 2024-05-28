@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i> Location Audit Forms
+                    </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="isBusy">
+        <div class="loader">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+        </div>
+    </ng-container>
+    <!-- Audit Forms for Service user -->
+    <div class="my-3">
+        <div class="sv-tab-panel mr-lft-10">
+            <ng-container *ngIf="!isBusy">
+                <div class="d-inline-block w-100 bg-white p-2">
+                    <ol class="mb-0">
+                        <li (click)="openForm(7)"><span class="mr-2">1</span>Fire Safety and Emergency Response</li>
+                        <li (click)="openForm(8)"><span class="mr-2">2</span>First Aid Kit Audit Checklist</li>
+                        <li (click)="openForm(14)"><span class="mr-2">3</span>General Medication Audit Tool</li>
+                        <li (click)="openForm(2)"><span class="mr-2">4</span>Incident Audit Form</li>
+                        <li (click)="openForm(11)"><span class="mr-2">5</span>Infection Control Audit Tool</li>
+                        <li (click)="openForm(9)"><span class="mr-2">6</span>Internal Food Safety Inspection Record</li>
+                    </ol>
+                        <ol class="mb-0">
+                        <li (click)="openForm(16)"><span class="mr-2">7</span>Monthly Environmental Safety Audit Form </li>
+                        <li (click)="openForm(10)"> <span class="mr-2">8</span>Monthly Hot Water Temperature Record</li>
+                        <li (click)="openForm(21)"><span class="mr-2">9</span>Service inspection</li>
+                        <li (click)="openForm(19)"><span class="mr-2">10</span>Weekly Environmental Tool</li>
+                        <li (click)="openForm(12)"><span class="mr-2">11</span>Window Restrictor Audit (Weekly)</li>
+                        <li (click)="openForm(20)"><span class="mr-2">12</span>Window Safety Risk Assessment </li>
+                    </ol>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

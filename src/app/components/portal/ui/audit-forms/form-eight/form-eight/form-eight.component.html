@@ -1,0 +1,1546 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        FIRST AID KIT AUDIT CHECKLIST
+                    </span>
+                    <span class="usr_headname"></span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go
+                            Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mt-1 mb-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+
+                    <form [formGroup]="auditForm">
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control"
+                                                        (change)="getUsers($event.target.value)"
+                                                        formControlName="locationId">
+                                                        <ng-container *ngFor="let location of locationList">
+                                                            <option [value]="location.id">
+                                                                {{location.name}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" (change)="completeForm($event)"
+                                                        name="auditedBy" formControlName="auditedBy">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType != userType.Admin">
+                                                                {{ (user.firstName ==null ||
+                                                                user.lastName == null)?
+                                                                user.email: user.firstName+"
+                                                                "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <!-- <input type="date" class="form-control" /> -->
+                                                    <label>{{(auditForm.get('auditDate').value)?(auditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <ng-container *ngIf="isFilling">
+                                <div class="care-infotable w-96 mb-3 d-flex">
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">Item</th>
+                                                <th class="w-25">Use</th>
+                                                <th class="w-25">Quantity</th>
+                                                <th class="w-25">Checked By</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="border-top-0">Blanket accident thermal</td>
+                                                <td>For hypothermia or shock</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="blanketAccidentQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.blanketAccidentQuantity.valid && (auditForm.controls.blanketAccidentQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.blanketAccidentQuantity.errors?.required"
+                                                                class="errorText">This field is required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.blanketAccidentQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.blanketAccidentQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="blanketAccidentCheckBy"
+                                                            formControlName="blanketAccidentCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Cotton balls sterilises</td>
+                                                <td class="border-top-0">Bathing wounds</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="cottonBallsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.cottonBallsQuantity.valid && (auditForm.controls.cottonBallsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.cottonBallsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.cottonBallsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.cottonBallsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="cottonBallsCheckBy"
+                                                            formControlName="cottonBallsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Disposable latex gloves large and medium</td>
+                                                <td class="border-top-0">Protection against transmisslon of blood borne
+                                                    disease</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="disposableGlovesQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.disposableGlovesQuantity.valid && (auditForm.controls.disposableGlovesQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.disposableGlovesQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.disposableGlovesQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.disposableGlovesQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="disposableGlovesCheckBy"
+                                                            formControlName="disposableGlovesCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Drink bottle or hard plastic cups</td>
+                                                <td class="border-top-0">Not to be shared, for fluid replacement</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="bottleHardPlasticQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.bottleHardPlasticQuantity.valid && (auditForm.controls.bottleHardPlasticQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.bottleHardPlasticQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.bottleHardPlasticQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.bottleHardPlasticQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="bottleHardPlasticCheckBy"
+                                                            formControlName="bottleHardPlasticCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Crepe bandage fabric strips (box 20)</td>
+                                                <td class="border-top-0">Cover small wounds</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="crepeBandageQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.crepeBandageQuantity.valid && (auditForm.controls.crepeBandageQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="crepeBandageCheckBy"
+                                                            formControlName="crepeBandageCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Eye pad sterile</td>
+                                                <td class="border-top-0">For protecting the eye after trauma or foreign
+                                                    body
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="eyePadSterileQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.eyePadSterileQuantity.valid && (auditForm.controls.eyePadSterileQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.eyePadSterileQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.eyePadSterileQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.eyePadSterileQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="eyePadSterileCheckBy"
+                                                            formControlName="eyePadSterileCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Freezer bags (pack)</td>
+                                                <td class="border-top-0">For ice and disposal of rubbish</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="freezerBagsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.freezerBagsQuantity.valid && (auditForm.controls.freezerBagsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.freezerBagsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.freezerBagsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.freezerBagsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="freezerBagsCheckBy"
+                                                            formControlName="freezerBagsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Instant cold pack</td>
+                                                <td class="border-top-0">When ice is unavailable. Recommend crushed ice
+                                                    in
+                                                    eskys or
+                                                    prepared ice bags in the freezer if possible</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="instantColdPackQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.instantColdPackQuantity.valid && (auditForm.controls.instantColdPackQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.instantColdPackQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.instantColdPackQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.instantColdPackQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="instantColdPackCheckBy"
+                                                            formControlName="instantColdPackCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Jelly beans</td>
+                                                <td class="border-top-0">Diabetics</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="jellyBeansQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.jellyBeansQuantity.valid && (auditForm.controls.jellyBeansQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.jellyBeansQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.jellyBeansQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.jellyBeansQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="jellyBeansCheckBy"
+                                                            formControlName="jellyBeansCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">List of medical conditions/allergies/etc</td>
+                                                <td class="border-top-0">To ensure appropriate care of medical
+                                                    conditions
+                                                    including
+                                                    allergies or asthma, collected pre season</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="listOfMedicalQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.listOfMedicalQuantity.valid && (auditForm.controls.listOfMedicalQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.listOfMedicalQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.listOfMedicalQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.listOfMedicalQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="listOfMedicalCheckBy"
+                                                            formControlName="listOfMedicalCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Medical emergency plan</td>
+                                                <td class="border-top-0">An emergency plan may include script of details
+                                                    for
+                                                    an
+                                                    emergency (999) call (quickest access io the unit where medical
+                                                    emergency is
+                                                    etc), chain of command, (IocaI out of hours clinic etc), who is
+                                                    responsible for
+                                                    medical/first aid supplies etc.</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="medicalEmergencyQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.medicalEmergencyQuantity.valid && (auditForm.controls.medicalEmergencyQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.medicalEmergencyQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.medicalEmergencyQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.medicalEmergencyQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="medicalEmergencyCheckBy"
+                                                            formControlName="medicalEmergencyCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Non adhesive dressings 50mmx50mm & 77x75mm</td>
+                                                <td class="border-top-0">Wound desifectant</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text"
+                                                            formControlName="nonAdhesiveDressingsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.nonAdhesiveDressingsQuantity.valid && (auditForm.controls.nonAdhesiveDressingsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.nonAdhesiveDressingsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.nonAdhesiveDressingsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.nonAdhesiveDressingsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="nonAdhesiveDressingsCheckBy"
+                                                            formControlName="nonAdhesiveDressingsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Resuscitation mask -packet or pocket mask </td>
+                                                <td class="border-top-0">Used for CPR</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="resuscitationMarkQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.resuscitationMarkQuantity.valid && (auditForm.controls.resuscitationMarkQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.resuscitationMarkQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.resuscitationMarkQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.resuscitationMarkQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="resuscitationMarkCheckBy"
+                                                            formControlName="resuscitationMarkCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Safety pins assorted</td>
+                                                <td class="border-top-0">To secure slings or bandages</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="safetyPinsAssortedQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.safetyPinsAssortedQuantity.valid && (auditForm.controls.safetyPinsAssortedQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.safetyPinsAssortedQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.safetyPinsAssortedQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.safetyPinsAssortedQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="safetyPinsAssortedCheckBy"
+                                                            formControlName="safetyPinsAssortedCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Sod Chloride 10ml </td>
+                                                <td class="border-top-0">Saline for washing wounds or eyes after trauma
+                                                    or foreign body </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="sodChlorideQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.sodChlorideQuantity.valid && (auditForm.controls.sodChlorideQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.sodChlorideQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.sodChlorideQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.sodChlorideQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="sodChlorideCheckBy"
+                                                            formControlName="sodChlorideCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Accident Book pen, paper, clip board </td>
+                                                <td class="border-top-0">Record injuries, treatments and actions</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="accidentBookPenQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.accidentBookPenQuantity.valid && (auditForm.controls.accidentBookPenQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.accidentBookPenQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.accidentBookPenQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.accidentBookPenQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="accidentBookPenCheckBy"
+                                                            formControlName="accidentBookPenCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Tape scissors 14cm</td>
+                                                <td class="border-top-0">Cut tape and bandages</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="tapeScissorsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.tapeScissorsQuantity.valid && (auditForm.controls.tapeScissorsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.tapeScissorsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.tapeScissorsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.tapeScissorsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="tapeScissorsCheckBy"
+                                                            formControlName="tapeScissorsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Telephone or access to one</td>
+                                                <td class="border-top-0">For emergency calls</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="telephoneQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.telephoneQuantity.valid && (auditForm.controls.telephoneQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.telephoneQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.telephoneQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.telephoneQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="telephoneCheckBy"
+                                                            formControlName="telephoneCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Triangular bandage</td>
+                                                <td class="border-top-0">For arm slings and compression</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="triangularBandageQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.triangularBandageQuantity.valid && (auditForm.controls.triangularBandageQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.triangularBandageQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.triangularBandageQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.triangularBandageQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="triangularBandageCheckBy"
+                                                            formControlName="triangularBandageCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Wound closure strips</td>
+                                                <td class="border-top-0">Closed, bring wound edges together</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="woundClousreStripsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.woundClousreStripsQuantity.valid && (auditForm.controls.woundClousreStripsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.woundClousreStripsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.woundClousreStripsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.woundClousreStripsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="woundClousreStripsCheckBy"
+                                                            formControlName="woundClousreStripsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Gauze swabs 10cmx10cm </td>
+                                                <td class="border-top-0">Bathing wounds</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="guzeSwabsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.guzeSwabsQuantity.valid && (auditForm.controls.guzeSwabsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.guzeSwabsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.guzeSwabsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.guzeSwabsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="guzeSwabsCheckBy"
+                                                            formControlName="guzeSwabsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Plain scissors </td>
+                                                <td class="border-top-0">To cut foam, adhesives</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="plainScissorsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.plainScissorsQuantity.valid && (auditForm.controls.plainScissorsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.plainScissorsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.plainScissorsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.plainScissorsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="plainScissorsCheckBy"
+                                                            formControlName="plainScissorsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Crepe bandage - small </td>
+                                                <td class="border-top-0">Secure wound dressings or ice</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="crepeBandageSmallQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.crepeBandageSmallQuantity.valid && (auditForm.controls.crepeBandageSmallQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageSmallQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageSmallQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageSmallQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="crepeBandageSmallCheckBy"
+                                                            formControlName="crepeBandageSmallCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Crepe bandage - large </td>
+                                                <td class="border-top-0">Secure wound dressings or ice</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="crepeBandageLargeQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.crepeBandageLargeQuantity.valid && (auditForm.controls.crepeBandageLargeQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageLargeQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageLargeQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.crepeBandageLargeQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="crepeBandageLargeCheckBy"
+                                                            formControlName="crepeBandageLargeCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Vaseline 50g </td>
+                                                <td class="border-top-0">For prevention of chaffing and rubbing</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="veseline50gQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.veseline50gQuantity.valid && (auditForm.controls.veseline50gQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.veseline50gQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.veseline50gQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.veseline50gQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="veseline50gCheckBy"
+                                                            formControlName="veseline50gCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Micropore tape</td>
+                                                <td class="border-top-0">For strapping of sensitive skin</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="microporeTapeQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.microporeTapeQuantity.valid && (auditForm.controls.microporeTapeQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.microporeTapeQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.microporeTapeQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.microporeTapeQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="microporeTapeCheckBy"
+                                                            formControlName="microporeTapeCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Defribulator </td>
+                                                <td class="border-top-0">Tt requires a qualified person to use it</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="defribulatorQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.defribulatorQuantity.valid && (auditForm.controls.defribulatorQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.defribulatorQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.defribulatorQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.defribulatorQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="defribulatorCheckBy"
+                                                            formControlName="defribulatorCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Scissors </td>
+                                                <td class="border-top-0">Cutclothng</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="scissorsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.scissorsQuantity.valid && (auditForm.controls.scissorsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.scissorsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.scissorsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.scissorsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="scissorsCheckBy"
+                                                            formControlName="scissorsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Tissues </td>
+                                                <td class="border-top-0">Clearing spillages / vomit</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="tissuesQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.tissuesQuantity.valid && (auditForm.controls.tissuesQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.tissuesQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.tissuesQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.tissuesQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="tissuesCheckBy"
+                                                            formControlName="tissuesCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Resuscitation flash </td>
+                                                <td class="border-top-0">CPR</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="resuscitationFlashQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.resuscitationFlashQuantity.valid && (auditForm.controls.resuscitationFlashQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.resuscitationFlashQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.resuscitationFlashQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.resuscitationFlashQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="resuscitationFlashCheckBy"
+                                                            formControlName="resuscitationFlashCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Shaver </td>
+                                                <td class="border-top-0">Removal chest hair</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="shaverQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.shaverQuantity.valid && (auditForm.controls.shaverQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.shaverQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.shaverQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.shaverQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="shaverCheckBy"
+                                                            formControlName="shaverCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Cleansing wipes </td>
+                                                <td class="border-top-0">Cleansing</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="cleansingWipesQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.cleansingWipesQuantity.valid && (auditForm.controls.cleansingWipesQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.cleansingWipesQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.cleansingWipesQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.cleansingWipesQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="cleansingWipesCheckBy"
+                                                            formControlName="cleansingWipesCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Heat Retaining Wrap </td>
+                                                <td class="border-top-0">Hypothermia or shock</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="heatRetainingWrapQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.heatRetainingWrapQuantity.valid && (auditForm.controls.heatRetainingWrapQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.heatRetainingWrapQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.heatRetainingWrapQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.heatRetainingWrapQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="heatRetainingWrapCheckBy"
+                                                            formControlName="heatRetainingWrapCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">NitrileGIovas </td>
+                                                <td class="border-top-0">Protection</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="nitrileGlovasQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.nitrileGlovasQuantity.valid && (auditForm.controls.nitrileGlovasQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.nitrileGlovasQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.nitrileGlovasQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.nitrileGlovasQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="nitrileGlovasCheckBy"
+                                                            formControlName="nitrileGlovasCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Sterile adhesive dressings </td>
+                                                <td class="border-top-0">Cuts / wounds</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text"
+                                                            formControlName="sterileAdhesiveDressingsQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.sterileAdhesiveDressingsQuantity.valid && (auditForm.controls.sterileAdhesiveDressingsQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.sterileAdhesiveDressingsQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.controls.sterileAdhesiveDressingsQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.controls.sterileAdhesiveDressingsQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control"
+                                                            name="sterileAdhesiveDressingsCheckBy"
+                                                            formControlName="sterileAdhesiveDressingsCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Washproof plasters</td>
+                                                <td class="border-top-0">Cuts</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="washproofPlastersQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.washproofPlastersQuantity.valid && (auditForm.controls.washproofPlastersQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.washproofPlastersQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.washproofPlastersQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.washproofPlastersQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="washproofPlastersCheckBy"
+                                                            formControlName="washproofPlastersCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Blue plasters</td>
+                                                <td class="border-top-0">If personnel is in the kitchen</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="bluePlastersQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.bluePlastersQuantity.valid && (auditForm.controls.bluePlastersQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.bluePlastersQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.bluePlastersQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.bluePlastersQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="bluePlastersCheckBy"
+                                                            formControlName="bluePlastersCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">Burn gel</td>
+                                                <td class="border-top-0">Burns</td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <input type="text" formControlName="burngelQuantity"
+                                                            class="form-control" />
+                                                        <ng-container
+                                                            *ngIf="!auditForm.controls.burngelQuantity.valid && (auditForm.controls.burngelQuantity.dirty )">
+                                                            <small
+                                                                *ngIf="auditForm.controls.burngelQuantity.errors?.required"
+                                                                class="errorText">This field is
+                                                                required</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.burngelQuantity.errors?.min"
+                                                                class="errorText">Minimum 0</small>
+                                                            <small
+                                                                *ngIf="auditForm.controls.burngelQuantity.errors?.pattern"
+                                                                class="errorText">Please provide valid input max 9999</small>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <select class="form-control" name="burngelCheckBy"
+                                                            formControlName="burngelCheckBy">
+                                                            <ng-container *ngFor="let user of allUserList">
+                                                                <option [ngValue]="user.id">
+                                                                    {{ (user.firstName ==null || user.lastName == null)?
+                                                                    user.email: user.firstName+" "+user.lastName}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3"
+                                *ngIf="auditForm.get('signoffBy').value == currentUserId ">
+                                <p class="mr-2"><strong>Do you want to create form for next review date</strong></p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes15"
+                                        [value]="true" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="yes15" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false"
+                                        id="No15" [value]="false"
+                                        class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="No15" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container
+                                    *ngIf="auditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

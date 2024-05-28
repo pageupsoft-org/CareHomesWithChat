@@ -1,0 +1,90 @@
+<div class="sv-tab-panel info_tab_container">
+    <h3 class="zoning-head-com">Zoning Board</h3>
+    <ng-container *ngIf="isBusy">
+        <div class="loader">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!isBusy">
+
+        <div id="status"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4 class="red_zone_headrbg">Red Zone</h4>
+                <div id="{{zoneCategory.Red}}" class="zone red zoning-board-scroll" ondragover="return false">
+                    <div *ngIf="patients; else elseBlock">
+                        <ng-container *ngFor="let patient of patients | zonePipe: 'R'">
+
+                            <div class="patient-container border-red" [ngStyle]="{ 'background-color': patient.alertEndDate | zoningAlertColor }"
+                                (click)="getDetails(patient)" draggable="true" id="{{patient.id}}" data-zone="R">
+                                <img src="assets/images/patient-icn.png" id="{{patient.id}}" data-zone="R" />
+                                <div class="head" id="{{patient.id}}" data-zone="R">{{ patient.firstName }} {{ patient.lastName }}</div>
+                            </div>
+                        </ng-container>
+
+
+                        <!--      <div class="patient-container" draggable="true" data-zone="R" id="111">
+                            <div class="head">Temp1</div>
+                            <i class="mdi mdi-account"></i>
+                        </div> 
+                            
+                              <div class="patient-container" draggable="true" data-zone="R" id="temp2">
+                        <div class="head">Temp2</div>
+                        <i class="mdi mdi-account"></i>
+                    </div>
+                    <div class="patient-container" draggable="true" data-zone="R" id="temp3">
+                        <div class="head">Temp3</div>
+                        <i class="mdi mdi-account"></i>
+                    </div> -->
+                    </div>
+                    <ng-template #elseBlock>No patients found.</ng-template>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4 class="amber_zone_headrbg">Amber Zone</h4>
+                <div id="{{zoneCategory.Amber}}" class="zone amber zoning-board-scroll" ondragover="return false">
+                    <div *ngIf="patients; else elseBlock">
+
+                        <ng-container *ngFor="let patient of patients | zonePipe: 'A'">
+
+                            <div class="patient-container border-amber"
+                                [ngStyle]="{ 'background-color': patient.alertEndDate | zoningAlertColor }"
+                                (click)="getDetails(patient)" draggable="true" id="{{patient.id}}" data-zone="A">
+                                <img src="assets/images/patient-icn.png"  id="{{patient.id}}" data-zone="A" />
+                                <div id="{{patient.id}}" data-zone="A" class="head">{{ patient.firstName }} {{ patient.lastName }}</div>
+
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4 class="green_zone_headrbg">Green Zone</h4>
+                <div id="{{zoneCategory.Green}}" class="zone green zoning-board-scroll" ondragover="return false">
+                    <div *ngIf="patients; else elseBlock">
+                        <ng-container *ngFor="let patient of patients | zonePipe: 'G'">
+
+                            <div class="patient-container border-green"
+                                [ngStyle]="{ 'background-color': patient.alertEndDate | zoningAlertColor }"
+                                (click)="getDetails(patient)" draggable="true" id="{{patient.id}}" data-zone="G">
+                                <img src="assets/images/patient-icn.png" id="{{patient.id}}" data-zone="G" />
+                                <div id="{{patient.id}}" data-zone="G" class="head">{{ patient.firstName }} {{ patient.lastName }}</div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+</div>
+
+<ng-container *ngIf="locationId">
+
+    <app-patient-zone-log-modal #patientZoneLog [locationId]="locationId"></app-patient-zone-log-modal>
+</ng-container>
+
+<!-- <ng-container *ngIf="showDetails"> -->
+    <!-- <app-patient-zone-log [patient]="patient" (getPatients)="getPatients()"></app-patient-zone-log> -->
+    <app-latest-log-modal #logModal></app-latest-log-modal>
+<!-- </ng-container> -->

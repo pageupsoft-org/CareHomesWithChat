@@ -1,0 +1,125 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <ng-container *ngIf="formName == formsName.Form2">
+                        <span class="usr_headleft">Form 2</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form7">
+                        <span class="usr_headleft">Form 7</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form8">
+                        <span class="usr_headleft">Form 8</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form9">
+                        <span class="usr_headleft">Form 9</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form10">
+                        <span class="usr_headleft">Form 10</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form12">
+                        <span class="usr_headleft">Form 12</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form13">
+                        <span class="usr_headleft">Form 13</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form14">
+                        <span class="usr_headleft">Form 14</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form15">
+                        <span class="usr_headleft">Form 15</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form16">
+                        <span class="usr_headleft">Form16</span>
+                    </ng-container>
+                    <ng-container *ngIf="formName == formsName.Form17">
+                        <span class="usr_headleft">Form 17</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="formName == formsName.Form11">
+                        <span class="usr_headleft">Form11</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="formName == formsName.Form19">
+                        <span class="usr_headleft">Form19</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="formName == formsName.Form20">
+                        <span class="usr_headleft">Form20</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="formName == formsName.Form21">
+                        <span class="usr_headleft">Form21</span>
+                    </ng-container>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="isBusy">
+        <div class="loader">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!isBusy">
+        <div class="row">
+            <div class="col-sm-12">
+                <ng-container *ngIf="formsList.length >0 && !showForm">
+                    <div class="d-inline-block w-100 bg-white p-3 mt-3">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="w-25">#</th>
+                                        <th class="w-25">Created At</th>
+                                        <th class="w-25">Created By</th>
+                                        <th class="w-25">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <ng-container *ngFor="let form of formsList; let i=index">
+                                        <tr>
+                                            <td class="w-25">{{i+1}}</td>
+                                            <td class="w-25">{{((form.createdAt)?(form.createdAt|date:'dd-MM-yyyy')
+                                                :((form.completedDate)?(form.completedDate|date:'dd-MM-yyyy'):(form.noteDate|date:'dd-MM-yyyy')))
+                                                }}
+                                            </td>
+                                            <td class="w-25">
+                                                {{getUserName((form.createdBy)?(form.createdBy):((form.completedBy)?form.completedBy:form.userId))}}
+                                            </td>
+                                            <td class="w-25">
+                                                <div class="actionbox">
+                                                    <i title="View" (click)="openForm(form)"
+                                                        class="mdi text-info mdi-eye-circle mr-2"></i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="formsList.length <=0">
+                    <div class="error_Box p-5 m-4">
+                        <h4 class="alert alert-danger text-center mb-0">No Record Found</h4>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="formName == formsName.Form13 && showForm">
+                    <app-form-thirteen [serviceUserData]="userData" [medicationAudit]="formData" [isReload]="true">
+                    </app-form-thirteen>
+                </ng-container>
+                <ng-container *ngIf="formName == formsName.Form15 && showForm">
+                    <app-form-fifteen [serviceUserData]="userData" [medicationSpotCheck]="formData" [isReload]="true">
+                    </app-form-fifteen>
+                </ng-container>
+                <ng-container *ngIf="formName == formsName.Form17 && showForm">
+                    <app-form-seventeen [serviceUserData]="userData" [weeklyMedicationStock]="formData"
+                        [isReload]="true"></app-form-seventeen>
+                </ng-container>
+            </div>
+        </div>
+    </ng-container>
+</div>

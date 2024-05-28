@@ -1,0 +1,122 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i> Service User List </span>
+                    <span class="usr_headname"></span>
+                    <button type="button"  *ngIf="currentUserRole != userType.Auditor" (click)="registerUser()" class="btn btn-sm btn-info add_new_user float-right">
+                        <i class="mdi mdi-account-plus mr-1"></i> <span>Add New Service User</span>
+                    </button>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="horizontal-tabs my-3 bg-white shadow-sm">
+                <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block tab-96-imp">
+                    <div class="row px-3 py-2">
+                        <div class="col-sm-12 col-md-3 col-lg-2">
+                            <div class="dataTables_info d-flex" id="dtBasicExample_info" role="status" aria-live="polite">
+                                <p class="mb-0 d-inline-block float-left mr-3 ln-40">Top</p>
+                                <select [(ngModel)]="records.top" class="form-control d-inline-block" (change)="getPatients()" style="width: auto;">
+                                    <option [ngValue]="10" selected>10</option>
+                                    <option [ngValue]="25">25</option>
+                                    <option [ngValue]="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-5 col-lg-4">
+                            <label class="form-check-label mr-2 ln-35 float-left ln-40"> Status: </label>
+
+                            <div class="form-check mr-2 d-inline-block">
+                                <select class="form-control d-inline-block bg-wine" (change)="filter(status)" [(ngModel)]="status" id="location">
+                                    <ng-container *ngIf="admissionStatus">
+                                        <ng-container *ngFor="let status of admissionStatus">
+                                            <option [ngValue]="status.value">{{status.key}}</option>
+                                        </ng-container>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-6">
+                            <div class="dataTables_paginate paging_simple_numbers pull-right cont-searchbox" id="dtBasicExample_paginate">
+                                <p class="mb-0"><i class="mdi mdi-magnify"></i></p>
+                                <input type="text" [(ngModel)]="records.searchString" (keyup)="searchPatients()" placeholder="search" class="form-control pull-right">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <ng-container *ngIf="isBusy">
+                            <div class="col-sm-12 text-center">
+                                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                                </mat-spinner>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="!isBusy && patientList.length > 0">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <!-- <th>S.no</th> -->
+                                            <th class="w-10">Service User Number </th>
+                                            <th class="w-10">Patient Name</th>
+                                            <th class="w-10">Contact Number</th>
+                                            <th class="w-10">Gender</th>
+                                            <th class="w-10">Ethinic Origin</th>
+                                            <th class="w-10">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let patient of patientList; let i = index">
+                                            <tr>
+                                                <!-- <td>{{i+1}}</td> -->
+                                                <td class="w-10">{{patient.serviceUserNumber}}</td>
+                                                <td class="w-10">
+                                                    <!-- {{nameTitleEnum[patient.title]}}  &nbsp; -->{{patient.firstName}} &nbsp; {{patient.lastName}}
+                                                </td>
+                                                <td class="w-10">{{patient.telePhone}}</td>
+                                                <td class="w-10">{{genderEnum[patient.gender]}}</td>
+                                                <td class="w-10">{{ethnicEnum[patient.ethnicOrigin]}}</td>
+                                                <td class="w-10">
+                                                    <div class="actionbox">
+                                                        <i class="mdi text-primary mdi-pencil mr-2" *ngIf="currentUserRole != userType.Auditor" title="Edit" (click)="patientUpdate(patient.id)"></i>
+                                                        <i class="mdi text-danger mdi-delete mr-2" *ngIf="currentUserRole != userType.Auditor" title="Remove" (click)="remove(patient.id)"></i>
+                                                        <i class="mdi text-info mdi-eye-circle mr-2" title="Show Details" (click)="patientView(patient.id)"></i>
+                                                        <a target="_blank" href="{{baseUrl}}/{{patient.id}}" class="mdi text-warning mdi-download mr-2" title="Download"></a>
+                                                        <!-- <a (click)="comingSoon()" class="mdi text-warning mdi-download mr-2" title="Download"></a> -->
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="!isBusy && patientList.length == 0">
+                            <div class="text-center w-100 d-inline-block px-3 py-3">
+                                <div class="alert alert-danger" role="alert">
+                                    <p class="mb-0"> No Record Found</p>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="row px-3 py-2">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">
+                                Showing {{records.skip+1}} to {{lastRecord}} of {{recordCount}} entries</div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers pull-right" id="dtBasicExample_paginate">
+                                <pagination [totalItems]=recordCount [rotate]="rotate" [maxSize]="maxSize" [itemsPerPage]=records.top (pageChanged)="pageChanged($event)"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,2769 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shared Pathway</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #ecf4fa;
+        }
+        
+        .table {
+            width: 1000px;
+            margin: 0px auto;
+            border: solid thin #eaeaea;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="table bg-white">
+
+        <!--SECTION A-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2" style="text-align:center;color: #fff;background-color: #b16d76 !important;line-height: 40px; font-size: 20px;">My Shared Pathway
+                        <div class="pull-right">
+                            <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2" (click)="goBack()">Go Back</button>
+                        </div>
+
+                    </th>
+                </tr>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th colspan="2">
+                        SECTION A
+                    </th>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        A - My Mental Health Recovery
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) Where am I now? Pathway Pointers
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        1. How well do I manage my self-care?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2. How well do I manage my mental health difficulties?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3. How well do I cope with life’s frustrations and stresses?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4. What is my relationship like with my clinical team and others who support me?
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        The points from the discussions I particularly want to note are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionANote}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        The areas me and my clinical team disagree on are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionADisagreementNote}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        2) My Outcomes
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1 - Major difficulties
+                    </td>
+                    <td>
+                        2 - Some difficulties
+                    </td>
+                    <td>
+                        3 - Making progress
+                    </td>
+                    <td>
+                        4 - Some strengths
+                    </td>
+                    <td>
+                        5 - Major strengths
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        S.no
+                    </th>
+                    <th>
+                        Outcome Area A - My Mental Health Recovery
+                    </th>
+                    <th>
+                        My previous score
+                    </th>
+                    <th>
+                        Team previous score
+                    </th>
+                    <th>
+                        Current score
+                    </th>
+                    <th>
+                        Team current score
+                    </th>
+                    <th>
+                        Difference in current scores
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        I have taken positive steps towards my recovery and actively engage in activties that help me get better
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.PositiveStepsTowardsRecoveryScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PositiveStepsTowardsRecoveryTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PositiveStepsTowardsRecoveryScore - mySharedPathway.PositiveStepsTowardsRecoveryTeamScore}}
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        I am independent and managing my self care
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.IndependentAndManagingSelfCareScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.IndependentAndManagingSelfCareTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.IndependentAndManagingSelfCareScore- mySharedPathway.IndependentAndManagingSelfCareTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        My symptoms are well controlled with treatment
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.WellControlledSymptomsScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.WellControlledSymptomsTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.WellControlledSymptomsScore- mySharedPathway.WellControlledSymptomsTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        I have regularly shown that I think before I act even when I am stressed and upset
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.ThinkBeforeActScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ThinkBeforeActTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ThinkBeforeActScore - mySharedPathway.ThinkBeforeActTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        I have demonstrated that I can take my medication responsibly and manage this outside of secure hospital environment
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.TakeMedicationResponsiblyScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.TakeMedicationResponsiblyTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.TakeMedicationResponsiblyScore- mySharedPathway.TakeMedicationResponsiblyTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        6
+                    </td>
+                    <td>
+                        When stressed I can consistently use coping strategies that stop me becoming unwell
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.CopingStrategiesScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CopingStrategiesTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CopingStrategiesScore- mySharedPathway.CopingStrategiesTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        7
+                    </td>
+                    <th>
+                        Total
+                    </th>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>{{currentTotalSectionA()}}</td>
+                    <td>{{currentTeamTotalSectionA()}}</td>
+                    <td>{{getDifferenceSectionA()}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        3) My Plans and Progress
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.PlansAndProgresses; let i = index">
+                    <ng-container *ngIf="section.SectionName == 'A'">
+                        <tr>
+                            <td>
+                                Where do I want to get to? Goals / milestones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.GoalsMilestonesNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How do I get there? Plans / actions
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.PlansActionNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Who will support me with this?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.SupportNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How will I know when I have got there? Outcome measures / progress / things that have changed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.OutcomeMeasures}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Timescales / reviews
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.TimeScalesReviewsNote}}
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+
+            </tbody>
+        </table>
+
+        <!--SECTION B-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th>
+                        SECTION B
+                    </th>
+                </tr>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        B - Stopping My Problem Behaviours
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) Where am I now? Pathway Pointers
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        1. What are the risky behaviours that caused me to have to come into hospital?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2. What are my risky behaviours, if any, now?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3. What treatment have I had to help manage my risky behaviours?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4. What plans do I have in place to manage my risky behaviours in the future?
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        The points from the discussions I particularly want to note are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionBNote}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        The areas me and my clinical team disagree on are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionBDisagreementNote}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        2) My Outcomes
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1 - Major difficulties
+                    </td>
+                    <td>
+                        2 - Some difficulties
+                    </td>
+                    <td>
+                        3 - Making progress
+                    </td>
+                    <td>
+                        4 - Some strengths
+                    </td>
+                    <td>
+                        5 - Major strengths
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        S.no
+                    </th>
+                    <th>
+                        Outcome Area B - Stopping My Problem Behaviours
+                    </th>
+                    <th>
+                        My previous score
+                    </th>
+                    <th>
+                        Team previous score
+                    </th>
+                    <th>
+                        Current score
+                    </th>
+                    <th>
+                        Team current score
+                    </th>
+                    <th>
+                        Difference in current scores
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        I have a good attitude towards other people that means that I can get on with others and avoid trouble.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.GoodAttitudeTowardsPeopleScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.GoodAttitudeTowardsPeopleTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.GoodAttitudeTowardsPeopleScore- mySharedPathway.GoodAttitudeTowardsPeopleTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        I have shown that I can manage my risk to others around me and not be involved in any problem behaviours on the ward
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.CanManageMyRiskToOthersScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CanManageMyRiskToOthersTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CanManageMyRiskToOthersScore- mySharedPathway.CanManageMyRiskToOthersTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        I have shown that I can manage set backs or new stresses by asking the staff team for help at the right time
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.CanManageMySetbacksScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CanManageMySetbacksTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CanManageMySetbacksScore- mySharedPathway.CanManageMySetbacksTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        I have spent my time in unsupervised settings and shown that I can stay risk free
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.UnsupervisedSettingsScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.UnsupervisedSettingsTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.UnsupervisedSettingsScore- mySharedPathway.UnsupervisedSettingsTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        I am willing to work with the team to help manage any risk that I present to myself and/or others
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.WillingToWorkWithTheTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.WillingToWorkWithTheTeamTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.WillingToWorkWithTheTeamScore- mySharedPathway.WillingToWorkWithTheTeamTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        6
+                    </td>
+                    <td>
+                        I have successfully completed the treatment programme to manage my risk
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.SuccessfullyCompletedTreatmentProgrammeScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.SuccessfullyCompletedTreatmentProgrammeTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.SuccessfullyCompletedTreatmentProgrammeScore- mySharedPathway.SuccessfullyCompletedTreatmentProgrammeTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        7
+                    </td>
+                    <td>
+                        I have consistently complied with care plans that help me stay safe both inside and outside of hospital
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.ConsistentlyCompliedWithCarePlansScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ConsistentlyCompliedWithCarePlansTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ConsistentlyCompliedWithCarePlansScore- mySharedPathway.ConsistentlyCompliedWithCarePlansTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        8
+                    </td>
+                    <th>
+                        Total
+                    </th>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>{{currentTotalSectionB()}}</td>
+                    <td>{{currentTeamTotalSectionB()}}</td>
+                    <td>{{getDifferenceSectionB()}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        3) My Plans and Progress
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.PlansAndProgresses; let i = index">
+                    <ng-container *ngIf="section.SectionName == 'B'">
+                        <tr>
+                            <td>
+                                Where do I want to get to? Goals / milestones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.GoalsMilestonesNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How do I get there? Plans / actions
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.PlansActionNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Who will support me with this?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.SupportNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How will I know when I have got there? Outcome measures / progress / things that have changed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.OutcomeMeasures}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Timescales / reviews
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.TimeScalesReviewsNote}}
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <!--SECTION C-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th>
+                        SECTION C
+                    </th>
+                </tr>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        C - Getting Insight
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) Where am I now? Pathway Pointers
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        1. What do I understand about why I am in hospital?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2. What do I understand about my mental health and how this affects my behaviour?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3. What are the difficulties I’ve had that I need help with?
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        The points from the discussions I particularly want to note are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionCNote}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        The areas me and my clinical team disagree on are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionCDisagreementNote}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        2) My Outcomes
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1 - Major difficulties
+                    </td>
+                    <td>
+                        2 - Some difficulties
+                    </td>
+                    <td>
+                        3 - Making progress
+                    </td>
+                    <td>
+                        4 - Some strengths
+                    </td>
+                    <td>
+                        5 - Major strengths
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        S.no
+                    </th>
+                    <th>
+                        Outcome Area C - Getting Insight
+                    </th>
+                    <th>
+                        My previous score
+                    </th>
+                    <th>
+                        Team previous score
+                    </th>
+                    <th>
+                        Current score
+                    </th>
+                    <th>
+                        Team current score
+                    </th>
+                    <th>
+                        Difference in current scores
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        I accept that I have a mental health problem and I know what factors make my health worse.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.MentalHealthProblemFactorsScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.MentalHealthProblemFactorsTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.MentalHealthProblemFactorsScore- mySharedPathway.MentalHealthProblemFactorsTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        I understand how my mental health problems affect my life skills (for example, work, relationships) in both a good and bad way.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.MentalHealthProblemAffectLifeSkillsScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.MentalHealthProblemAffectLifeSkillsTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.MentalHealthProblemAffectLifeSkillsScore- mySharedPathway.MentalHealthProblemAffectLifeSkillsTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        I understand what factors in my life increase or decrease my risk to myself or others (for example, symptoms, drug and alcohol use, poor anger control, strengths).
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.FactorsIncreaseOrDecreaseRiskScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.FactorsIncreaseOrDecreaseRiskTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.FactorsIncreaseOrDecreaseRiskScore- mySharedPathway.FactorsIncreaseOrDecreaseRiskTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        I understand how my living conditions affect my risks (for example, homelessness, friends, access to drugs).
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.LivingConditionsAffectRiskScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.LivingConditionsAffectRiskTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.LivingConditionsAffectRiskScore- mySharedPathway.LivingConditionsAffectRiskTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        I understand how people have been affected by any problem behaviours that I have shown
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.PeopleAffectedByMyBehavioursScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PeopleAffectedByMyBehavioursTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PeopleAffectedByMyBehavioursScore- mySharedPathway.PeopleAffectedByMyBehavioursTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        6
+                    </td>
+                    <td>
+                        I understand and agree with the treatment plan offered by my clinical team.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.AgreeWithTreatmentPlanOfferedScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.AgreeWithTreatmentPlanOfferedTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.AgreeWithTreatmentPlanOfferedScore- mySharedPathway.AgreeWithTreatmentPlanOfferedTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        7
+                    </td>
+                    <td>
+                        I have shown that I have benefited from the treatments I have engaged in to allow me to move on
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.BenefitedFromTheTreatmentsScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.BenefitedFromTheTreatmentsTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.BenefitedFromTheTreatmentsScore- mySharedPathway.BenefitedFromTheTreatmentsTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        8
+                    </td>
+                    <th>
+                        Total
+                    </th>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>{{currentTotalSectionC()}}</td>
+                    <td>{{currentTeamTotalSectionC()}}</td>
+                    <td>{{getDifferenceSectionC()}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        3) My Plans and Progress
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.PlansAndProgresses; let i = index">
+                    <ng-container *ngIf="section.SectionName == 'C'">
+                        <tr>
+                            <td>
+                                Where do I want to get to? Goals / milestones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.GoalsMilestonesNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How do I get there? Plans / actions
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.PlansActionNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Who will support me with this?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.SupportNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How will I know when I have got there? Outcome measures / progress / things that have changed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.OutcomeMeasures}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Timescales / reviews
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.TimeScalesReviewsNote}}
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <!--SECTION D-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th>
+                        SECTION D
+                    </th>
+                </tr>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        D - Recovery from Drug and Alcohol Problems
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) Where am I now? Pathway Pointers
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        1. What problems have I had with drugs and alcohol in the past?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2. What treatment for these problems have I had in hospital?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3. What are my plans for stopping these problems happening again?
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        The points from the discussions I particularly want to note are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionDNote}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        The areas me and my clinical team disagree on are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionDDisagreementNote}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        2) My Outcomes
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1 - Major difficulties
+                    </td>
+                    <td>
+                        2 - Some difficulties
+                    </td>
+                    <td>
+                        3 - Making progress
+                    </td>
+                    <td>
+                        4 - Some strengths
+                    </td>
+                    <td>
+                        5 - Major strengths
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        S.no
+                    </th>
+                    <th>
+                        Outcome Area D - Recovery from Drug and Alcohol Problems
+                    </th>
+                    <th>
+                        My previous score
+                    </th>
+                    <th>
+                        Team previous score
+                    </th>
+                    <th>
+                        Current score
+                    </th>
+                    <th>
+                        Team current score
+                    </th>
+                    <th>
+                        Difference in current scores
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        I have successfully completed the treatment programme for my drug and/or alcohol problem.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.CompletedTheTreatmentProgrammeScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CompletedTheTreatmentProgrammeTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CompletedTheTreatmentProgrammeScore- mySharedPathway.CompletedTheTreatmentProgrammeTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        I have managed to stop my drug and/or alcohol use in hospital over a significant period of time.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.ManagedToStopDrugAlcoholUseScoreScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ManagedToStopDrugAlcoholUseScoreTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ManagedToStopDrugAlcoholUseScoreScore- mySharedPathway.ManagedToStopDrugAlcoholUseScoreTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        I have a relapse prevention plan that has been tested successfully in this hospital.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.RelapsePreventionPlanScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.RelapsePreventionPlanTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.RelapsePreventionPlanScore- mySharedPathway.RelapsePreventionPlanTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        I have consistently shown that I have not returned to using drugs and/or alcohol when I have been left unsupervised.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.NotUsingDrugsAlcoholWhenLeftUnsupervisedScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.NotUsingDrugsAlcoholWhenLeftUnsupervisedTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.NotUsingDrugsAlcoholWhenLeftUnsupervisedScore- mySharedPathway.NotUsingDrugsAlcoholWhenLeftUnsupervisedTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        I cooperate willingly with drug and alcohol screens when asked and the results have been consistently negative.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.CooperateWithDrugAlcoholScreensScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CooperateWithDrugAlcoholScreensTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.CooperateWithDrugAlcoholScreensScore- mySharedPathway.CooperateWithDrugAlcoholScreensTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        6
+                    </td>
+                    <th>
+                        Total
+                    </th>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>{{currentTotalSectionD()}}</td>
+                    <td>{{currentTeamTotalSectionD()}}</td>
+                    <td>{{getDifferenceSectionD()}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        3) My Plans and Progress
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.PlansAndProgresses; let i = index">
+                    <ng-container *ngIf="section.SectionName == 'D'">
+                        <tr>
+                            <td>
+                                Where do I want to get to? Goals / milestones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.GoalsMilestonesNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How do I get there? Plans / actions
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.PlansActionNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Who will support me with this?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.SupportNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How will I know when I have got there? Outcome measures / progress / things that have changed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.OutcomeMeasures}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Timescales / reviews
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.TimeScalesReviewsNote}}
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <!--SECTION E-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th>
+                        SECTION E
+                    </th>
+                </tr>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        E - Making Feasible Plans
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) Where am I now? Pathway Pointers
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        1. What are my plans for how I’ll look after myself when I leave hospital?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2. Who do I have around me to help me once I leave hospital?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3. What stresses do I think I’ll face once I leave hospital?
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        The points from the discussions I particularly want to note are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionENote}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        The areas me and my clinical team disagree on are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionEDisagreementNote}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        2) My Outcomes
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1 - Major difficulties
+                    </td>
+                    <td>
+                        2 - Some difficulties
+                    </td>
+                    <td>
+                        3 - Making progress
+                    </td>
+                    <td>
+                        4 - Some strengths
+                    </td>
+                    <td>
+                        5 - Major strengths
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        S.no
+                    </th>
+                    <th>
+                        Outcome Area E - Making Feasible Plans
+                    </th>
+                    <th>
+                        My previous score
+                    </th>
+                    <th>
+                        Team previous score
+                    </th>
+                    <th>
+                        Current score
+                    </th>
+                    <th>
+                        Team current score
+                    </th>
+                    <th>
+                        Difference in current scores
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        I have an adequate plan † about my future care for mental health services and other important support outside of secure care.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMyFutureCareScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMyFutureCareTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMyFutureCareScore- mySharedPathway.PlanAboutMyFutureCareTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        I have an adequate plan ††about my placement outside of secure care.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMyPlacementScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMyPlacementTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMyPlacementScore- mySharedPathway.PlanAboutMyPlacementTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        I have an adequate plan ††† about my support networks outside of secure care
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMySupportNetworksScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMySupportNetworksTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PlanAboutMySupportNetworksScore- mySharedPathway.PlanAboutMySupportNetworksTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        I will comply with the treatment plans* outside of secure care.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.WillComplyWithTreatmentPlansScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.WillComplyWithTreatmentPlansTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.WillComplyWithTreatmentPlansScore- mySharedPathway.WillComplyWithTreatmentPlansTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        I understand what stresses I will face outside of secure hospital and how to handle them well.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.StressesIWillFaceOutsideHospitalScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.StressesIWillFaceOutsideHospitalTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.StressesIWillFaceOutsideHospitalScore- mySharedPathway.StressesIWillFaceOutsideHospitalTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        6
+                    </td>
+                    <th>
+                        Total
+                    </th>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>{{currentTotalSectionE()}}</td>
+                    <td>{{currentTeamTotalSectionE()}}</td>
+                    <td>{{getDifferenceSectionE()}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        3) My Plans and Progress
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.PlansAndProgresses; let i = index">
+                    <ng-container *ngIf="section.SectionName == 'E'">
+                        <tr>
+                            <td>
+                                Where do I want to get to? Goals / milestones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.GoalsMilestonesNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How do I get there? Plans / actions
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.PlansActionNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Who will support me with this?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.SupportNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How will I know when I have got there? Outcome measures / progress / things that have changed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.OutcomeMeasures}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Timescales / reviews
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.TimeScalesReviewsNote}}
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+
+
+        <!--SECTION F-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th>
+                        SECTION F
+                    </th>
+                </tr>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        F - Staying Healthy
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) Where am I now? Pathway Pointers
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        1. Do I have any problems with my physical health, and if so, how do I manage these?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2. Do I have any side effects or other problems with my medication, and if so, how do I manage these?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3. How am I best going to live a healthy lifestyle?
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        The points from the discussions I particularly want to note are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionFNote}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        The areas me and my clinical team disagree on are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionFDisagreementNote}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        2) My Outcomes
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1 - Major difficulties
+                    </td>
+                    <td>
+                        2 - Some difficulties
+                    </td>
+                    <td>
+                        3 - Making progress
+                    </td>
+                    <td>
+                        4 - Some strengths
+                    </td>
+                    <td>
+                        5 - Major strengths
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        S.no
+                    </th>
+                    <th>
+                        Outcome Area F - Staying Healthy
+                    </th>
+                    <th>
+                        My previous score
+                    </th>
+                    <th>
+                        Team previous score
+                    </th>
+                    <th>
+                        Current score
+                    </th>
+                    <th>
+                        Team current score
+                    </th>
+                    <th>
+                        Difference in current scores
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        I am independent and managing my self-care.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.ManagingMySelfCareScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ManagingMySelfCareTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ManagingMySelfCareScore- mySharedPathway.ManagingMySelfCareTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        Any problems with my physical health are well managed and there is an appropriate plan of care and treatment in place
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.PhysicalHealthProblemsAreWellManagedScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PhysicalHealthProblemsAreWellManagedTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PhysicalHealthProblemsAreWellManagedScore- mySharedPathway.PhysicalHealthProblemsAreWellManagedTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        I do not suffer from any side effects from my medication that cause distress.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.NotSufferingFromAnySideEffectsScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.NotSufferingFromAnySideEffectsTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.NotSufferingFromAnySideEffectsScore- mySharedPathway.NotSufferingFromAnySideEffectsTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        I know how my physical health will be checked and be managed when I leave secure care as there is a clear plan† in place.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.PhysicalHealthWillBeCheckedScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PhysicalHealthWillBeCheckedTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PhysicalHealthWillBeCheckedScore- mySharedPathway.PhysicalHealthWillBeCheckedTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5
+                    </td>
+                    <th>
+                        Total
+                    </th>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>{{currentTotalSectionF()}}</td>
+                    <td>{{currentTeamTotalSectionF()}}</td>
+                    <td>{{getDifferenceSectionF()}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        3) My Plans and Progress
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.PlansAndProgresses; let i = index">
+                    <ng-container *ngIf="section.SectionName == 'F'">
+                        <tr>
+                            <td>
+                                Where do I want to get to? Goals / milestones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.GoalsMilestonesNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How do I get there? Plans / actions
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.PlansActionNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Who will support me with this?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.SupportNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How will I know when I have got there? Outcome measures / progress / things that have changed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.OutcomeMeasures}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Timescales / reviews
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.TimeScalesReviewsNote}}
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <!--SECTION G-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th>
+                        SECTION G
+                    </th>
+                </tr>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        G - My Life Skills
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) Where am I now? Pathway Pointers
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        1. How do I fill my time?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2. What interests and activities do I enjoy?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3. What skills do I have that will help me once I leave hospital?
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        The points from the discussions I particularly want to note are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionGNote}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        The areas me and my clinical team disagree on are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionGDisagreementNote}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        2) My Outcomes
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1 - Major difficulties
+                    </td>
+                    <td>
+                        2 - Some difficulties
+                    </td>
+                    <td>
+                        3 - Making progress
+                    </td>
+                    <td>
+                        4 - Some strengths
+                    </td>
+                    <td>
+                        5 - Major strengths
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        S.no
+                    </th>
+                    <th>
+                        Outcome Area G - My Life Skills
+                    </th>
+                    <th>
+                        My previous score
+                    </th>
+                    <th>
+                        Team previous score
+                    </th>
+                    <th>
+                        Current score
+                    </th>
+                    <th>
+                        Team current score
+                    </th>
+                    <th>
+                        Difference in current scores
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        I have the skills to get on with other people and to manage my day.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.SkillsToGetOnWithPeopleScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.SkillsToGetOnWithPeopleTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.SkillsToGetOnWithPeopleScore- mySharedPathway.SkillsToGetOnWithPeopleTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        I take part in a well-balanced weekly routine of self-care and meaningful activity that helps my recovery.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.WellBalancedWeeklyRoutineScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.WellBalancedWeeklyRoutineTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.WellBalancedWeeklyRoutineScore- mySharedPathway.WellBalancedWeeklyRoutineTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        I can show that I can consistently manage daily living skills (for example, managing my money, shopping, cooking and getting about).
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.ConsistentlyManageDailyLivingSkillsScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ConsistentlyManageDailyLivingSkillsTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ConsistentlyManageDailyLivingSkillsScore- mySharedPathway.ConsistentlyManageDailyLivingSkillsTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        I have a range of interests such as education, leisure, work and creative that I plan to continue when I move on
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.RangeOfInterestsScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.RangeOfInterestsTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.RangeOfInterestsScore- mySharedPathway.RangeOfInterestsTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5
+                    </td>
+                    <th>
+                        Total
+                    </th>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>{{currentTotalSectionG()}}</td>
+                    <td>{{currentTeamTotalSectionG()}}</td>
+                    <td>{{getDifferenceSectionG()}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        3) My Plans and Progress
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.PlansAndProgresses; let i = index">
+                    <ng-container *ngIf="section.SectionName == 'G'">
+                        <tr>
+                            <td>
+                                Where do I want to get to? Goals / milestones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.GoalsMilestonesNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How do I get there? Plans / actions
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.PlansActionNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Who will support me with this?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.SupportNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How will I know when I have got there? Outcome measures / progress / things that have changed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.OutcomeMeasures}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Timescales / reviews
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.TimeScalesReviewsNote}}
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <!--SECTION H-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th>
+                        SECTION H
+                    </th>
+                </tr>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        H - My Relationships
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) Where am I now? Pathway Pointers
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        1. What are my relationships like with my family and friends?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2. What are my relationships like with everyone in my clinical team?
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3. How well do I cope with difficult relationships?
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <!--1-->
+                <tr>
+                    <th>
+                        The points from the discussions I particularly want to note are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+
+                        {{mySharedPathway.SectionHNote}}
+                    </td>
+                </tr>
+                <!--2-->
+                <tr>
+                    <th>
+                        The areas me and my clinical team disagree on are:
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{mySharedPathway.SectionHDisagreementNote}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="5">
+                        2) My Outcomes
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1 - Major difficulties
+                    </td>
+                    <td>
+                        2 - Some difficulties
+                    </td>
+                    <td>
+                        3 - Making progress
+                    </td>
+                    <td>
+                        4 - Some strengths
+                    </td>
+                    <td>
+                        5 - Major strengths
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        S.no
+                    </th>
+                    <th>
+                        Outcome Area H - My Relationships
+                    </th>
+                    <th>
+                        My previous score
+                    </th>
+                    <th>
+                        Team previous score
+                    </th>
+                    <th>
+                        Current score
+                    </th>
+                    <th>
+                        Team current score
+                    </th>
+                    <th>
+                        Difference in current scores
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        I have a positive therapeutic relationship with the clinical team that will continue outside of hospital.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.PositiveTherapeuticRelationshipWithClinicalTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PositiveTherapeuticRelationshipWithClinicalTeamTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.PositiveTherapeuticRelationshipWithClinicalTeamScore- mySharedPathway.PositiveTherapeuticRelationshipWithClinicalTeamTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        I have consistently been able to get on with other service users and can deal with differences of opinion in an appropriate manner.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.BeenAbleToGetOnWithOtherServiceUsersScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.BeenAbleToGetOnWithOtherServiceUsersTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.BeenAbleToGetOnWithOtherServiceUsersScore- mySharedPathway.BeenAbleToGetOnWithOtherServiceUsersTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        Any family relationships that I have are free from conflict.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.FamilyRelationshipsFreeFromConflictScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.FamilyRelationshipsFreeFromConflictTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.FamilyRelationshipsFreeFromConflictScore- mySharedPathway.FamilyRelationshipsFreeFromConflictTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        In this setting I have not shown any problem behaviours of a sexual nature that continue to cause concern to me or anyone in the hospital.
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+                    <td>
+                        {{mySharedPathway.ShownProblemOfSexualNatureScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ShownProblemOfSexualNatureTeamScore}}
+                    </td>
+                    <td>
+                        {{mySharedPathway.ShownProblemOfSexualNatureScore- mySharedPathway.ShownProblemOfSexualNatureTeamScore}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5
+                    </td>
+                    <th>
+                        Total
+                    </th>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>{{currentTotalSectionH()}}</td>
+                    <td>{{currentTeamTotalSectionH()}}</td>
+                    <td>{{getDifferenceSectionH()}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        3) My Plans and Progress
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.PlansAndProgresses; let i = index">
+                    <ng-container *ngIf="section.SectionName == 'H'">
+                        <tr>
+                            <td>
+                                Where do I want to get to? Goals / milestones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.GoalsMilestonesNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How do I get there? Plans / actions
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.PlansActionNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Who will support me with this?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.SupportNote}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                How will I know when I have got there? Outcome measures / progress / things that have changed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.OutcomeMeasures}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Timescales / reviews
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{section.TimeScalesReviewsNote}}
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <!--SECTION I-->
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr style="background-color: #f5f5f5;border-bottom: solid thin #eaeaea;">
+                    <th>
+                        SECTION I
+                    </th>
+                </tr>
+                <tr style="background-color: #ffeaec;">
+                    <th>
+                        I - My Summary Outcome Plan
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        1) What do I need to do to move on from secure services?
+                    </th>
+                </tr>
+                <ng-container *ngFor="let section of mySharedPathway.SummaryOutcomePlans; let i = index">
+                    <tr>
+                        <td>
+                            My Outcomes that need to be Achieved or Partially Achieved (please state)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{section.OutcomesNeedToAchieve}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            What I need to do:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{section.WhatNeedToDo}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Who is the main person working with me on this:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{section.PersonWorkingWithMe}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Timescales
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{section.TimeScalesReviewsNote|date :'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                </ng-container>
+
+            </tbody>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <th>
+                        Date done
+                    </th>
+                    <td>
+                        {{mySharedPathway.CompletedDate|date:"dd-MM-yyyy"}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        Completed by
+                    </th>
+                    <td><select class="form-control min-wd-60" style="border: none;" disabled [(ngModel)]="mySharedPathway.CompletedBy" id="completedBy" name="compeletedBy">
+                        <ng-container *ngFor="let user of usersList">
+                            <option [ngValue]="user.id">
+                                {{ (user.firstName ==null || user.lastName ==
+                                null)? user.email: user.firstName+"
+                                "+user.lastName}}
+                            </option>
+                        </ng-container>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Next review date
+                    </th>
+                    <td>
+                        {{mySharedPathway.NextReviewDate|date:"dd-MM-yyyy"}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        Circulated to
+                    </th>
+                    <td>
+                        {{getCirculateToString(mySharedPathway.CirculatedTo)}}
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+</html>

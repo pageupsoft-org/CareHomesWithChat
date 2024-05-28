@@ -1,0 +1,329 @@
+<div class="row mt-2 mb-2 px-4">
+    <div class="col-lg-12 no-pad scroller">
+        <div class="box_nav_tab" id="scroll-div">
+            <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                <li class="nav-item">
+                    <div class="nav-link menu-barbox menu-barbox1 " (click)="showTab(1)"
+                        [ngClass]="{'active': tab == 1}" data-toggle="tab" href="#stats" role="tab"
+                        aria-controls="status">
+                        <img src="assets/images/overview-stats.png">
+                        <h4 class="mb-0">CareHome Limits</h4>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link menu-barbox menu-barbox2" (click)="showTab(3)" [ngClass]="{'active': tab == 2}"
+                        data-toggle="tab" href="#carePlan" role="tab" aria-controls="carePlan">
+                        <img src="assets/images/service-user-stats.png">
+                        <h4 class="mb-0">Users Per CareHome</h4>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link menu-barbox menu-barbox3" (click)="showTab(2)" [ngClass]="{'active': tab == 3}"
+                        data-toggle="tab" href="#recoveryStar" role="tab" aria-controls="recoveryStar">
+                        <img src="assets/images/system-user.png">
+                        <h4 class="mb-0">Users Per Location</h4>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12">
+    <div class="tab-content bg-white shadow">
+        <ng-container *ngIf="tab == 1">
+
+            <div class="tab-pane show" [ngClass]="{'active': tab == 1}" id="stats" role="tabpanel">
+
+                <div class="row m-0 pb-1">
+                    <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block tab-96-imp">
+                        <div class="row px-3 py-2">
+                            <div class="col-sm-12 col-md-3 col-lg-6">
+                                <div class="dataTables_info d-flex" id="dtBasicExample_info" role="status"
+                                    aria-live="polite">
+                                    <p class="mb-0 d-inline-block float-left mr-3 ln-40">Top</p>
+                                    <select [(ngModel)]="records.top" class="form-control d-inline-block"
+                                        (change)="getCareHomePatientsLimit(records)" style="width: auto;">
+                                        <option [ngValue]="10" selected>10</option>
+                                        <option [ngValue]="25">25</option>
+                                        <option [ngValue]="50">50</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-6">
+                               
+                            </div>
+                        </div>
+                      
+                        <div class="">
+                            <ng-container *ngIf="isBusy">
+                                <div class="col-sm-12 text-center">
+                                    <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                                    </mat-spinner>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isBusy && careHomeLimits.length > 0">
+                                <div class="col-sm-12">
+                                    <table
+                                        class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                                        <thead class="thead-light">
+                                            <tr>
+                                               
+                                                <th class="w-20">CareHome Name</th>
+                                                <th class="w-10">Total Service Users (Active,InProgress)</th>
+                                                <th class="w-10">Limit</th>
+                                                <th class="w-10">Status</th>
+                                                <th class="w-10">Active/Deactive</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let careHome of careHomeLimits; let i = index">
+                                                <tr>
+                                                  
+                                                    <td class="w-10">{{careHome.careHomeName}}</td>
+                                                    <td class="w-10">{{careHome.patientCount}}</td>
+                                                    <td class="w-10">{{careHome.serviceUserLimit}}</td>
+                                                    <td><span
+                                                            class="badge badge-{{(careHome.patientCount <= careHome.serviceUserLimit)?'success':'danger'}}">{{(careHome.patientCount
+                                                            <= careHome.serviceUserLimit)?'WithIn Limit':'Exceeded'}}</span>
+                                                    </td>
+                                                    <td><span
+                                                            class="badge badge-{{(careHome.isActive)?'success':'danger'}}">{{(careHome.isActive)?'Active':'Deleted'}}</span>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!isBusy && careHomeLimits.length == 0">
+                                <div class="text-center w-100 d-inline-block px-3 py-3">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p class="mb-0"> No Record Found</p>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="row px-3 py-2">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">
+                                    Showing {{records.skip+1}} to {{lastRecord}} of {{recordCount}} entries</div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers pull-right"
+                                    id="dtBasicExample_paginate">
+                                    <pagination [totalItems]=recordCount [rotate]="rotate" [maxSize]="maxSize"
+                                        [itemsPerPage]=records.top (pageChanged)="pageChanged($event)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="tab == 2">
+
+            <div class="tab-pane" [ngClass]="{'active': tab == 2}" id="carePlan" role="tabpanel">
+                <div class="row m-0 mb-1 pb-1">
+                    <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block tab-96-imp">
+                        <div class="row px-3 py-2">
+                            <div class="col-sm-12 col-md-3 col-lg-6">
+                                <div class="dataTables_info d-flex" id="dtBasicExample_info" role="status"
+                                    aria-live="polite">
+                                    <p class="mb-0 d-inline-block float-left mr-3 ln-40">Top</p>
+                                    <select [(ngModel)]="userLogsRecords.top" class="form-control d-inline-block"
+                                        (change)="getCareHomeUserLogs(userLogsRecords)" style="width: auto;">
+                                        <option [ngValue]="10" selected>10</option>
+                                        <option [ngValue]="25">25</option>
+                                        <option [ngValue]="50">50</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-6">
+                                <div class="d-inline-block float-right">
+                                    <label class="form-check-label mr-2 ln-35 float-left ln-40"> CareHome: </label>
+
+                                    <div class="form-check mr-2 d-inline-block">
+                                        <select class="form-control d-inline-block"
+                                            (change)="filterByCareHome($event.target.value)" id="patientId">
+                                            <option [value]="0">Select CareHome</option>
+                                            <ng-container *ngIf="careHomesList">
+                                                <ng-container *ngFor="let careHome of careHomesList">
+                                                    <option [value]="careHome.id">{{careHome.name}}</option>
+                                                </ng-container>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="">
+                            <ng-container *ngIf="isBusy">
+                                <div class="col-sm-12 text-center">
+                                    <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                                    </mat-spinner>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isBusy && userLogs.length > 0">
+                                <div class="col-sm-12">
+                                    <table
+                                        class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                                        <thead class="thead-light">
+                                            <tr>
+                                              
+                                                <th class="w-20">CareHome Name</th>
+                                                <th class="w-20">Location Name</th>
+                                                <th class="w-10">Super User</th>
+                                                <th class="w-10">User</th>
+                                                <th class="w-10">Auditor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let careHome of userLogs; let i = index">
+                                                <tr>
+                                                   
+                                                    <td class="w-10">{{careHome.careHomeName}}</td>
+                                                    <td class="w-10">{{careHome.locationName}}</td>
+                                                    <td class="w-10">{{careHome.superUserCount}}</td>
+                                                    <td class="w-10">{{careHome.userCount}}</td>
+                                                    <td class="w-10">{{careHome.auditorCount}}</td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!isBusy && userLogs.length == 0">
+                                <div class="text-center w-100 d-inline-block px-3 py-3">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p class="mb-0"> No Record Found</p>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="row px-3 py-2">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">
+                                    Showing {{userLogsRecords.skip+1}} to {{userLogsLastRecord}} of {{userLogsRecordCount}} entries</div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers pull-right"
+                                    id="dtBasicExample_paginate">
+                                    <pagination [totalItems]=userLogsRecordCount [rotate]="rotate" [maxSize]="maxSize"
+                                        [itemsPerPage]=userLogsRecords.top (pageChanged)="userLogPageChanged($event)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="tab == 3">
+
+            <div class="tab-pane" [ngClass]="{'active': tab == 3}" id="recoveryStar" role="tabpanel">
+                <div class="row m-0 pb-1">
+                    <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block tab-96-imp">
+                        <div class="row px-3 py-2">
+                            <div class="col-sm-12 col-md-3 col-lg-6">
+                                <div class="dataTables_info d-flex" id="dtBasicExample_info" role="status"
+                                    aria-live="polite">
+                                    <p class="mb-0 d-inline-block float-left mr-3 ln-40">Top</p>
+                                    <select [(ngModel)]="careHomeUserRecords.top" class="form-control d-inline-block"
+                                        (change)="getCareHomePatientsLimit(careHomeUserRecords)" style="width: auto;">
+                                        <option [ngValue]="10" selected>10</option>
+                                        <option [ngValue]="25">25</option>
+                                        <option [ngValue]="50">50</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-6">
+                                <div class="d-inline-block float-right">
+                                    <label class="form-check-label mr-2 ln-35 float-left ln-40"> CareHome: </label>
+
+                                    <div class="form-check mr-2 d-inline-block">
+                                        <select class="form-control d-inline-block"
+                                            (change)="filterByCareHome($event.target.value)" id="patientId">
+                                            <option [value]="0">Select CareHome</option>
+                                            <ng-container *ngIf="careHomesList">
+                                                <ng-container *ngFor="let careHome of careHomesList">
+                                                    <option [value]="careHome.id">{{careHome.name}}
+                                                    </option>
+                                                </ng-container>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="">
+                            <ng-container *ngIf="isBusy">
+                                <div class="col-sm-12 text-center">
+                                    <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                                    </mat-spinner>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isBusy && careHomesUsersCount.length > 0">
+                                <div class="col-sm-12">
+                                    <table
+                                        class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                
+                                                <th class="w-20">CareHome Name</th>
+                                                <th class="w-10">Super User</th>
+                                                <th class="w-10">User</th>
+                                                <th class="w-10">Auditor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let careHome of careHomesUsersCount; let i = index">
+                                                <tr>
+                                                    
+                                                    <td class="w-10">{{careHome.careHomeName}}</td>
+                                                    <td class="w-10">{{careHome.superUserCount}}</td>
+                                                    <td class="w-10">{{careHome.userCount}}</td>
+                                                    <td class="w-10">{{careHome.auditorCount}}</td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!isBusy && careHomesUsersCount.length == 0">
+                                <div class="text-center w-100 d-inline-block px-3 py-3">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p class="mb-0"> No Record Found</p>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="row px-3 py-2">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">
+                                    Showing {{careHomeUserRecords.skip+1}} to {{careHomeUserLastRecord}} of {{careHomeUserRecordCount}} entries</div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers pull-right"
+                                    id="dtBasicExample_paginate">
+                                    <pagination [totalItems]=careHomeUserRecordCount [rotate]="rotate" [maxSize]="maxSize"
+                                        [itemsPerPage]=careHomeUserRecords.top (pageChanged)="userRecordPageChanged($event)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

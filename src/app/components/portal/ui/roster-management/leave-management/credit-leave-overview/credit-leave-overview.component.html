@@ -1,0 +1,147 @@
+<ng-container *ngIf="!creditLeaves; else elseTemplate">
+    <h3>Credited Leaves List
+        <span> <button class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn pull-right"
+                (click)="creditUserLeaves()">
+                <i class="mdi mdi-location-exit mr-1"></i>
+                Credit Leave</button>
+            <button class="btn btn-sm btn-primary rounded-pill mb-2 mr-4 crt-user-btn pull-right"
+                (click)="editUserLeaves()">
+                <i class="mdi mdi-pencil mr-1"></i>
+                Edit Leaves</button>
+
+        </span>
+    </h3>
+    <hr class="mx-4">
+    <div class="bg-light shadow pt-3 mt-3 pb-2 mx-5">
+        <div class="row mx-0 justify-content-between">
+            <div class="col-sm-12 col-md-3 col-lg-2">
+                <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">
+                    <label for="" class="mr-3 d-block w-100"><strong>Top</strong></label>
+                    <select [(ngModel)]="records.top" class="form-control d-inline-block"
+                        (change)="getcreditedLeaves(records)" style="width: auto;">
+                        <option [ngValue]="10" selected>10</option>
+                        <option [ngValue]="25">25</option>
+                        <option [ngValue]="50">50</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-3">
+                <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">
+                    <label for="" class="mr-3 d-block w-100"><strong>Financial Year</strong></label>
+                    <select class="form-control" id="" (change)="filterByYear($event.target.value)">
+                        <ng-container *ngIf="financialYears.length > 0">
+                            <option value="0">Select Financial Years</option>
+                            <ng-container *ngFor="let year of financialYears">
+                                <option [value]="year.id">{{year.financialYearName}}</option>
+                            </ng-container>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <!-- <div class="col-sm-4">
+                <div class="form-group mb-0 input-txtbox fiscalbox">
+                    <label for="" class="mr-3"> <strong>Financial Year</strong></label>
+                    <select class="form-control" id="" (change)="filterByYear($event.target.value)">
+                        <ng-container *ngIf="financialYears.length > 0">
+                            <option value="0">Select Financial Years</option>
+                            <ng-container *ngFor="let year of financialYears">
+                                <option [value]="year.id">{{year.financialYearName}}</option>
+                            </ng-container>
+                        </ng-container>
+                    </select>
+                </div>
+
+            </div> -->
+        </div>
+        <div class="row">
+
+            <!-- <div class="col-sm-4">
+                <div class="form-group mb-0 input-txtbox">
+                    <div class="input-group">
+                        <label for="" class="mr-3 ln-40"><strong>Start Date</strong></label>
+                        <input type="date" placeholder="" (change)="filterByDates()"
+                            [ngModel]="startDate | date:'yyyy-MM-dd'" (ngModelChange)="startDate = $event"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group mb-0 input-txtbox">
+                    <div class="input-group">
+                        <label for="" class="mr-3 ln-40"><strong>End Date</strong></label>
+                        <input type="date" placeholder="" (change)="filterByDates()"
+                            [ngModel]="endDate | date:'yyyy-MM-dd'" (ngModelChange)="endDate = $event"
+                            class="form-control">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="care-infotable traing-course-table w-96 mt-3 d-inline-block">
+        <table class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+            <thead class="thead-light">
+                <tr>
+                    <th class="w-5">S.no</th>
+                    <th class="w-20">Employee Name</th>
+                    <th class="w-20">Financial Year</th>
+                    <th class="w-20">Leaves Credited</th>
+                    <th class="w-20">Total Leave</th>
+                    <th class="w-15">Action</th>
+                </tr>
+            </thead>
+            <ng-container *ngIf="isBusy">
+                <div class="col-sm-12 text-center">
+                    <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline-block">
+                    </mat-spinner>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isBusy && creditedLeaves.length>0;">
+                <tbody>
+                    <ng-container *ngFor="let leaves of creditedLeaves; let i=index">
+
+                        <tr>
+                            <td class="w-5">{{i+1}}</td>
+                            <td class="w-20">{{leaves.userName}} </td>
+                            <td class="w-20">{{leaves.financialYearName}}</td>
+                            <td class="w-20">{{leaves.leaveCount}}</td>
+                            <td class="w-20">{{(leaves.isCarryForward)?leaves.leaveCount+leaves.lastYearBalance
+                                :leaves.leaveCount}}</td>
+                            <td class="w-15">
+                                <div class="actionbox">
+                                    <!-- <i class="mdi text-primary mdi-eye mr-2"></i> -->
+                                    <!-- <i class="mdi text-info mdi-pencil mr-2"></i> -->
+                                    <i class="mdi text-danger mdi-delete mr-2" (click)="remove(leaves.id)"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </ng-container>
+            <ng-template *ngIf="!isBusy && creditedLeaves.length==0;">
+                <div class="text-center px-3 py-3 bg-white">
+                    <div class="col-sm-12 text-center">
+                        <label class="alert alert-danger mt-3 w-100"> No Record Found</label>
+                    </div>
+                </div>
+
+            </ng-template>
+
+        </table>
+
+    </div>
+    <div class="row px-3 py-2 ml-3">
+        <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info" id="dtBasicExample_info" role="status" aria-live="polite">
+                Showing {{records.skip+1}} to {{lastRecord}} of {{recordCount}} entries</div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers pull-right" id="dtBasicExample_paginate">
+                <pagination [totalItems]=recordCount [rotate]="rotate" [maxSize]="maxSize" [itemsPerPage]=records.top
+                    (pageChanged)="pageChanged($event)"></pagination>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-template #elseTemplate>
+    <app-credit-leave (creditedLeaves)="setFilters()" [isEdit]="isEdit"></app-credit-leave>
+</ng-template>

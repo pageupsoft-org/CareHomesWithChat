@@ -1,0 +1,21 @@
+.add_couse_info{
+    position: relative;
+}
+.close_course{
+    position: absolute;
+    height: 25px;
+    line-height: 25px;
+    right: 1px;
+    width: 25px;
+    top: 2px;
+    font-size: 16px;
+    text-align: CENTER;
+    border-radius: 15px 0px 25px 25px;
+    color: #ecf4fa;
+    background-color: #b9727a;
+    cursor: pointer;
+    z-index: 1;
+}
+.pull-right{
+    float: right;
+}

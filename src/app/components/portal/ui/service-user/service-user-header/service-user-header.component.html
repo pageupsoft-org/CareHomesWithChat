@@ -1,0 +1,153 @@
+<div class="container-fluid mob-block-regstr">
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 no-pad scroller">
+                        <div class="box_nav_tab" id="scroll-div1">
+                            <ul class="nav nav-tabs top_head_tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==1}" (click)="onTabChange(1)" role="" aria-controls="">
+                                        <span>Registration</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==2}" (click)="onTabChange(2)" aria-controls="">
+                                        <span>Risk Assessment</span>
+                                    </a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==3}" (click)="onTabChange(3)" aria-controls="">
+                                        <span>Shared Pathway</span>
+                                    </a>
+                                </li> -->
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==4 || activeTab == 3 || activeTab == 5 }" (click)="onTabChange(4)" aria-controls="">
+                                        <span>Careplan</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==6}" (click)="onTabChange(6)" aria-controls="">
+                                        <span>Medication</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==7}" (click)="onTabChange(7)" aria-controls="">
+                                        <!-- <span>Progress notes</span> -->
+                                        <span>Daily Occurrence</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==8}" (click)="onTabChange(8)" aria-controls="">
+                                        <!-- <span>Move-on Functional Checklist</span> -->
+                                        <span>Move-On Assessments</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==9}" (click)="onTabChange(9)" aria-controls="">
+                                        <span>Finance</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [ngClass]="{ 'active':activeTab ==10}" (click)="onTabChange(10)" aria-controls="">
+                                        <span>Audit</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-none">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1 class="d-inline-block">
+                    <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i> Users > </span> <span class="usr_headname"></span>
+                </h1>
+                <div class="box_search_inner d-inline-block float-right">
+                    <form class="d-flex searchbox_header mb-0">
+                        <input class="form-control ml-4" type="search" placeholder="Search" aria-label="Search">
+                        <span class="mdi mdi-magnify"></span>
+                    </form>
+                </div>
+                <button type="button" class="btn btn-sm btn-success add_new_user float-right">
+                    <i class="mdi mdi-account-plus mr-1"></i> <span>Add New User</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- app-registration -->
+    <ng-container *ngIf="tabIndex == 1">
+        <app-registration (onCompleteRegistration)="onCompleteRegistration($event)">
+            <div class="row"></div>
+        </app-registration>
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 2">
+        <app-risk-assessment-overview [userData]="userData"></app-risk-assessment-overview>
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 3">
+        <!-- <app-my-shared-pathway [userData]="userData"></app-my-shared-pathway> -->
+        <app-my-shared-pathway-overview [userData]="userData"></app-my-shared-pathway-overview>
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 4">
+        <div class="horizontal-tabs my-3 bg-white shadow-sm">
+            <div class="sv-tab-panel info_tab_container">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 text-center my-5">
+                            <div class="card p-5 bg-light rounded-pill">
+                                <h3>My SharedPathway</h3>
+                                <button class="btn btn-sm btn-primary rounded-pill" (click)="onTabChange(3)">
+                                    Open My Shared Pathway</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 text-center my-5">
+                            <div class="card p-5 bg-light rounded-pill">
+                                <h3>Recovery Star</h3>
+                                <button class="btn btn-sm btn-info rounded-pill" (click)="onTabChange(5)">
+                                    Open My Recovery Star</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 5">
+        <app-recovery-star-overview [userData]="userData"></app-recovery-star-overview>
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 6">
+        <!-- <app-medication [userData]="userData"></app-medication> -->
+        <app-medication-overview [userData]="userData"></app-medication-overview>
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 7">
+        <app-progress-note-overview [userData]="userData"></app-progress-note-overview>
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 8">
+        <app-functional-checklist-overview [userData]="userData"></app-functional-checklist-overview>
+        <!-- <app-functional-checklist [userData]="userData"></app-functional-checklist> -->
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 9">
+        <app-finance-overview [userData]="userData"></app-finance-overview>
+    </ng-container>
+
+    <ng-container *ngIf="tabIndex == 10">
+        <!-- <app-audit-forms></app-audit-forms> -->
+        <app-audit-forms [serviceUserData]="userData" [auditType]="1"></app-audit-forms>
+        <!-- <app-audit-overview [serviceUserData]="userData"></app-audit-overview> -->
+    </ng-container>
+
+</div>

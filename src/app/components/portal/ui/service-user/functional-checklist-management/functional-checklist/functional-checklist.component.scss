@@ -1,0 +1,53 @@
+.box_patientinfo ul {
+  padding-left: 0;
+  list-style: none;
+}
+.box_patientinfo ul li {
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 10px;
+  border-right: 5px solid #fff;
+  background-color: #ecf4fa;
+  border-radius: 50px;
+  border: solid thin #ecf4fa;
+}
+.whitetable {
+  background-color: #fff;
+  box-shadow: 1px 3px 9px #a4c4dc8a;
+  margin-bottom: 20px !important;
+}
+.care-infotable .table td,
+.care-infotable .table th {
+  border-top: 1px solid #ffffff;
+  height: 10px;
+  position: relative;
+  line-height: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.bg-lightwine {
+  background-color: #ffecee;
+}
+
+.bg-red {
+  background-color: #FF0000;
+  color: #fff;
+}
+
+.bg-amber-red {
+  background-color: #891522;
+  color: #fff;
+}
+
+.bg-amber-green {
+  background-color: #9a803a;
+  color: #fff;
+}
+.bg-amber {
+  background-color: #FFBF00;
+  color: #fff;
+}
+.bg-green {
+  background-color: #00FF00;
+  color: #fff;
+}

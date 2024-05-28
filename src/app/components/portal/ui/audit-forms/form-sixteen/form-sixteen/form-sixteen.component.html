@@ -1,0 +1,436 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Monthly Environmental Safety Audit Form
+                    </span>
+                    <span class="usr_headname"></span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mt-3 mb-2 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!isBusy && auditForm">
+
+                    <form [formGroup]="auditForm">
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control" (change)="getUsers($event.target.value)"
+                                                    formControlName="locationId">
+                                                    <ng-container *ngFor="let location of locationList">
+                                                        <option [value]="location.id">
+                                                            {{location.name}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control" (change)="completeForm($event)"
+                                                    name="auditedBy" formControlName="auditedBy">
+                                                    <ng-container *ngFor="let user of userList">
+                                                        <option [ngValue]="user.id"
+                                                            *ngIf="user.userType != userType.Admin">
+                                                            {{ (user.firstName ==null ||
+                                                            user.lastName == null)?
+                                                            user.email: user.firstName+"
+                                                            "+user.lastName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <!-- <input type="date" class="form-control" /> -->
+                                                    <label>{{(auditForm.get('auditDate').value)?(auditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-container *ngIf="isFilling">
+                                <div class="care-infotable w-96 mb-3 d-flex">
+                                    <table class="table w-50 mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">Doors, Handles & Locks</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    This means that the doors. Handles and locks are in place and
+                                                    working
+                                                    properly.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="border-top-0">Furniture, Toilet & Fittings</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    This means that all furniture that should be in the room is present
+                                                    and
+                                                    in good order. Also check: - Windows, Curtains, Radiators, Shelving,
+                                                    Bedding, Power Points all pose no danger to clients or staffs
+                                                    safety.
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <table class="table w-50 mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">Hazardous items</th>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    List everything that is considered to be unsafe, and that you have
+                                                    removed to a place of safety.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="border-top-0">Hazards identified</th>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    List anything that you consider could pose a realistic probable
+                                                    threat
+                                                    that you cannot rectify as you undertaking the audit e.a. light bulb
+                                                    blown or sink blocked etc.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Whenever 'NO' is ticked please fill comments column in and fill in a
+                                                    maintenance form. </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="care-infotable w-96 mb-3 d-flex overflow-auto limitheight-form">
+                                    <table
+                                        class="table table-bordered table-hover bg-white mb-0 zoning_table usertable">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">#</th>
+                                                <th class="border-top-0">Location </th>
+                                                <th class="border-top-0">Doors, Handles & Locks</th>
+                                                <th class="border-top-0">Furniture, Toilet & Fittings</th>
+                                                <th class="border-top-0">Harzardous items</th>
+                                                <th class="border-top-0">Action required</th>
+                                                <th class="border-top-0">Target date</th>
+                                                <th class="border-top-0">Actioned by</th>
+                                                <th class="border-top-0">Completed by</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container formArrayName="form16Records"
+                                                *ngFor="let record of auditForm.get('form16Records')['controls'];let i= index ">
+                                                <tr [formGroupName]="i">
+                                                    <!-- <td class="border-top-0">Staff Office Ground floor - Window 1</td> -->
+                                                    <td class="border-top-0">
+                                                        <div class="close" (click)="remove(i)">
+                                                            <i class="mdi mdi-close"></i>
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                            <input type="text" class="form-control" name="location"
+                                                                formControlName="location" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.location.valid && record.controls.location.touched || record.controls.location.dirty">
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <p *ngIf="record.controls.location.errors?.pattern"
+                                                                class="text-danger">Please provide a valid
+                                                                location</p>
+                                                            <p *ngIf="record.controls.location.errors?.required"
+                                                                class="text-danger">location is
+                                                                required</p>
+                                                            <p *ngIf="record.controls.location.errors?.maxlength"
+                                                                class="text-danger">Maximum
+                                                                {{record.get('location').errors.maxlength.requiredLength}}
+                                                                character allowed</p>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                            <!-- <input type="text" class="form-control" name="doorlocks"
+                                                                formControlName="doorlocks" /> -->
+                                                            <select class="form-control" name="isApplicable"
+                                                                formControlName="doorlocks">
+                                                                <ng-container
+                                                                    *ngFor="let satisfaction of satisfaction ">
+                                                                    <option value="{{satisfaction.value}}">
+                                                                        {{satisfaction.key}}</option>
+                                                                </ng-container>
+                                                                <!-- <option [value]="false">No</option> -->
+                                                            </select>
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.doorlocks.valid && record.controls.doorlocks.touched || record.controls.doorlocks.dirty">
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <!-- <p *ngIf="record.controls.doorlocks.errors?.pattern"
+                                                                class="text-danger">Please provide a valid
+                                                                input</p> -->
+                                                            <p *ngIf="record.controls.doorlocks.errors?.required"
+                                                                class="text-danger">this field is required</p>
+                                                            <!-- <p *ngIf="record.controls.doorlocks.errors?.maxlength"
+                                                                class="text-danger">Maximum {{record.get('doorlocks').errors.maxlength.requiredLength}}
+                                                                character allowed</p> -->
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                            <!-- <input type="text" class="form-control" name="furnitureFittings"
+                                                                formControlName="furnitureFittings" /> -->
+                                                            <select class="form-control" name="furnitureFittings"
+                                                                formControlName="furnitureFittings">
+                                                                <ng-container
+                                                                    *ngFor="let satisfaction of satisfaction ">
+                                                                    <option value="{{satisfaction.value}}">
+                                                                        {{satisfaction.key}}</option>
+                                                                </ng-container>
+                                                            </select>
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.furnitureFittings.valid && record.controls.furnitureFittings.touched || record.controls.furnitureFittings.dirty">
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <!-- <p *ngIf="record.controls.furnitureFittings.errors?.pattern" class="text-danger">Please provide a valid
+                                                                input</p> -->
+                                                            <p *ngIf="record.controls.furnitureFittings.errors?.required"
+                                                                class="text-danger">This field is required</p>
+                                                            <!-- <p *ngIf="record.controls.furnitureFittings.errors?.maxlength"
+                                                                class="text-danger">Maximum {{record.get('furnitureFittings').errors.maxlength.requiredLength}}
+                                                                character allowed</p> -->
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                            <input type="text" class="form-control"
+                                                                name="harzardousItem"
+                                                                formControlName="harzardousItem" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.harzardousItem.valid && record.controls.harzardousItem.touched || record.controls.harzardousItem.dirty">
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <p *ngIf="record.controls.harzardousItem.errors?.pattern"
+                                                                class="text-danger">Please provide a valid
+                                                                input</p>
+                                                            <p *ngIf="record.controls.harzardousItem.errors?.required"
+                                                                class="text-danger">This field is required</p>
+                                                            <p *ngIf="record.controls.harzardousItem.errors?.maxlength"
+                                                                class="text-danger">Maximum
+                                                                {{record.get('harzardousItem').errors.maxlength.requiredLength}}
+                                                                character allowed</p>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div
+                                                            class="form-group form-check mb-0 d-inline-block float-left pl-0">
+                                                            <input type="text" class="form-control"
+                                                                name="actionRequired"
+                                                                formControlName="actionRequired" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.actionRequired.valid && record.controls.actionRequired.touched || record.controls.actionRequired.dirty">
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <p *ngIf="record.controls.actionRequired.errors?.pattern"
+                                                                class="text-danger">Please provide a valid
+                                                                input</p>
+                                                            <p *ngIf="record.controls.actionRequired.errors?.required"
+                                                                class="text-danger">This field is
+                                                                required</p>
+                                                            <p *ngIf="record.controls.actionRequired.errors?.maxlength"
+                                                                class="text-danger">Maximum
+                                                                {{record.get('actionRequired').errors.maxlength.requiredLength}}
+                                                                character allowed</p>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <input type="date" class="form-control" name="targetDate"
+                                                                (keydown)="false" formControlName="targetDate" />
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.targetDate.valid && record.controls.targetDate.touched || record.controls.targetDate.dirty">
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <p *ngIf="record.controls.targetDate.errors?.required"
+                                                                class="text-danger">This field is
+                                                                required</p>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <select class="form-control" name="actionedBy"
+                                                                formControlName="actionedBy">
+                                                                <ng-container *ngFor="let user of allUserList">
+                                                                    <option [ngValue]="user.id">
+                                                                        {{ (user.firstName ==null || user.lastName ==
+                                                                        null)?
+                                                                        user.email: user.firstName+" "+user.lastName}}
+                                                                    </option>
+                                                                </ng-container>
+                                                            </select>
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.actionedBy.valid && record.controls.actionedBy.touched || record.controls.actionedBy.dirty">
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <p *ngIf="record.controls.actionedBy.errors?.required"
+                                                                class="text-danger">This field is required</p>
+                                                        </ng-container>
+                                                    </td>
+                                                    <td class="border-top-0">
+                                                        <div class="form-group mb-0 input-txtbox">
+                                                            <select class="form-control" name="completedBy"
+                                                                formControlName="completedBy">
+                                                                <ng-container *ngFor="let user of allUserList">
+                                                                    <option [ngValue]="user.id">
+                                                                        {{ (user.firstName ==null || user.lastName ==
+                                                                        null)?
+                                                                        user.email: user.firstName+" "+user.lastName}}
+                                                                    </option>
+                                                                </ng-container>
+                                                            </select>
+                                                        </div>
+                                                        <ng-container
+                                                            *ngIf="!record.controls.completedBy.valid && record.controls.completedBy.touched || record.controls.completedBy.dirty">
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <p *ngIf="record.controls.completedBy.errors?.required"
+                                                                class="text-danger">This field is required</p>
+                                                        </ng-container>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="care-infotable w-96 p-3 d-flex bg-white">
+                                    <button type="button" class="btn btn-sm rounded-pill btn-primary"
+                                        (click)="addMoreRecordClick()"><i class="mdi mdi-plus mr-2"></i>Add
+                                        more</button>
+                                </div>
+                                <div class="care-infotable w-96 mb-3 d-flex ">
+                                    <table class="table w-100 mb-0 ">
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">General comments</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-top-0">
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <textarea rows="4" cols="2" class="form-control"
+                                                            formControlName="generalComment"></textarea>
+                                                    </div>
+                                                    <ng-container
+                                                        *ngIf="!auditForm.controls.generalComment.valid && auditForm.controls.generalComment.touched || auditForm.controls.generalComment.dirty">
+                                                        <!--question mark(?) is a safe navigation operator-->
+                                                        <p *ngIf="auditForm.controls.generalComment.errors?.pattern"
+                                                            class="text-danger">Please provide a valid
+                                                            comment</p>
+                                                        <p *ngIf="auditForm.controls.generalComment.errors?.maxlength"
+                                                            class="text-danger">Maximum
+                                                            {{auditForm.get('generalComment').errors.maxlength.requiredLength}}
+                                                            character allowed</p>
+                                                    </ng-container>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3"
+                                *ngIf="auditForm.get('signoffBy').value == currentUserId ">
+                                <p class="mr-2"><strong> Do you want to create form for next review date</strong></p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes15"
+                                        [value]="true" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="yes15" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false"
+                                        id="No15" [value]="false"
+                                        class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="No15" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container
+                                    *ngIf="auditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+@media (max-width:1023px) and (min-width:768px) {
+    .table-bordered thead td,
+    .table-bordered thead th,
+    .table-bordered tbody td {
+        border-bottom-width: 1px;
+        font-size: 11px;
+        padding: .5rem;
+    }
+}

@@ -1,0 +1,49 @@
+.health-laddr ul li {
+    width: 20%;
+}
+.workinspect{
+    margin: 0px auto;
+}
+.work-ispect-point span{
+    font-size: 20px;
+    font-weight: 700;
+    color:#fff;
+}
+.work-ispect-point0{
+    background: linear-gradient( 
+        85deg
+         , #d4646c, #f7888d);
+}
+.work-ispect-point1{
+    background: linear-gradient(85deg, #f98891, #e88363);
+}
+.work-ispect-point2{
+    background: linear-gradient(85deg, #e98367, #70afa5);
+}
+.work-ispect-point3{
+    background: linear-gradient(85deg, #73aea3, #429c93);
+}
+.work-ispect-point4{
+    background: linear-gradient(85deg, #409c92, #0D8075);
+}
+.care-infotable .table thead th {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.limitheight-form{
+    height: 500px;
+}
+.limitheight-form .table thead th {
+        position: sticky;
+        top: -1px;
+        z-index: 100;
+        background-color: #d9ebf9 !important;
+}
+.limitheight-form{
+    background: transparent;
+}
+.twentyone-formtable{
+    height: 100%;
+    max-height: 500px;
+    overflow: AUTO;
+}

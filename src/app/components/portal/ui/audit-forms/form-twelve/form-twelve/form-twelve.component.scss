@@ -1,0 +1,21 @@
+.wd2000{
+    width: 2300px;
+}
+ .care-infotable .table th {
+    line-height: 22px;
+    padding: 5px 12px;
+}
+.limitheight-form{
+    height: 500px;
+}
+.limitheight-form .table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: #d9ebf9;
+}
+.innerwhite-table table thead tr th{
+    border: 1px solid #dee2e6;
+    line-height: 30px;
+    padding: 4px 12px;
+}

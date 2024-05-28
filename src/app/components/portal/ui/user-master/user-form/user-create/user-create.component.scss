@@ -1,0 +1,41 @@
+.add_couse_info{
+    position: relative;
+}
+.close_course{
+    position: absolute;
+    height: 25px;
+    line-height: 25px;
+    right: -8px;
+    width: 25px;
+    top: -14px;
+    font-size: 16px;
+    text-align: CENTER;
+    border-radius: 50%;
+    color: #ecf4fa;
+    background-color: #b9727a;
+    cursor: pointer;
+    z-index: 1;
+}
+.pull-right{
+    float: right;
+}
+
+.input-txtbox{
+    background-color: #fff !important;
+}
+.crt-user-btn{
+    background-color: #68b7dc;
+}
+.input-txtbox .multiselect-item-checkbox .dropdown-list{
+    position: absolute;
+    padding-top: 0px;
+    width: 100%;
+    z-index: 9999;
+    border: 1px solid #ececec;
+    border-radius: 3px;
+    background: #fff;
+    margin-top: 0px;
+    display: block !important;
+    box-shadow: 0 2px 8px #d6dfe4a6;
+    border-radius: 0px 0px 20px 20px;
+}

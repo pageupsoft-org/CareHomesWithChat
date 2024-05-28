@@ -1,0 +1,137 @@
+<div class="container-fluid audit-margin-main">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 mb-2 mt-0 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Medication Spot Check <span><button
+                                class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                                (click)="goBack()">Go
+                                Back</button> </span>
+                    </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs bg-white shadow-sm">
+                <div class="sv-tab-panel info_tab_container">
+                    <ng-container *ngIf="isBusy">
+                        <div class="loader">
+                            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                            </mat-spinner>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!isBusy && formFifteen">
+                        <form>
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Audited by</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{(formFifteen.auditor)?((formFifteen.auditor.firstName == null ||
+                                                        formFifteen.auditor.lastName == null)?
+                                                        formFifteen.auditor.email:(formFifteen.auditor.firstName+"
+                                                        "+formFifteen.auditor.lastName) ):'-'}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">Location</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    {{formFifteen.locationName}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{(formFifteen.auditDate)?(formFifteen.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <label>{{formFifteen.signoffByName}}</label>
+                                                  
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-container *ngFor="let stock of formFifteen.form15Records;let i= index ">
+
+                                <div class="care-infotable w-96 mb-2 d-flex">
+                                    <table class="table w-100 mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">Medication</th>
+                                                <th class="border-top-0">Time</th>
+                                                <th class="border-top-0">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Medication Administration Record (MAR) Front Page
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <!-- <input type="time"  class="form-control" /> -->
+                                                        {{stock.recordDateTime1+'Z'|date:'shortTime'}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <label class="form-check-label">{{(stock.action1)?"Yes":"No"}}</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Consent to treatment attached where applicable
+                                                </td>
+                                                <td>
+                                                    <div class="form-group mb-0 input-txtbox">
+                                                        <!-- <input type="time" class="form-control" /> -->
+                                                        {{stock.recordDateTime2+'Z'|date:'shortTime'}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                        <label class="form-check-label">{{(stock.action2)?"Yes":"No"}}</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+
+                                <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back" (click)="goBack()">Go
+                            Back</button>
+                            </div>
+                        </form>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

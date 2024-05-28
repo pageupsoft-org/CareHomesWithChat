@@ -1,0 +1,61 @@
+<div class="modal fade in" bsModal #locationAlertModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <ng-container *ngIf="!isEdit">Add Alert</ng-container>
+                    <ng-container *ngIf="isEdit">Edit Alert</ng-container>
+                </h5>
+                <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="isBusy">
+                    <div class="col-sm-12 text-center">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="locationAlertForm && !isBusy">
+                    <form>
+                        <div class="form-group">
+                            <label class="star_mandator pl-2"><strong>Alert Name</strong> </label>
+                            <input type="text" id="" [formControl]="locationAlertForm.name" placeholder=""
+                                class="form-control">
+                            <ng-container
+                                *ngIf="!locationAlertForm.controls.name.valid && (locationAlertForm.controls.name.dirty )">
+                                <p *ngIf="locationAlertForm.controls.name.errors?.minlength" class="errorText">Minimum 2
+                                    character required</p>
+                                <p *ngIf="locationAlertForm.controls.name.errors?.maxlength" class="errorText">Maximum
+                                    30 character allowed</p>
+                                <p *ngIf="locationAlertForm.controls.name.errors?.required" class="errorText">This field
+                                    is required</p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group">
+                            <label class="star_mandator"><strong>Location</strong> </label>
+                            <select class="form-control" id="location" [formControl]="locationAlertForm.locationId">
+                                <!-- <option selected> Select Location</option> -->
+                                <ng-container *ngIf="locationList">
+                                    <ng-container *ngFor="let location of locationList">
+                                        <option [ngValue]="location.id">{{location.name}}</option>
+                                    </ng-container>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </form>
+
+                </ng-container>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm rounded-pill btn-light" (click)="cancel()" data-dismiss="modal">
+                    <i class="mdi mdi-close mr-1"></i> Close</button>
+                <button type="submit" (click)="onSubmit()"
+                    [ngClass]="{ 'disabled':locationAlertForm && !locationAlertForm.valid}" class="btn btn-sm rounded-pill btn-success">
+                    <i class="mdi mdi-content-save mr-1"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>

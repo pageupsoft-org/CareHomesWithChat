@@ -1,0 +1,212 @@
+<!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1 class="d-inline-block">
+                    <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i> Depot Record</span> <span
+                        class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div> -->
+
+<div class="horizontal-tabs my-3 bg-white shadow-sm py-3">
+    <ng-container *ngIf="isBusy">
+        <div class="col-sm-12 text-center">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline-block">
+            </mat-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!isBusy">
+        <div class="bg-white p-3">
+            <div class="box_patientinfo mx-3 mt-1 mb-3">
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2" (click)="getMedicationList()">Go
+                        Back</button>
+                </div>
+                <ul class="d-flex mb-0">
+                    <li class="mr-2 ">
+                        <span class="mr-2"><b>Service User name: </b></span>
+                        <span>{{userData.firstName}} {{userData.lastName}}</span>
+                    </li>
+                    <li class="mr-2 ">
+                        <span class="mr-2"><b>Service User no.: </b></span>
+                        <span>{{userData.serviceUserNumber}}</span>
+                    </li>
+                    <li class="mr-2">
+                        <span class="mr-2"><b>DOB: </b></span>
+                        <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                    </li>
+                </ul>
+            </div>
+            <ng-container *ngIf="medicationForm">
+                <form [formGroup]="medicationForm">
+                    <div class="d-inline-block w-100">
+                        <div class="care-infotable w-96-imp d-inline-block float-left">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="">
+                                            Depot Type
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="text" placeholder="" readonly formControlName="depotType" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="">
+                                            Dose
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="text" readonly formControlName="dose" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="">
+                                            Prescriber
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="text" readonly formControlName="prescriber" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="care-infotable w-96-imp d-inline-block float-left">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="">
+                                            Strength
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="text" readonly formControlName="strength" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="">
+                                            Frequency
+                                        </th>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <input type="text" readonly formControlName="frequency" class="form-control">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="">
+                                            Start Date
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="date" readonly formControlName="startDate" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="">
+                                            End Date
+                                        </th>
+                                        <td>
+                                            <span class="d-none"></span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="date" readonly formControlName="endDate" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="sv-tab-panel pl-0 info_tab_container">
+                        <h4 class="w-96 mb-0 pl-2 headr_myshare min-desk-w-100 tab-w-100">Consultant and Team</h4>
+                        <div class="care-infotable w-96 d-inline-block float-left">
+                            <table class="table medicationtable mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date Due</th>
+                                        <th>Date Given</th>
+                                        <th>Location Administered</th>
+                                        <th>Staff Signature to confirm administration</th>
+                                        <th>Active/Finished</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container formArrayName="medicationInfos" *ngFor="let info of medicationForm.get('medicationInfos')['controls'];let i= index ">
+                                        <tr [formGroupName]="i">
+                                            <td>
+                                                {{i+1}}
+                                            </td>
+                                            <td class="">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control" id="" aria-describedby="" readonly formControlName="dueDate">
+                                                </div>
+                                            </td>
+                                            <td class="">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control" id="" aria-describedby="" readonly formControlName="dateGiven">
+                                                </div>
+                                            </td>
+                                            <td class="">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="" aria-describedby="" readonly formControlName="locationAdministered">
+                                                </div>
+                                            </td>
+                                            <td class="">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="" readonly formControlName="userId">
+                                                        <ng-container *ngFor="let user of usersList; let i=index">
+                                                            <option [ngValue]="user.id">
+                                                                {{ (user.firstName ==null || user.lastName
+                                                                ==null)?user.email:
+                                                                user.firstName+""+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td class="">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="" readonly formControlName="isFinished">
+                                                        <option [ngValue]="false">Active</option>
+                                                        <option [ngValue]="true">Finished</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

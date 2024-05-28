@@ -1,0 +1,101 @@
+<div class="modal fade in" bsModal #patientAlertEditModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <ng-container >Edit Patient Alert</ng-container>
+                </h5>
+                <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <ng-container *ngIf="isBusy">
+                <div class="col-sm-12 text-center">
+                    <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="patientAlertForm && !isBusy">
+                <form [formGroup]="patientAlertForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="star_mandator"><strong>Patient Name</strong></label>
+                            <div class="form-group mb-0 input-txtbox">
+                                <div class="input-group">
+                                    <select class="form-control" formControlName="patientId">
+                                        <ng-container *ngFor="let patient of patientList">
+                                            <option [value]="patient.id">
+                                                {{patient.name}}</option>
+                                        </ng-container>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div>
+                            <button type="button" class="btn btn-sm btn-primary ml-4 rounded-pill mb-3 pull-right"
+                                (click)="addAlertButtonClick()">Add Alert <i class="mdi mdi-plus ml-2"></i></button>
+                        </div> -->
+                        <div class="clearfix"></div>
+                        <div>
+                            <div class="bg-patient-alert">
+                                <div class="form-group">
+                                    <label><strong>Alert</strong></label>
+                                    <!-- <div class="close_course bg-close-alert" (click)="removeAlert(i)">
+                                        <i class="mdi mdi-close"></i>
+                                    </div> -->
+                                    <div class="form-group mb-0 input-txtbox">
+                                        <div class="input-group">
+                                            <select class="form-control" (change)="checkAlert($event)"
+                                                formControlName="locationAlertId">
+                                                <ng-container *ngFor="let alert of alertList">
+                                                    <option [value]="alert.id">{{alert.name}}</option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label><strong>Start date</strong></label>
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control"
+                                                            formControlName="startDate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label><strong>End date</strong></label>
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control"
+                                                            formControlName="endDate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn rounded-pill btn-sm btn-light" (click)="cancel()"
+                            data-dismiss="modal"><i class="mdi mdi-close mr-1"></i>Close</button>
+                        <button type="submit" (click)="onSubmit(patientAlertForm.value)"
+                            [disabled]="!patientAlertForm.valid" [ngClass]="{ 'disabled':!patientAlertForm.valid}"
+                            class="btn rounded-pill btn-sm btn-success"><i class="mdi mdi-content-save mr-1"></i>Save</button>
+                    </div>
+                </form>
+
+            </ng-container>
+        </div>
+    </div>
+</div>

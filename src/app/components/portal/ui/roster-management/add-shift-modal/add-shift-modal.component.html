@@ -1,0 +1,168 @@
+<div class="modal fade in" bsModal #addShiftModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modalwd-shift" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <ng-container *ngIf="isEdit; else elseTemplate">
+                        Edit Shift
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        Add Shift
+                    </ng-template>
+
+                </h5>
+                <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="shiftForm">
+                <form [formGroup]="shiftForm">
+                    <div class="care-infotable d-inline-block float-left w-100">
+                        <div class="sv-tab-panel info_tab_container pt-2">
+                            <h3>Shift </h3>
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="star_mandator">Shift Name</th>
+                                        <td><span class="d-none">N/A</span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="text" formControlName="title" placeholder=""
+                                                        class="form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="star_mandator">Location Name</th>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <select class="form-control" formControlName="locationId">
+                                                        <ng-container *ngFor="let location of locationList">
+                                                            <option [value]="location.id">{{location.name}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Start Time</th>
+                                        <td><span class="d-none">N/A</span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="datetime-local" formControlName="startTime"
+                                                        placeholder="" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>End Time</th>
+                                        <td><span class="d-none">N/A</span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="datetime-local" formControlName="endTime"
+                                                        placeholder="" class="form-control" />
+                                                </div>
+                                                <ng-container *ngIf="!shiftForm.controls.endTime.valid && 
+                                        (shiftForm.controls.endTime.dirty )">
+                                                    <p *ngIf="shiftForm.controls.endTime.errors?.lessDurationError"
+                                                        class="errorText">
+                                                        Shift should be atleast one hour</p>
+                                                </ng-container>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="care-infotable d-inline-block float-left w-100" *ngIf="!isEdit">
+                        <div class="sv-tab-panel info_tab_container pt-2">
+                            <h3 style="font-size: 16px;color:#212121">Repeat Days </h3>
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th colspan="2">
+                                            <div class="form-group form-check d-inline-block float-left mr-2 mb-0 mt-2">
+                                                <input type="checkbox" (change)="selectAllDays($event.target.checked)"
+                                                    [(ngModel)]="selectAll" [ngModelOptions]="{standalone: true}"
+                                                    class="form-check-input mrgn-2" value="true" id="alldays">
+                                                <label class="form-check-label" for="alldays">Select All</label>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="">
+                                            <div class="form-group form-check d-inline-block float-left mr-2"
+                                                *ngFor="let day of weekDays; let i=index">
+                                                <input type="checkbox" (change)="onSelect($event.target.checked,i)"
+                                                    [value]="day.value" [checked]="isChecked(day.value)"
+                                                    class="form-check-input mrgn-2" id="day_{{i}}">
+                                                <label class="form-check-label" for="day_{{i}}">{{day.key}}</label>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Start Date</th>
+                                        <td><span class="d-none">N/A</span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="date" placeholder=""
+                                                        [min]="(!isEdit)?(today|date:'yyyy-MM-dd'):'-'"
+                                                        formControlName="startDate" class="form-control">
+                                                </div>
+                                                <ng-container *ngIf="!shiftForm.controls.startDate.valid && 
+                                        (shiftForm.controls.startDate.dirty )">
+                                                    <p *ngIf="shiftForm.controls.startDate.errors?.inValidDateError"
+                                                        class="errorText">
+                                                        Start Date can't be previous date</p>
+                                                </ng-container>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>End Date</th>
+                                        <td><span class="d-none">N/A</span>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <div class="input-group">
+                                                    <input type="date" formControlName="endDate" placeholder=""
+                                                        class="form-control" />
+                                                </div>
+                                                <ng-container *ngIf="!shiftForm.controls.endDate.valid && 
+                                        (shiftForm.controls.endDate.dirty )">
+                                                    <p *ngIf="shiftForm.controls.endDate.errors?.inValidDateError"
+                                                        class="errorText">
+                                                        End Date can't before start date</p>
+                                                </ng-container>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer" *ngIf="shiftForm">
+                <button type="button" [disabled]="!shiftForm.valid ||( selectedDays.length == 0)"
+                    [ngClass]="{ 'disabled':!shiftForm.valid ||( selectedDays.length == 0)}" (click)="onSumbit()"
+                    class="btn btn-sm btn-success rounded-pill disabled">
+                    <i class="mdi mdi-content-save-settings mr-2"></i>
+                    Submit</button>
+                <button type="button" class="btn btn-light rounded-pill" (click)="cancel()" data-dismiss="modal"> <i
+                        class="mdi mdi-close mr-1"></i> Close</button>
+                <!-- <button type="submit" (click)="onSubmit()" [ngClass]="{ 'disabled':courseForm && !courseForm.valid}"
+          class="btn btn-success rounded-pill"><i class="mdi mdi-content-save mr-1"></i> Save</button> -->
+            </div>
+        </div>
+    </div>
+</div>

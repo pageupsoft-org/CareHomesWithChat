@@ -1,0 +1,227 @@
+<!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1 class="d-inline-block">
+                    <span class="usr_headleft"><i class="mdi mdi-account-multiple mx-2"></i> Depot Record</span> <span
+                        class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div> -->
+<div class="horizontal-tabs my-3 bg-white shadow-sm">
+    <ng-container *ngIf="isBusy">
+        <div class="col-sm-12 text-center">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline-block">
+            </mat-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="showNotification">
+        <div class="container">
+            <div class="col-sm-12 text-center">
+                <label class="alert alert-danger mt-3 w-100"> Please complete registration first</label>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!isBusy && !showNotification">
+        <div class="bg-white p-3 shadow-sm">
+            <div class="col-sm-12">
+                <div class="box_patientinfo mx-3 mt-1 mb-3">
+                    <div class="pull-right">
+                        <button class="btn btn-sm btn-dark rounded-pill mr-4 mb-2" (click)="getMedicationList()">Go
+                            Back</button>
+                    </div>
+                    <ul class="d-flex mb-0">
+                        <li class="mr-2 ">
+                            <span class="mr-2"><b>Service User name: </b></span>
+                            <span>{{userData.firstName}} {{userData.lastName}}</span>
+                        </li>
+                        <li class="mr-2 ">
+                            <span class="mr-2"><b>Service User no.: </b></span>
+                            <span>{{userData.serviceUserNumber}}</span>
+                        </li>
+                        <li class="mr-2">
+                            <span class="mr-2"><b>DOB: </b></span>
+                            <span>{{userData.dob | date:'dd-MM-yyyy'}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <ng-container *ngIf="medicationForm">
+                <form [formGroup]="medicationForm" class="w-100">
+                    <div class="care-infotable d-inline-block float-left">
+                        <table class="table mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="star_mandator">
+                                        Depot Type
+                                    </th>
+                                    <td>
+                                        <span class="d-none"></span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input maxlength="250" type="text" placeholder="" formControlName="depotType" class="form-control">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="star_mandator">
+                                        Dose
+                                    </th>
+                                    <td>
+                                        <span class="d-none"></span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input maxlength="250" type="text" formControlName="dose" class="form-control">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="star_mandator">
+                                        Prescriber
+                                    </th>
+                                    <td>
+                                        <span class="d-none"></span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input maxlength="250" type="text" formControlName="prescriber" class="form-control">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="star_mandator">
+                                        Strength
+                                    </th>
+                                    <td>
+                                        <span class="d-none"></span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input maxlength="250" type="text" formControlName="strength" class="form-control">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="care-infotable d-inline-block float-left">
+                        <table class="table mb-0">
+                            <tbody>
+
+                                <tr>
+                                    <th class="star_mandator">
+                                        Frequency
+                                    </th>
+                                    <td>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <input maxlength="250" type="text" formControlName="frequency" class="form-control">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="star_mandator">
+                                        Start Date
+                                    </th>
+                                    <td>
+                                        <span class="d-none"></span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="date" formControlName="startDate" (change)="checkDateValidation()" class="form-control">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="star_mandator">
+                                        End Date
+                                    </th>
+                                    <td>
+                                        <span class="d-none"></span>
+                                        <div class="form-group mb-0 input-txtbox">
+                                            <div class="input-group">
+                                                <input type="date" formControlName="endDate" (change)="checkDateValidation()" class="form-control">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="sv-tab-panel pl-0 w-96 tab-wd100">
+                        <h4 class="w-100 mb-0 pl-2 headr_myshare">Consultant and Team</h4>
+                        <div class="care-infotable w-100 d-inline-block float-left">
+                            <table class="table medicationtable mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="star_mandator">Date Due</th>
+                                        <th class="star_mandator">Date Given</th>
+                                        <th class="star_mandator">Location Administered</th>
+                                        <th class="star_mandator">Staff Signature to confirm administration</th>
+                                        <th class="star_mandator">Active/Finished</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container formArrayName="medicationInfos" *ngFor="let info of medicationForm.get('medicationInfos')['controls'];let i= index ">
+                                        <tr [formGroupName]="i">
+                                            <td>
+                                                <div (click)="removeMedicationInfo(i)" class="close"><i class="mdi mdi-close"></i></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control" id="" aria-describedby="" formControlName="dueDate">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control" id="" aria-describedby="" formControlName="dateGiven">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input maxlength="250" type="text" class="form-control" id="" aria-describedby="" formControlName="locationAdministered">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control" id="" formControlName="userId">
+                                                        <ng-container *ngFor="let user of usersList; let i=index">
+                                                            <option [ngValue]="user.id">
+                                                                {{ (user.firstName ==null || user.lastName
+                                                                ==null)?user.email:
+                                                                user.firstName+""+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control" id="" formControlName="isFinished">
+                                                        <option [ngValue]="false">Active</option>
+                                                        <option [ngValue]="true">Finished</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            <button type="button" (click)="addMedicationButtonClick()" class="btn btn-sm btn-primary ml-3 rounded-pill mb-3">
+                                Add more <i class="mdi mdi-plus ml-2"></i></button>
+                        </div>
+                        <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                            <button type="button" class="btn btn-sm btn-success rounded-pill" (click)="onSubmit(medicationForm.value)" [disabled]="!medicationForm.valid" [ngClass]="{ 'disabled':!medicationForm.valid}">
+                                Submit <i class="mdi mdi-content-save ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

@@ -1,0 +1,1498 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        Fire Safety and Emergency Response
+                    </span>
+                    <span class="usr_headname"></span><span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mt-1 mb-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!isBusy && auditForm">
+
+                    <form [formGroup]="auditForm">
+                        <div class="sv-tab-panel info_tab_container">
+                            <div class="care-infotable w-96 mb-3 d-flex">
+                                <table class="table w-50 mb-0">
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control" (change)="getUsers($event.target.value)"
+                                                    formControlName="locationId">
+                                                    <ng-container *ngFor="let location of locationList">
+                                                        <option [value]="location.id">
+                                                            {{location.name}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngIf="currentUserRole == userType.Admin ||currentUserRole == userType.SuperUser ">
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <select class="form-control" (change)="completeForm($event)"
+                                                    name="auditedBy" formControlName="auditedBy">
+                                                    <ng-container *ngFor="let user of userList">
+                                                        <option [ngValue]="user.id"
+                                                            *ngIf="user.userType != userType.Admin">
+                                                            {{ (user.firstName ==null ||
+                                                            user.lastName == null)?
+                                                            user.email: user.firstName+"
+                                                            "+user.lastName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table w-50 mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">Date of Audit</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <!-- <input type="date" class="form-control" /> -->
+                                                    <label>{{(auditForm.get('auditDate').value)?(auditForm.get('auditDate').value|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">SignOff By</th>
+                                            <td class="border-top-0">
+                                                <div class="form-group mb-0 input-txtbox">
+                                                    <select class="form-control" formControlName="signoffBy"
+                                                        (change)="changeSignoff()">
+                                                        <ng-container *ngFor="let user of userList">
+                                                            <option [ngValue]="user.id"
+                                                                *ngIf="user.userType == userType.Admin || user.userType == userType.SuperUser ">
+                                                                {{ (user.firstName ==null || user.lastName == null)?
+                                                                user.email: user.firstName+" "+user.lastName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-container *ngIf="isFilling">
+
+                                <div class="accordion" id="scrolldownbox">
+                                    <div id="headingOne">
+                                        <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100"
+                                            data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="headingOne">
+                                            <i class="mdi mdi-chevron-down float-right"></i>Part A
+                                        </h4>
+                                        <!--section 2-->
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                            data-parent="#scrolldownbox">
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">S.no</th>
+                                                            <th>Staff on Duty</th>
+                                                            <!-- <th>Position</th> -->
+                                                            <th>Role During Exercise</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container formArrayName="staffs"
+                                                            *ngFor="let satff of auditForm.get('staffs')['controls'];let i= index ">
+                                                            <tr [formGroupName]="i">
+
+                                                                <td class="text-center">
+                                                                    <div class="close float-none"
+                                                                        (click)="removeStaff(i)">
+                                                                        <i class="mdi mdi-close"></i>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <select name="userId" formControlName="userId"
+                                                                            class="form-control">
+                                                                            <ng-container *ngFor="let user of allUserList">
+                                                                                <option [ngValue]="user.id">
+                                                                                    {{ (user.firstName ==null ||
+                                                                                    user.lastName
+                                                                                    == null)?
+                                                                                    user.email: user.firstName+"
+                                                                                    "+user.lastName}}
+                                                                                </option>
+                                                                            </ng-container>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+                                                                <!-- <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <input type="text" class="form-control">
+                                                                    </div>
+                                                                </td> -->
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <input type="text"
+                                                                            formControlName="roleDuringExercise"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3 d-flex bg-white">
+                                                <button type="button" (click)="addMoreStaffClick()"
+                                                    class="btn btn-primary rounded-pill btn-sm">
+                                                    <i class="mdi mdi-plus mr-2"></i>
+                                                    Add more
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="headingtwo">
+                                        <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100"
+                                            data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true"
+                                            aria-controls="headingtwo">
+                                            <i class="mdi mdi-chevron-down float-right"></i>Part B
+                                        </h4>
+                                        <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo"
+                                            data-parent="#scrolldownbox">
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">S.no</th>
+                                                            <th>Name of Service User</th>
+                                                            <th>Observed Response/Effect on Service User</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container formArrayName="serviceUsers"
+                                                            *ngFor="let serviceUser of auditForm.get('serviceUsers')['controls'];let i= index ">
+                                                            <tr [formGroupName]="i">
+                                                                <td class="text-center">
+                                                                    <div class="close  float-none"
+                                                                        (click)="removePatient(i)">
+                                                                        <i class="mdi mdi-close"></i>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <select formControlName="patientId"
+                                                                            class="form-control">
+                                                                            <ng-container
+                                                                                *ngFor="let patient of patientsList">
+                                                                                <option [ngValue]="patient.id">
+                                                                                    {{patient.firstName+"
+                                                                                    "+patient.lastName}}
+                                                                                </option>
+                                                                            </ng-container>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <input type="text"
+                                                                            formControlName="observedResponse"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3 d-flex bg-white">
+                                                <button type="button" (click)="addMorePatientClick()"
+                                                    class="btn btn-primary rounded-pill btn-sm">
+                                                    <i class="mdi mdi-plus mr-2"></i>
+                                                    Add more
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="headingthree">
+                                        <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100"
+                                            data-toggle="collapse" data-target="#collapsethree" aria-expanded="true"
+                                            aria-controls="headingthree">
+                                            <i class="mdi mdi-chevron-down float-right"></i>Part C
+                                        </h4>
+                                        <div id="collapsethree" class="collapse" aria-labelledby="headingthree"
+                                            data-parent="#scrolldownbox">
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Exercise Scenario</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea formControlName="exerciseScenario"
+                                                                        class="form-control" rows="3"
+                                                                        cols="3"></textarea>
+                                                                </div>
+                                                                <p class="textError" *ngIf="auditForm.controls.exerciseScenario.errors?.maxlength">Maximum limit reached</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="headingfour">
+                                        <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100"
+                                            data-toggle="collapse" data-target="#collapsefour" aria-expanded="true"
+                                            aria-controls="headingfour">
+                                            <i class="mdi mdi-chevron-down float-right"></i>Part D - Sequence of Events
+                                        </h4>
+                                        <div id="collapsefour" class="collapse " aria-labelledby="headingfour"
+                                            data-parent="#scrolldownbox">
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-75 mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Time (enter mins)</th>
+                                                            <th>Event</th>
+                                                            <th>Comments</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="alarmActivatedTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.alarmActivatedTime.valid && (auditForm.controls.alarmActivatedTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.alarmActivatedTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.alarmActivatedTime.errors?.min"
+                                                                            class="errorText">Minimum 0.01</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.alarmActivatedTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            00.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Alarm activated (exercise begins)
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="alarmActivatedComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.alarmActivatedComment.valid && (!auditForm.controls.alarmActivatedComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.alarmActivatedComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="staffResponseTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.staffResponseTime.valid && (auditForm.controls.staffResponseTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.staffResponseTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.staffResponseTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Staff member/s responds
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="staffResponseComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.staffResponseComment.valid && (!auditForm.controls.staffResponseComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.staffResponseComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="verifiesEmergencyTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.verifiesEmergencyTime.valid && (auditForm.controls.verifiesEmergencyTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.verifiesEmergencyTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.verifiesEmergencyTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Staff member verifies emergency
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="verifiesEmergencyComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.verifiesEmergencyComment.valid && (!auditForm.controls.verifiesEmergencyComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.verifiesEmergencyComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="emergencyServiceTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.emergencyServiceTime.valid && (auditForm.controls.emergencyServiceTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.emergencyServiceTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.emergencyServiceTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Emergency Services notified
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="emergencyServiceComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.emergencyServiceComment.valid && (!auditForm.controls.emergencyServiceComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.emergencyServiceComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="evacuationBeginsTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.evacuationBeginsTime.valid && (auditForm.controls.evacuationBeginsTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.evacuationBeginsTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.evacuationBeginsTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Evacuation begins
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="evacuationBeginsComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.evacuationBeginsComment.valid && (!auditForm.controls.evacuationBeginsComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.evacuationBeginsComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="checkAllAreasTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.checkAllAreasTime.valid && (!auditForm.controls.checkAllAreasTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.checkAllAreasTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.checkAllAreasTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Staff check all areas
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="checkAllAreasComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.checkAllAreasComment.valid && (!auditForm.controls.checkAllAreasComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.checkAllAreasComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="arriveAssemblyAreaTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.arriveAssemblyAreaTime.valid && (auditForm.controls.arriveAssemblyAreaTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.arriveAssemblyAreaTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.arriveAssemblyAreaTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Arrive at assembly area
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="arriveAssemblyAreaComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.arriveAssemblyAreaComment.valid && (!auditForm.controls.arriveAssemblyAreaComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.arriveAssemblyAreaComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="staffCheckOccupantsTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.staffCheckOccupantsTime.valid && (auditForm.controls.staffCheckOccupantsTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.staffCheckOccupantsTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.staffCheckOccupantsTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Staff check that all occupants are accounted for (roll
+                                                                call)
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="staffCheckOccupantsComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.staffCheckOccupantsComment.valid && (!auditForm.controls.staffCheckOccupantsComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.staffCheckOccupantsComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="reportEmergencyServicesTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.reportEmergencyServicesTime.valid && (auditForm.controls.reportEmergencyServicesTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.reportEmergencyServicesTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.reportEmergencyServicesTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Staff provide situation report to Emergency Services
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="reportEmergencyServicesComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.reportEmergencyServicesComment.valid && (!auditForm.controls.reportEmergencyServicesComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.reportEmergencyServicesComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="exerciseCompletedTime"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.exerciseCompletedTime.valid && (auditForm.controls.exerciseCompletedTime.dirty )">
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.exerciseCompletedTime.errors?.required"
+                                                                            class="errorText">This field is
+                                                                            required</small>
+                                                                        <small
+                                                                            *ngIf="auditForm.controls.exerciseCompletedTime.errors?.pattern"
+                                                                            class="errorText">Please provide valid input
+                                                                            000.01 to 999.59</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                Exercise completed
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <input type="text"
+                                                                        formControlName="exerciseCompletedComment"
+                                                                        class="form-control">
+                                                                    <ng-container
+                                                                        *ngIf="!auditForm.controls.exerciseCompletedComment.valid && (!auditForm.controls.exerciseCompletedComment.dirty )">
+                                                                        <small
+                                                                            *ngIf="!auditForm.controls.exerciseCompletedComment.errors?.maxLength"
+                                                                            class="errorText">Maximum 200 characher
+                                                                            required</small>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label>{{totalTime()}}</label>
+                                                            </th>
+                                                            <th colspan="2">
+                                                                Total Time for Evacuation Exercise
+                                                            </th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="headingfive">
+                                        <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100"
+                                            data-toggle="collapse" data-target="#collapsefive" aria-expanded="true"
+                                            aria-controls="headingfive">
+                                            <i class="mdi mdi-chevron-down float-right"></i>Part E - Emergency Response
+                                            Checklist
+                                        </h4>
+                                        <div id="collapsefive" class="collapse" aria-labelledby="headingfive"
+                                            data-parent="#scrolldownbox">
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-96 mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="w-50">When the emergency started, were all
+                                                                occupants alerted?
+                                                            </th>
+                                                            <th class="w-25">Yes/No/N/A</th>
+                                                            <th class="w-25">Comments</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                Was the alarm activated? (Where appropriate for
+                                                                scenario)
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="wasAlaramActivated"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="wasAlaramActivated" id="yes1" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes1">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="wasAlaramActivated"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="wasAlaramActivated" id="No1" />
+                                                                    <label class="form-check-label" for="No1">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="wasAlaramActivated"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="wasAlaramActivated" id="Na1" />
+                                                                    <label class="form-check-label" for="Na1">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="wasAlaramActivatedComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Did staff follow the appropriate emergency procedures
+                                                                for the scenario?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="staffFollowAppropriateEmergencyProcedures"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="staffFollowAppropriateEmergencyProcedures"
+                                                                        id="yes" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="staffFollowAppropriateEmergencyProcedures"
+                                                                        [value]="riskAction.No"
+                                                                        class=" form-check-input mt-1"
+                                                                        name="staffFollowAppropriateEmergencyProcedures"
+                                                                        id="No" />
+                                                                    <label class="form-check-label" for="No">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="staffFollowAppropriateEmergencyProcedures"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="staffFollowAppropriateEmergencyProcedures"
+                                                                        id="Na" />
+                                                                    <label class="form-check-label" for="Na">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="staffFollowAppropriateEmergencyProceduresComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Was emergency confined to area of origin (e.g. doors
+                                                                closed)?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="wasEmergencyConfined"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="wasEmergencyConfined" id="yes2" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes2">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="wasEmergencyConfined"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="wasEmergencyConfined" id="No2" />
+                                                                    <label class="form-check-label" for="No2">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="wasEmergencyConfined"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="wasEmergencyConfined" id="Na2" />
+                                                                    <label class="form-check-label" for="Na2">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="wasEmergencyConfinedComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Were the Emergency Services notified promptly?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="emergencyServicesNotified"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="emergencyServicesNotified" id="yes3" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes3">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="emergencyServicesNotified"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="emergencyServicesNotified" id="No3" />
+                                                                    <label class="form-check-label" for="No3">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="emergencyServicesNotified"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="emergencyServicesNotified" id="Na3" />
+                                                                    <label class="form-check-label" for="Na3">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea
+                                                                        formControlName="emergencyServicesNotifiedComments"
+                                                                        rows="2" cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Were all areas of the house searched i.e. toilets,
+                                                                laundries,
+                                                                etc?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="areasOfHouseSearched"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="areasOfHouseSearched" id="yes4" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes4">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="areasOfHouseSearched"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="areasOfHouseSearched" id="No4" />
+                                                                    <label class="form-check-label" for="No4">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="areasOfHouseSearched"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="areasOfHouseSearched" id="Na4" />
+                                                                    <label class="form-check-label" for="Na4">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="areasOfHouseSearchedComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <td>
+                                                                Did staff wear appropriate identification?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="staffAppropriateIdentification"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="staffAppropriateIdentification"
+                                                                        id="yes5" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes5">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio" [value]="riskAction.No"
+                                                                        formControlName="staffAppropriateIdentification"
+                                                                        class="form-check-input mt-1"
+                                                                        name="staffAppropriateIdentification"
+                                                                        id="No5" />
+                                                                    <label class="form-check-label" for="No5">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="staffAppropriateIdentification"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="staffAppropriateIdentification"
+                                                                        id="Na5" />
+                                                                    <label class="form-check-label" for="Na5">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="staffAppropriateIdentificationComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Was the evacuation of occupants logical and methodical?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="evacuationOfOccupants"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="evacuationOfOccupants" id="yes6" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes6">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="evacuationOfOccupants"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="evacuationOfOccupants" id="No6" />
+                                                                    <label class="form-check-label" for="No6">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="evacuationOfOccupants"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="evacuationOfOccupants" id="Na6" />
+                                                                    <label class="form-check-label" for="Na6">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="evacuationOfOccupantsComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Were mobility impaired persons assisted to evacuate?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="mobilityImpairedPersons"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="mobilityImpairedPersons" id="yes7" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes7">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="mobilityImpairedPersons"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="mobilityImpairedPersons" id="No7" />
+                                                                    <label class="form-check-label" for="No7">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="mobilityImpairedPersons"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="mobilityImpairedPersons" id="Na7" />
+                                                                    <label class="form-check-label" for="Na7">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="mobilityImpairedPersonsComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Did anyone refuse to follow instructions? (Include in
+                                                                comments,
+                                                                reason why.)
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="anyoneRefuseToFollow"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="anyoneRefuseToFollow" id="yes8" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes8">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="anyoneRefuseToFollow"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="anyoneRefuseToFollow" id="No8" />
+                                                                    <label class="form-check-label" for="No8">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="anyoneRefuseToFollow"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="anyoneRefuseToFollow" id="Na8" />
+                                                                    <label class="form-check-label" for="Na8">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="anyoneRefuseToFollowComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Was the most appropriate evacuation route taken?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="appropriateEvacuationRoute"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="appropriateEvacuationRoute" id="yes9" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes9">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="appropriateEvacuationRoute"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="appropriateEvacuationRoute" id="No9" />
+                                                                    <label class="form-check-label" for="No9">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="appropriateEvacuationRoute"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="appropriateEvacuationRoute" id="Na9" />
+                                                                    <label class="form-check-label" for="Na9">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="appropriateEvacuationRouteComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Did occupants proceed to and stay in the assembly area?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="occupantsProceed"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="occupantsProceed" id="yes10" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes10">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="occupantsProceed"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="occupantsProceed" id="No10" />
+                                                                    <label class="form-check-label"
+                                                                        for="No10">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="occupantsProceed"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="occupantsProceed" id="Na10" />
+                                                                    <label class="form-check-label"
+                                                                        for="Na10">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="occupantsProceedComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Were all occupants accounted for (roll call)?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="occupantsAccounted"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="occupantsAccounted" id="yes11" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes11">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="occupantsAccounted"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="occupantsAccounted" id="No11" />
+                                                                    <label class="form-check-label"
+                                                                        for="No11">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="occupantsAccounted"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="occupantsAccounted" id="Na11" />
+                                                                    <label class="form-check-label"
+                                                                        for="Na11">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="occupantsAccountedComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Did anyone re-enter the building before the ‘All-Clear’
+                                                                was given?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="didAnyoneReenter"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="didAnyoneReenter" id="yes12" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes12">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="didAnyoneReenter"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="didAnyoneReenter" id="No12" />
+                                                                    <label class="form-check-label"
+                                                                        for="No12">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="didAnyoneReenter"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="didAnyoneReenter" id="Na12" />
+                                                                    <label class="form-check-label"
+                                                                        for="Na12">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="didAnyoneReenterComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Did a staff person liaise with the Emergency Services
+                                                                i.e.
+                                                                fire
+                                                                brigade?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="didStaffPersonLiaise"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="didStaffPersonLiaise" id="yes13" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes13">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="didStaffPersonLiaise"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="didStaffPersonLiaise" id="No13" />
+                                                                    <label class="form-check-label"
+                                                                        for="No13">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="didStaffPersonLiaise"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="didStaffPersonLiaise" id="Na13" />
+                                                                    <label class="form-check-label"
+                                                                        for="Na13">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="didStaffPersonLiaiseComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Did the Emergency Services receive the correct
+                                                                information?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="emergencyServicesReceive"
+                                                                        [value]="riskAction.Yes"
+                                                                        class="form-check-input mt-1"
+                                                                        name="emergencyServicesReceive" id="yes14" />
+                                                                    <label class="form-check-label"
+                                                                        for="yes14">Yes</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 mr-2 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="emergencyServicesReceive"
+                                                                        [value]="riskAction.No"
+                                                                        class="form-check-input mt-1"
+                                                                        name="emergencyServicesReceive" id="No14" />
+                                                                    <label class="form-check-label"
+                                                                        for="No14">No</label>
+                                                                </div>
+                                                                <div
+                                                                    class="form-group form-check mb-0 d-inline-block float-left">
+                                                                    <input type="radio"
+                                                                        formControlName="emergencyServicesReceive"
+                                                                        [value]="riskAction.NotKnown"
+                                                                        class="form-check-input mt-1"
+                                                                        name="emergencyServicesReceive" id="Na14" />
+                                                                    <label class="form-check-label"
+                                                                        for="Na14">NA</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <textarea rows="2"
+                                                                        formControlName="emergencyServicesReceiveComments"
+                                                                        cols="2" class="form-control">
+                                                        </textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="headingsix">
+                                        <h4 class="w-96 mt-2 mb-0 pl-2 pr-2 headr_myshare tabwd100"
+                                            data-toggle="collapse" data-target="#collapsesix" aria-expanded="true"
+                                            aria-controls="headingsix">
+                                            <i class="mdi mdi-chevron-down float-right"></i>Part F - Debrief
+                                        </h4>
+                                        <div id="collapsesix" class="collapse" aria-labelledby="headingsix"
+                                            data-parent="#scrolldownbox">
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">S.no</th>
+                                                            <th>Difficulties observed during the exercise</th>
+                                                            <th>Areas for further improvement</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container formArrayName="debriefs"
+                                                            *ngFor="let debrief of auditForm.get('debriefs')['controls'];let i= index ">
+                                                            <tr [formGroupName]="i">
+                                                                <td class="text-center">
+                                                                    <div class="close  float-none"
+                                                                        (click)="removeDebrief(i)">
+                                                                        <i class="mdi mdi-close"></i>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <input type="text"
+                                                                            formControlName="difficultiesObserved"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        <input type="text"
+                                                                            formControlName="furtherImprovement"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3 d-flex bg-white">
+                                                <button type="button" (click)="addMoreDebriefClick()"
+                                                    class="btn btn-primary rounded-pill btn-sm">
+                                                    <i class="mdi mdi-plus mr-2"></i>
+                                                    Add more
+                                                </button>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="3">Additional Comments</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <textarea rows="2" formControlName="additionalComments"
+                                                                    cols="2" class="form-control"></textarea>
+                                                                <ng-container
+                                                                    *ngIf="!auditForm.controls.additionalComments.valid && (!auditForm.controls.additionalComments.dirty )">
+                                                                    <small
+                                                                        *ngIf="!auditForm.controls.additionalComments.errors?.maxLength"
+                                                                        class="errorText">Maximum 300 characher
+                                                                        required</small>
+                                                                    <small
+                                                                        *ngIf="!auditForm.controls.additionalComments.errors?.pattern"
+                                                                        class="errorText">Please enter valid </small>
+                                                                </ng-container>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <div class="col-sm-12 d-inline-block care-infotable mt-3 w-96 p-3"
+                                *ngIf="auditForm.get('signoffBy').value == currentUserId ">
+                                <p class="mr-2"><strong>Do you want to create form for next review date</strong></p>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" (change)="createForm = true" id="yes15"
+                                        [value]="true" class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="yes15" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-group form-check mb-0 mr-2 d-inline-block">
+                                    <input type="radio" name="confirmation" checked (change)="createForm = false"
+                                        id="No15" [value]="false"
+                                        class="form-check-input mt-1 ng-untouched ng-pristine ng-valid">
+                                    <label for="No15" class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                <ng-container
+                                    *ngIf="auditForm.get('signoffBy').value == currentUserId && isFilling; else elseTemplate">
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit & SignOff <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button type="button" [disabled]="!auditForm.valid" (click)="onSubmit()"
+                                        class="btn btn-sm btn-success rounded-pill">
+                                        Submit <i class="mdi mdi-content-save ml-1"></i>
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>

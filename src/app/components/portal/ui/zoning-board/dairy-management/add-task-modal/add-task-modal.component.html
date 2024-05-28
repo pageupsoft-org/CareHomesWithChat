@@ -1,0 +1,95 @@
+<div class="modal fade in" bsModal #taskModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <ng-container *ngIf="!isEdit">Add Task</ng-container>
+                    <ng-container *ngIf="isEdit">Edit Task</ng-container>
+                </h5>
+                <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="isBusy">
+                    <div class="col-sm-12 text-center">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf=" userTaskForm && !isBusy">
+
+                    <ng-container *ngIf="!isClose">
+
+                        <div class="form-group">
+                            <label class="star_mandator"><strong>Task Name</strong></label>
+                            <input type="text" [formControl]="userTaskForm.taskName" placeholder=""
+                                class="form-control">
+                            <ng-container
+                                *ngIf="!userTaskForm.controls.taskName.valid && (userTaskForm.controls.taskName.dirty )">
+                                <p *ngIf="userTaskForm.controls.taskName.errors?.maxlength" class="errorText">Maximum {{userTaskForm.get('taskName').errors.maxlength.requiredLength}} character allowed</p>
+                                <p *ngIf="userTaskForm.controls.taskName.errors?.minlength" class="errorText">Minimum 2 character required</p>
+                                <p *ngIf="userTaskForm.controls.taskName.errors?.required" class="errorText">This field is required</p>
+                                <p *ngIf="userTaskForm.controls.taskName.errors?.pattern" class="errorText">Please provide valid task name</p>
+
+                            </ng-container>
+                        </div>
+                        <div class="form-group">
+                            <label class="star_mandator"><strong>Description</strong> </label>
+                            <textarea rows="2" [formControl]="userTaskForm.description" cols="2" class="form-control"></textarea>
+                            <ng-container
+                                *ngIf="!userTaskForm.controls.description.valid && (userTaskForm.controls.description.dirty )">
+                                <p *ngIf="userTaskForm.controls.description.errors?.minlength" class="errorText">Minimum 2 character required</p>
+                                <p *ngIf="userTaskForm.controls.description.errors?.required" class="errorText">This field is required</p>
+                                <p *ngIf="userTaskForm.controls.description.errors?.maxlength" class="errorText">Maximum 
+                                    {{userTaskForm.get('description').errors.maxlength.requiredLength}}
+                                     character allowed</p>
+                                
+                            </ng-container>
+                        </div>
+                        <div class="form-group">
+                            <label class="star_mandator"><strong>Due Date</strong></label>
+                            <input type="date" placeholder="" min="{{today |date:'yyyy-MM-dd'}}" class="form-control"
+                                [formControl]="userTaskForm.taskDate">
+                        </div>
+                        <div class="form-group">
+                            <label class="star_mandator"><strong>Care Coordinator</strong></label>
+                            <div class="form-group mb-0 input-txtbox">
+                                <div class="input-group">
+                                    <select class="form-control" [formControl]="userTaskForm.userId">
+                                        <!-- <option [ngValue]="">Select User</option> -->
+                                        <ng-container *ngFor="let user of usersList">
+                                            <option [ngValue]="user.id" *ngIf="userType.Admin != user.userType">
+                                                {{ (user.firstName ==null || user.lastName == null)? user.email:
+                                                user.firstName+" "+user.lastName}}
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="isClose">
+                        <div class="form-group">
+                            <label class="star_mandator">Remark</label>
+                            <textarea rows="2" cols="2" class="form-control"
+                                [formControl]="userTaskForm.remark"></textarea>
+                                <ng-container
+                                *ngIf="!userTaskForm.controls.remark.valid && (userTaskForm.controls.remark.dirty )">
+                                <p *ngIf="userTaskForm.controls.remark.errors?.pattern" class="errorText">Please provide valid remark</p>
+                                <p *ngIf="userTaskForm.controls.remark.errors?.maxlength" class="errorText">Maximum 50 character allowed</p>
+                                
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-light rounded-pill" (click)="cancel()" data-dismiss="modal"><i class="mdi mdi-close mr-1"></i> Close</button>
+                <button type="submit" (click)="onSubmit()" [ngClass]="{ 'disabled':userTaskForm && !userTaskForm.valid}"
+                    [disabled]="userTaskForm && !userTaskForm.valid" class="btn btn-sm btn-success rounded-pill"><i class="mdi mdi-content-save mr-1"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="modal fade in" bsModal #courseModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <ng-container *ngIf="!isEdit">Add Course</ng-container>
+          <ng-container *ngIf="isEdit">Edit Course</ng-container>
+        </h5>
+        <button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="isBusy">
+          <div class="col-sm-12 text-center">
+            <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="courseForm && !isBusy">
+          <form>
+            <div class="form-group">
+              <label class="star_mandator"><strong>Name of course</strong></label>
+              <input type="text" class="form-control" id="nameofcourse" placeholder="" [formControl]='courseForm.name'>
+              <ng-container *ngIf="!courseForm.controls.name.valid && 
+              (courseForm.controls.name.dirty )">
+                <p *ngIf="courseForm.controls.name.errors?.pattern && !courseForm.controls.name.errors?.maxlength" class="text-danger">Please provide a valid
+                  name</p>
+                <p *ngIf="courseForm.controls.name.errors?.required" class="text-danger">This Field is Required
+                </p>
+                <p *ngIf="courseForm.controls.name.errors?.minlength"  class="errorText">Minimum 2 character required</p>
+                <p *ngIf="courseForm.controls.name.errors?.maxlength" class="errorText">Maximum  {{courseForm.get('name').errors.maxlength.requiredLength}} character allowed</p>
+              </ng-container>
+            </div>
+
+            <label class="d-block"><strong>Mandatory</strong></label>
+            <div class="form-check d-inline-block mr-3">
+              <input class="form-check-input mt-1" type="radio" name="editmandatory" id="edit-yes"
+                [formControl]='courseForm.isMandatory' [value]="true">
+              <label class="form-check-label" for="edit-yes">
+                Yes
+              </label>
+            </div>
+            <div class="form-check d-inline-block">
+              <input class="form-check-input mt-1" type="radio" name="editmandatory" id="edit-no"
+                [formControl]='courseForm.isMandatory' [value]="false">
+              <label class="form-check-label" for="edit-no">
+                No
+              </label>
+            </div>
+          </form>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light rounded-pill" (click)="cancel()" data-dismiss="modal"> <i class="mdi mdi-close mr-1"></i> Close</button>
+        <button type="submit" (click)="onSubmit()" [ngClass]="{ 'disabled':courseForm && !courseForm.valid}"
+          class="btn btn-success rounded-pill"><i class="mdi mdi-content-save mr-1"></i> Save</button>
+      </div>
+    </div>
+  </div>
+</div>

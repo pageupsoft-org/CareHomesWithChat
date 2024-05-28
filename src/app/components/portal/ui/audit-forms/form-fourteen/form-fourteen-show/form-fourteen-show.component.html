@@ -1,0 +1,241 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 mt-2 ml-0 mb-2">
+                <h1 class="">
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>
+                        General Medication Audit Tool
+                    </span>
+                    <span class="usr_headname"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="horizontal-tabs mb-3 bg-white shadow-sm mr-lft-10">
+                <ng-container *ngIf="isBusy">
+                    <div class="loader">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isBusy && auditForm">
+                    <div class="sv-tab-panel info_tab_container">
+                        <div class="care-infotable w-96 mb-3 d-flex">
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Audited by</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{(auditForm.auditor)?((auditForm.auditor.firstName == null ||
+                                                auditForm.auditor.lastName == null)?
+                                                auditForm.auditor.email:(auditForm.auditor.firstName+"
+                                                "+auditForm.auditor.lastName) ):'-'}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">Location</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{auditForm.locationName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">Patient</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{patientName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table w-50 mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="border-top-0">Date of Audit</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <!-- <input type="date" class="form-control" /> -->
+                                                <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0">SignOff By</th>
+                                        <td class="border-top-0">
+                                            <div class="form-group mb-0 input-txtbox">
+                                                <label>{{auditForm.signoffByName}}</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="care-infotable w-96 mb-3 d-flex">
+                            <table class="table w-75 mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0 w-75">Areas of Audit</th>
+                                        <th class="border-top-0 w-25">
+                                            Findings
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th colspan="2">Controlled Drugs (CD)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>CD requisition book available with two counter signatures for all CDs in
+                                            use/ stock</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.allCounterSignature]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>CD recording book with two counter signatures when administered </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.administeredCounterSignature]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>CD in Date, Expiry date in diary for prompts</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.controlledDrugExpiryDate]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="2">Emergency Drugs (ED)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>ED in date, Expiry date in diary for prompts</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.emergencyDrugExpiryDate]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>ED recording book with two counter signatures when administered</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.emergencyDrugRecording]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="2">Treatment/ Medication Room(s) </th>
+                                    </tr>
+                                    <tr>
+                                        <td>Room/ space is clean, neat and tidy</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.isRoomClean]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cupboards/ trolleys are clean neat and tidy</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.isCupboardsClean]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="2">Areas of Audit</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Daily room temperature maintained 250C and below </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.roomTemperatureMaintained]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Clinical fridge clean, neat and tidy</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.isClinicalFridgeClean]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Daily clinical fridge temperature maintained between 20C and 80C </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.clinicalFridgeTemperatureMaintained]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Clinical waste bags available </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.wasteBagsAvailable]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sharp box available, clean, neat and tidy</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.sharpBoxAvailable]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Updated BNF availabley</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.updatedBNFAvailable]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Updated Drug Alert emails available</td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.updatedDrugAlert]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Updated signatory list </td>
+                                        <td>
+                                            <div class="form-group mb-0 input-txtbox">
+                                                {{riskEntry[auditForm.updatedSignatoryList]}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                            <span class="usr_headname"></span><span>
+                                <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 my-1 btn-go-back"
+                                    (click)="goBack()">Go Back</button>
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

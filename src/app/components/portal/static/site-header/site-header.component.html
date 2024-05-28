@@ -1,0 +1,251 @@
+<div class="maincontainer">
+    <header class="header_box">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="dashboard">
+                    <img src="assets/images/dres-logo.png">
+                </a>
+                <img src="assets/images/menu.svg" class="icon_menu mx-4" (click)="toggle()" />
+
+                <div class="container_searchbox">
+                    <!-- <form class="d-flex searchbox_header mb-0">
+                        <input class="form-control ml-4" type="search" placeholder="Search" aria-label="Search">
+                        <span class="mdi mdi-magnify"></span>
+                    </form> -->
+                </div>
+                <div class="container_prof_notify">
+                    <ul class="d-flex pl-0 mb-0">
+                        <li class="notifications" (click)="getNotification()">
+                            <i class="mdi mdi-bell-outline mt-1 d-inline-block"></i>
+                            <span class="num_notify">{{notificationCount}}</span>
+                            <div class="profilebox_user notification-inner" [ngClass]="{'visible-notification': showNotifications}">
+                                <div class="text_infouser textbox_notification">
+                                    <div class="head_notify">
+                                        <p class="mb-0">Notification</p>
+                                    </div>
+                                    <ul class="pl-0 notify_scroll">
+                                        <ng-container *ngFor="let notification of notificationList">
+                                            <li [ngStyle]="{'background-color':notification.isSeen?'#ffffff':'#efe0e2'}">
+                                                <span class="notif_user_ico"><i
+                                                        class="mdi mdi-account-outline"></i></span>
+                                                        <!-- href="{{(notification.type == notificationType.FormSignOff)?'/dashboard':'/dashboard#dairyComponent'}}" -->
+                                                <a (click)="showDetails(notification)" class="text-notif">{{notification.title}}:
+                                                    {{notification.message}} </a>
+                                                <p class="time_notification mb-0">
+                                                    <span class="date">{{notification.createdTime|date:'dd-MM-yyyy'}}</span>
+                                                    <!-- <span class="day-time">10:30 am</span> -->
+                                                </p>
+                                            </li>
+                                        </ng-container>
+
+
+                                        <!-- <li>
+                                            <span class="notif_user_ico"><i class="mdi mdi-account-outline"></i></span>
+                                            <a href="" class="text-notif">Someone Like Your Post</a>
+                                            <p class="time_notification mb-0">
+                                                <span class="date">21-may-2021</span>
+                                                <span class="day-time">10:30 am</span>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <span class="notif_user_ico"><i class="mdi mdi-account-outline"></i></span>
+                                            <a href="" class="text-notif">Someone Like Your Post</a>
+                                            <p class="time_notification mb-0">
+                                                <span class="date">21-may-2021</span>
+                                                <span class="day-time">10:30 am</span>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <span class="notif_user_ico"><i class="mdi mdi-account-outline"></i></span>
+                                            <a href="" class="text-notif">Someone Like Your Post</a>
+                                            <p class="time_notification mb-0">
+                                                <span class="date">21-may-2021</span>
+                                                <span class="day-time">10:30 am</span>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <span class="notif_user_ico"><i class="mdi mdi-account-outline"></i></span>
+                                            <a href="" class="text-notif">Someone Like Your Post</a>
+                                            <p class="time_notification mb-0">
+                                                <span class="date">21-may-2021</span>
+                                                <span class="day-time">10:30 am</span>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <span class="notif_user_ico"><i class="mdi mdi-account-outline"></i></span>
+                                            <a href="" class="text-notif">Someone Like Your Post</a>
+                                            <p class="time_notification mb-0">
+                                                <span class="date">21-may-2021</span>
+                                                <span class="day-time">10:30 am</span>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <span class="notif_user_ico"><i class="mdi mdi-account-outline"></i></span>
+                                            <a href="" class="text-notif">Someone Like Your Post</a>
+                                            <p class="time_notification mb-0">
+                                                <span class="date">21-may-2021</span>
+                                                <span class="day-time">10:30 am</span>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <span class="notif_user_ico"><i class="mdi mdi-account-outline"></i></span>
+                                            <a href="" class="text-notif">Someone Like Your Post</a>
+                                            <p class="time_notification mb-0">
+                                                <span class="date">21-may-2021</span>
+                                                <span class="day-time">10:30 am</span>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <span class="notif_user_ico"><i class="mdi mdi-account-outline"></i></span>
+                                            <a href="" class="text-notif">Someone Like Your Post</a>
+                                            <p class="time_notification mb-0">
+                                                <span class="date">21-may-2021</span>
+                                                <span class="day-time">10:30 am</span>
+                                            </p>
+                                        </li> -->
+                                    </ul>
+                                    <!-- <div class="foot_notify">
+                                        <p class="mb-0">See all notification</p>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </li>
+                        <li class="user_prof_hov">
+                            <i class="mdi mdi-account profile_icon"></i>
+                            <div class="profilebox_user">
+                                <div class="imgbox_user">
+                                    <img src="assets/images/demo-user.png" class="figure-img img-fluid rounded-circle" alt="...">
+                                </div>
+                                <!-- <div class="progress mx-2">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div> -->
+                                <span class="d-block text-center my-3 font12">{{username}}</span>
+                                <div class="text_infouser">
+                                    <ul class="pl-0">
+                                        <!-- <li>
+                                            <span>{{username}}</span>
+                                        </li> -->
+                                        <!-- <li (click)="userProfile()">
+                                            <i class="mdi mdi-account-cog-outline"></i>
+                                            <span>&nbsp;Edit Profile</span>
+                                        </li> -->
+                                        <li (click)="changePassword()">
+                                            <i class="mdi mdi-lock-reset"></i>
+                                            <span>&nbsp;Change Password</span>
+                                        </li>
+                                        <li (click)="logout()">
+                                            <i class="mdi mdi-login"></i>
+                                            <span>&nbsp;Logout</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="left_menu" [ngClass]="{'left_menu_broad':showSidebar}">
+        <ul>
+            <li routerLinkActive="active">
+                <a routerLink="dashboard">
+                    <div class="bg_circle">
+                        <!-- <span class="hove-visible">Dashboard</span> -->
+                        <img src="assets/images/dashboard.svg" title="Dashboard">
+                    </div>
+                    <span class="nameleftmenu" [ngClass]="{'visible_menuname': showSidebar}">Dashboard</span>
+                </a>
+            </li>
+            <li routerLinkActive="active" *ngIf="userType.User != currentUserRole">
+                <a routerLink="userMaster">
+                    <div class="bg_circle">
+                        <img src="assets/images/admin.svg" title="Admin">
+                    </div>
+                    <span class="nameleftmenu" [ngClass]="{'visible_menuname': showSidebar}">Admin</span>
+                </a>
+            </li>
+            <ng-container *ngIf="!isSuperAdmin">
+                <li routerLinkActive="active">
+                    <a routerLink="service-overview">
+                        <div class="bg_circle">
+                            <img src="assets/images/patient.svg" title="Service User">
+                        </div>
+                        <span class="nameleftmenu" [ngClass]="{'visible_menuname': showSidebar}">Service User</span>
+                    </a>
+                </li>
+                <li routerLinkActive="active" *ngIf="userType.Auditor != currentUserRole">
+                    <a routerLink="zone-master">
+                        <div class="bg_circle">
+                            <img src="assets/images/zonal.svg" title="Zonal">
+                        </div>
+                        <span class="nameleftmenu" [ngClass]="{'visible_menuname': showSidebar}">Zonal</span>
+                    </a>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="location-audit">
+                        <div class="bg_circle">
+                            <img src="assets/images/audit.svg" title="Audit">
+                        </div>
+                        <span class="nameleftmenu" [ngClass]="{'visible_menuname': showSidebar}">Audit</span>
+                    </a>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="roster-management">
+                        <div class="bg_circle">
+                            <img src="assets/images/roaster.svg" title="Roaster">
+                        </div>
+                        <span class="nameleftmenu" [ngClass]="{'visible_menuname': showSidebar}">Roaster</span>
+                    </a>
+                </li>
+                <li routerLinkActive="active">
+                    <a [routerLink]="constants.routes.locationAudits.formTwoOverview()">
+                        <div class="bg_circle">
+                            <img src="assets/images/roaster.svg" title="Incident Audit Form">
+                        </div>
+                        <span class="nameleftmenu" [ngClass]="{'visible_menuname': showSidebar}">Incident Audit Form</span>
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>
+
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a [routerLink]="['dashboard']" class="navbar-brand">Care Homes</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a [routerLink]="['care-home']" class="nav-link">Care Home </a>
+
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="['location/create']" class="nav-link">Location</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="['course/create']" class="nav-link">Course</a>
+            </li>
+
+            <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item">Action</a>
+          <a class="dropdown-item">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">Something else here</a>
+        </div>
+      </li>
+        </ul>
+
+    </div>
+</nav> -->
+
+<!-- <app-show-task-modal #showTaskModal></app-show-task-modal> -->

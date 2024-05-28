@@ -1,0 +1,125 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3 ml-0">
+                <h1><span class="usr_headleft"><i class="mdi mdi-account-reactivate-outline mx-2"></i> Rota-management
+                    </span><span class="usr_headname"></span>
+                    <button *ngIf="currentUserRole == userType.Admin || currentUserRole == userType.SuperUser" class="btn btn-sm btn-info add_new_user float-right" (click)="addShift()"><i
+                            class="mdi mdi-account-plus mr-1"></i><span>Add New Shift</span></button>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white ml-2 mt-2 shadow p-2 pt-3">
+        <div class="row mx-0">
+            <div class="col-sm-4 d-inline-block mb-2">
+
+                <select class="form-control d-inline-block pull-right bg-wine" (change)="getUsers($event.target.value)" [(ngModel)]="locationId" id="location">
+                    <option value="0" selected> Select Location</option>
+                    <ng-container *ngIf="locationList">
+                        <ng-container *ngFor="let location of locationList">
+                            <option [value]="location.id">{{location.name}}</option>
+                        </ng-container>
+                    </ng-container>
+                </select>
+                <label for="" class="mr-3 ln-40 pull-right"><strong>Select Location</strong></label>
+            </div>
+            <div class="col-sm-4 d-inline-block mb-2" *ngIf="currentUserRole == userType.Admin || currentUserRole == userType.SuperUser">
+
+                <select class="form-control d-inline-block pull-right bg-wine" [(ngModel)]="userId" id="userId">
+                    <option value="0" selected> Select User</option>
+                    <ng-container *ngIf="userList">
+                        <ng-container *ngFor="let user of userList">
+                            <option [value]="user.id" *ngIf="user.userType != userType.Admin">
+                                {{ (user.firstName ==null || user.lastName == null)?
+                                user.email: user.firstName+" "+user.lastName}}
+                            </option>
+                        </ng-container>
+                    </ng-container>
+                </select>
+                <label for="" class="mr-3 ln-40 pull-right"><strong>All Users</strong></label>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group mb-0 input-txtbox d-flex">
+                    <div class="input-group mr-2">
+                        <label for="" class="mr-3 ln-40"><strong>Start Date</strong></label>
+                        <input type="date" placeholder="" [ngModel]="startDate | date:'yyyy-MM-dd'"
+                            (ngModelChange)="startDate = $event"
+                            class="form-control ng-untouched ng-pristine ng-valid" />
+                    </div>
+                    <button class="btn btn-sm btn-primary float-right rounded-pill btn-search" data-toggle="modal"
+                        (click)="getShifts()"><i class="mdi mdi-magnify mr-1"></i><span>Search</span></button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="my-3">
+        <div class="sv-tab-panel mr-lft-10">
+            <!-- <ng-container *ngIf="isBusy">
+                <div class="loader">
+                    <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                </div>
+            </ng-container> -->
+            <div class="d-inline-block w-100 bg-white p-4">
+                <ng-container>
+                    <div class="loader" *ngIf="!initialized">
+                        <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+                    </div>
+
+                    <full-calendar #calendar *ngIf="initialized" [options]="calendarOptions"></full-calendar>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-show-shift-modal #showShiftModal [locationId]="locationId" (shiftId)="addShift($event)"></app-show-shift-modal>
+<app-add-shift-modal #addShiftModal></app-add-shift-modal>
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header p-2">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="actionbox w-100 text-right">
+                    <i class="mdi text-info mdi-pencil mr-2"></i>
+                    <i class="mdi text-danger mdi-delete mr-2"></i>
+                </div>
+                <h4>Title</h4>
+                <p>
+                    <span class="mr-1">Sunday, </span><span class="mr-2">September</span> <span class="mr-2">5⋅5:30 –
+                        6:30pm</span>
+                </p>
+                <button type="button" class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn"
+                    data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <i class="mdi mdi-account-plus mr-1 mr-1"></i>
+                    Assign User
+                </button>
+                <div class="collapse mt-4" id="collapseExample">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">User 1</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck2">
+                                <label class="form-check-label" for="exampleCheck2">User 2 </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div> -->

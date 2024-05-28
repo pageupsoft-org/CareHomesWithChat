@@ -1,0 +1,132 @@
+{
+  "location": [
+    {
+      "id": 1,
+      "name": "Chathurangi",
+      "address1": "Gorakhur",
+      "address2": "Pansari Mohalla",
+      "address3": "",
+      "address4": "",
+      "postalCode": "482001"
+    },
+    {
+      "name": "indore",
+      "postalCode": "482001",
+      "address1": "add 1",
+      "address2": "add 2",
+      "address3": "",
+      "address4": "",
+      "id": 2
+    },
+    {
+      "name": "nm,n",
+      "postalCode": "nm,m",
+      "address1": "mn,",
+      "address2": "nm,",
+      "address3": "nm,",
+      "address4": "nm,",
+      "id": 3
+    },
+    {
+      "name": "Raiput",
+      "address1": "Address1",
+      "address2": "Address2",
+      "address3": "Address3",
+      "address4": "Address4",
+      "id": 4
+    },
+    {
+      "name": "gor",
+      "postalCode": "482001",
+      "address1": "XDSOXD",
+      "address2": "ONBO",
+      "id": 5
+    },
+    {
+      "name": "jaipur",
+      "address1": "5zaszas",
+      "address2": "zsazsaz",
+      "address3": "zszszs",
+      "address4": "zszszs",
+      "postalCode": "48000",
+      "id": 7
+    },
+    {
+      "id": 8
+    },
+    {
+      "id": 9
+    },
+    {
+      "id": 10
+    },
+    {
+      "name": "dsfdgfg",
+      "address1": "dfgfdg",
+      "address2": "dfgfdg",
+      "address3": "dxzfs",
+      "address4": "cxfgd",
+      "postalCode": "dfgfd",
+      "id": 11
+    }
+  ],
+  "course": [
+    {
+      "id": 1,
+      "name": "Chathurangi",
+      "isMandatory": true
+    },
+    {
+      "name": "php",
+      "id": 2
+    },
+    {
+      "name": "JAVA",
+      "isMandatory": true,
+      "id": 3
+    },
+    {
+      "name": "zszs",
+      "id": 5
+    },
+    {
+      "name": "DotNET",
+      "id": 8
+    },
+    {
+      "name": "Angulart",
+      "id": 11
+    },
+    {
+      "name": "Angular",
+      "id": 12
+    },
+    {
+      "name": "Angular",
+      "id": 13
+    },
+    {
+      "name": "Angular",
+      "id": 14
+    },
+    {
+      "name": "Angular",
+      "id": 15
+    },
+    {
+      "name": "Angular",
+      "id": 16
+    },
+    {
+      "name": "Angular",
+      "id": 17
+    }
+  ],
+  "user":[
+    {
+      "id":1,
+      "user_name":"rishi",
+      "password":"qwer"
+    }
+  ]
+}

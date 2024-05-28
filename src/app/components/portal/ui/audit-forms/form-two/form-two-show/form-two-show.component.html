@@ -1,0 +1,1618 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading_page shadow-sm header_usrprofl p-2 pr-3">
+                <h1>
+                    <span class="usr_headleft">
+                        <i class="mdi mdi-account-multiple mx-2"></i>Incident Form
+                    </span>
+                    <span class="usr_headname"></span>
+                    <span>
+                        <button class="btn btn-sm btn-dark rounded-pill mb-3 mr-4 pull-right my-1 btn-go-back"
+                            (click)="goBack()">Go Back</button>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+            <div class="horizontal-tabs mb-3 mt-2 bg-white shadow-sm mr-lft-10">
+                <div class="sv-tab-panel info_tab_container">
+                    <div class="care-infotable w-96 mb-3 d-flex">
+                        <table class="table w-96 mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="border-top-0">
+                                        Use this form to report any type of incident e.g. Injury, illness,
+                                        physical/verbal abuse, AWOL, near misses, building/property damage, fire,
+                                        environmental incident, theft/loss, drugs. Information provided is kept in
+                                        accordance with the Data Protection
+                                        Act and will only be used in relation to report and investigation of accidents
+                                        and incidents.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <!-- tab bar -->
+                    <div class="col-sm-12">
+                        <div class="horizontal-tabs my-3 user-form-container bg-white shadow-sm">
+                            <ng-container *ngIf="isBusy">
+                                <div class="loader">
+                                    <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline">
+                                    </mat-spinner>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!isBusy && auditForm">
+
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-12 no-pad scroller">
+                                            <div class="left-btn-scroller left-scroll ">
+                                                <i class="mdi mdi-chevron-left"></i>
+                                            </div>
+                                            <div class="right-btn-scroller right-scroll ">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                            </div>
+                                            <div class="box_nav_tab" id="scroll-div">
+                                                <ul class="nav nav-tabs prof_info_tabs" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" [ngClass]="{ 'active':active ==1}"
+                                                            (click)="onTabChange(1)" data-toggle="tab"
+                                                            data-target="#tab1" role="tab" aria-controls="">
+                                                            <span>Part A</span></a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" [ngClass]="{ 'active':active ==2}"
+                                                            (click)="onTabChange(2)" data-toggle="tab"
+                                                            data-target="#tab2" role="tab" aria-controls="">
+                                                            <span>Part B</span></a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" [ngClass]="{ 'active':active ==3}"
+                                                            (click)="onTabChange(3)" data-toggle="tab"
+                                                            data-target="#tab3" role="tab" aria-controls="">
+                                                            <span>Part C</span></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane" [ngClass]="{ 'active':active ==1}" id="tab1">
+                                        <!--section 2-->
+
+                                        <div class="care-infotable w-96 mb-3 d-flex">
+                                            <table class="table w-50 mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="border-top-0">Location</th>
+                                                        <td class="border-top-0">
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <span>{{auditForm.locationName}}</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="border-top-0">Audited by</th>
+                                                        <td class="border-top-0">
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                {{(auditForm.auditor)?((auditForm.auditor.firstName == null ||
+                                                                auditForm.auditor.lastName == null)?
+                                                                auditForm.auditor.email:(auditForm.auditor.firstName+"
+                                                                "+auditForm.auditor.lastName) ):'-'}}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+            
+                                                </tbody>
+                                            </table>
+                                            <table class="table w-50 mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="border-top-0">Date of Audit</th>
+                                                        <td class="border-top-0">
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <label>{{(auditForm.auditDate)?(auditForm.auditDate|date:'dd-MM-yyyy'):'-'}}</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="border-top-0">SignOff By</th>
+                                                        <td class="border-top-0">
+                                                            <div class="form-group mb-0 input-txtbox">
+                                                                <span>{{auditForm.signoffByName}}</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="d-inline-block p-3 w-100">
+                                            <h4>1. About the Person reporting the Incident</h4>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Full Name</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <label>{{auditForm.fullName}}</label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Address</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <label>{{auditForm.address}}</label>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Post code</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <label>{{auditForm.postCode}}</label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Telephone Number</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <label>{{auditForm.telephoneNumber}}</label>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="star_mandator"> Signature</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <label>{{auditForm.signature}}</label>
+
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="star_mandator">Date reported</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    <label>{{(auditForm.dateReported)?(auditForm.dateReported|date:'dd-MM-yyyy'):'-'}}</label>
+
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <h4>2. About the Person who had the Accident</h4>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Status</th>
+                                                            <td>
+                                                                <div class="form-group form-check mt-2 mb-0">
+                                                                    {{status[auditForm.status]}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Full Name</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonName}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Date of birth</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonDateOfBirth |date:"dd-MM-yyyy"}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                       
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Address</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonAddress}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Email</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonEmail}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Telephone Number</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonPhone}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Post code</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonPostCode}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                        </table>
+                                            </div>
+
+                                            <div class="care-infotable w-96 mb-3">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-character0">
+                                                                Emergency Contact
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Name</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonEmergencyName}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Telephone number</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonEmergencyPhone}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th class="border-top-0">Relationship</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.accidentPersonEmergencyRelationship}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="care-infotable w-96 mb-3">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Activity being undertaken at the time of the inciden
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group">
+                                                                    {{auditForm.actionAtIncidentTime}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--section 3-->
+                                            <h4>3. About the Incident</h4>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Date of the
+                                                                Incident</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{(auditForm.incidentDate)?(auditForm.incidentDate|date:'dd-MM-yyyy'):'-'}}
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Time of the
+                                                                Incident</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.timeOfIncident}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Location of the
+                                                                Incident</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{incidentLocationName}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Area</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.incidentLocationSpecificArea}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">What happened?
+                                                            </th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.whatHappened}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">What was the cause?</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.whatWasTheCause}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0 star_mandator">Were there any
+                                                                injuries?</th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0 mt-2">
+                                                                    {{(auditForm.isAnyInjuries)?"Yes":"No"}}
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="star_mandator">What immediate action was
+                                                                taken?</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group">
+                                                                    {{(auditForm.immediateActionTaken)}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--section 4-->
+                                            <h4>4. Details of Witness</h4>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0">Where there any witnesses</th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0 mt-2">
+                                                                    {{(auditForm.isAnyWitnesses)?"Yes":"No"}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <ng-container *ngFor="let witness of auditForm.witnesses;let i= index ">
+                                                <div class="care-infotable w-96 mb-0 d-flex">
+                                                    <table class="table w-50 mb-0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="border-top-0">Full Name</th>
+                                                                <td class="border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        {{witness.witnessFullName}}
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="border-top-0">Address</th>
+                                                                <td class="border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        {{witness.witnessAddress}}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="border-top-0">Post code</th>
+                                                                <td class="border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        {{witness.witnessPostCode}}
+                                                                    </div>
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="border-top-0">Telephone Number</th>
+                                                                <td class="border-top-0">
+                                                                    <div class="form-group mb-0 input-txtbox">
+                                                                        {{witness.witnessTelephoneNumber}}
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                                <div class="care-infotable w-96 mb-3 d-flex">
+                                                    <table class="table w-50 mb-0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="border-top-0">Status</th>
+                                                                <td>
+                                                                    <div class="form-group form-check mt-2 mb-0">
+                                                                        {{status[witness.witnessStatus]}}
+                                                                    </div>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="care-infotable w-96 mb-3">
+                                                    <table class="table mb-0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Attach statement here</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="border-top-0">
+                                                                    <div class="form-group">
+                                                                        {{witness.statement}}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+
+                                            </ng-container>
+
+                                            <!--section 5-->
+                                            <h4 class="star_mandator">5. Incident Type (Please tick one box only)
+                                            </h4>
+                                            <div class="care-infotable w-96 mb-3 overflow-auto scrollthin">
+                                                <div class="innerwhite-table p-3 d-flex">
+                                                    <div class="row">
+                                                        <div class="border-top-0 col-sm-12">
+                                                            <div class="form-group form-check mb-0">
+                                                                <!-- {{auditForm.incidentType}}
+                                                                {{incident[auditForm.incidentType]}} -->
+                                                                <ng-container
+                                                                    *ngIf="incident.HandlingOfObject == auditForm.incidentType">
+                                                                    <p>moving/ handling of object(s)</p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.HandlingOfPerson == auditForm.incidentType">
+                                                                    <p>moving /handling of person(s)</p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.StruckAgainst == auditForm.incidentType">
+                                                                    <p>struck against</p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.StruckBy == auditForm.incidentType">
+                                                                    <p>Struck by</p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.SharpObject == auditForm.incidentType">
+                                                                    <p>Sharp Object</p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.HotColdContact == auditForm.incidentType">
+                                                                    <p>hot/ cold contact</p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.FallOnSameLevel == auditForm.incidentType">
+                                                                    <p>slip/trip/fall on same level
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.FallFromHeight == auditForm.incidentType">
+                                                                    <p>fall from height </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.MachineryEquipment == auditForm.incidentType">
+                                                                    <p>machinery/equipment
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.ElectricalInjury == auditForm.incidentType">
+                                                                    <p>electrical injury
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.VerbalAbuse == auditForm.incidentType">
+                                                                    <p>verbal abuse
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.HazardousSubstance == auditForm.incidentType">
+                                                                    <p>hazardous substance
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.Violence == auditForm.incidentType">
+                                                                    <p>Violence (Complete section 6)
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.RoadTrafficCollision == auditForm.incidentType">
+                                                                    <p>road traffic collision </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.AWOL == auditForm.incidentType">
+                                                                    <p>AWOL (Absent Without Official Leave)
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.NearMiss == auditForm.incidentType">
+                                                                    <p>near miss
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.MedicationError == auditForm.incidentType">
+                                                                    <p>Medication
+                                                                        Error (Complete section 8)
+                                                                    </p>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incident.Other == auditForm.incidentType">
+                                                                    <p>Other</p>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <table class="table w-100 mb-0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="border-top-0">
+                                                                        <div class="form-group form-check mb-0 pl-0">
+                                                                            {{auditForm.otherIncidentSpecify}}
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--section 6-->
+                                            <h4>
+                                                6. Complete for Violent Incidents only (Please tick one box only)
+                                            </h4>
+                                            <div class="care-infotable w-96 mb-3 py-2 d-flex">
+                                                <div class="row m-0">
+                                                    <div class="border-top-0 col-sm-12">
+                                                        <div class="form-group form-check mb-0">
+                                                            <ng-container
+                                                                *ngIf="violentIncidents.PhysicalAssault == auditForm.violentIncidents">
+                                                                <label class="form-check-label">Physical
+                                                                    Assault</label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="violentIncidents.ThreatVerbalAbuse == auditForm.violentIncidents">
+                                                                <label class="form-check-label">Threat/verbal
+                                                                    abuse (includes telephone & written)
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="violentIncidents.PropertyDamaged == auditForm.violentIncidents">
+                                                                <label class="form-check-label">Property
+                                                                    damaged
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="violentIncidents.PersonNotNecessarilyResponsible == auditForm.violentIncidents">
+                                                                <label class="form-check-label">Please
+                                                                    tick if you believe that the person was not
+                                                                    necessarily responsible for their
+                                                                    actions</label>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h4>Nature of Activity</h4>
+                                            <div class="care-infotable w-96 mb-0 py-2 d-flex">
+                                                <div class="row m-0">
+                                                    <div class="border-top-0 col-sm-12">
+
+                                                        <div class="form-group form-check mb-0">
+                                                            <ng-container
+                                                                *ngIf="natureOfActivity.SupportingAssisting == auditForm.natureOfActivity">
+                                                                <label class="form-check-label">Supporting/Assisting
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="natureOfActivity.PersonalCare == auditForm.natureOfActivity">
+                                                                <label class="form-check-label">Personal Care</label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="natureOfActivity.TransportingServiceUser == auditForm.natureOfActivity">
+                                                                <label class="form-check-label">Transporting
+                                                                    Service User
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="natureOfActivity.Other == auditForm.natureOfActivity">
+                                                                <label class="form-check-label">Other
+                                                                    (Please
+                                                                    Specify)</label>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="care-infotable d-inline-block w-96 mb-3 py-2">
+                                                <table class="table w-100 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group form-check mb-0 pl-0">
+                                                                    {{auditForm.otherNatureActivitySpecify}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <h4>Other Factors</h4>
+                                            <div class="care-infotable w-96 mb-3 py-2 d-flex">
+                                                <div class="row m-0">
+                                                    <div class="border-top-0 col-sm-12">
+
+                                                        <div class="form-group form-check mb-0">
+                                                            <ng-container
+                                                                *ngIf="otherFactors.CarerClientAlone ==auditForm.otherFactors">
+                                                                <label class="form-check-label">was carer/client alone?
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="otherFactors.IsWeaponUsed ==auditForm.otherFactors">
+                                                                <label class="form-check-label">was a weapon used?
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="otherFactors.EmotionalDistress ==auditForm.otherFactors">
+                                                                <label class="form-check-label">Emotional distress
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="otherFactors.PhysicalInterventionChallenging ==auditForm.otherFactors">
+                                                                <label class="form-check-label">physical intervention/
+                                                                    challenging
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="otherFactors.FormOfPrejudice ==auditForm.otherFactors">
+                                                                <label class="form-check-label">some form of prejudice
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="otherFactors.IsPoliceInvolved ==auditForm.otherFactors">
+                                                                <label class="form-check-label">were police involved?
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="otherFactors.ChallengingBehaviour ==auditForm.otherFactors">
+                                                                <label class="form-check-label">challenging behaviour
+                                                                </label>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <h4>Details of third party/aggressor involved</h4>
+                                            <div class="care-infotable w-96 mb-0 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0">Full Name</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.thirdPartyName}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Address</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.thirdPartyAddress}}
+
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Post code</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{auditForm.thirdPartyPostCode}}
+
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0">Status</th>
+                                                            <td>
+                                                                <div class="form-group form-check mt-2 mb-0">
+                                                                    {{status[auditForm.thirdPartyStatus]}}
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--section 7-->
+                                            <h4>7. Injuries</h4>
+                                            <div class="care-infotable w-96 mb-0 pb-3">
+                                                <table class="table mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <h5>Details of Injury</h5>
+                                                                <p class="mb-0">
+                                                                    Provide details of the injury: (Please ensure
+                                                                    that a
+                                                                    body map is completed and kept locally)
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0">
+                                                                    {{auditForm.injuryDetails}}
+
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-0 pb-2 d-flex">
+                                                <div class="row m-0">
+                                                    <div class="border-top-0 col-sm-12">
+
+                                                        <div class="form-group form-check mb-0">
+                                                            <ng-container
+                                                                *ngIf="injuryType.CutAbrasion == auditForm.injuryType">
+                                                                <label class="form-check-label">Cut/abrasion
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="injuryType.TwistStrain == auditForm.injuryType">
+                                                                <label class="form-check-label">Twist/strain
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="injuryType.Bruise == auditForm.injuryType">
+                                                                <label class="form-check-label">Bruise
+
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="injuryType.Fracture == auditForm.injuryType">
+                                                                <label class="form-check-label">Fracture
+
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="injuryType.BurnScald == auditForm.injuryType">
+                                                                <label class="form-check-label">Burn/scald
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="injuryType.ForeignObject == auditForm.injuryType">
+                                                                <label class="form-check-label">Foreign object
+
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="injuryType.Other == auditForm.injuryType">
+                                                                <label class="form-check-label">Other (Please
+                                                                    Specify)
+                                                                </label>
+                                                            </ng-container>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="care-infotable d-inline-block w-96 mb-3 pb-2">
+                                                <table class="table w-100 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group form-check mb-0 pl-0">
+                                                                    {{auditForm.injuryDetailsOtherSpecify}}
+
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <h4>Consequences</h4>
+                                            <div class="care-infotable w-96 mb-0 py-2 d-flex">
+                                                <div class="row m-0">
+                                                    <div class="border-top-0 col-sm-12">
+                                                        <div class="form-group form-check mb-0">
+                                                            <ng-container
+                                                                *ngIf="consequences.None == auditForm.consequences">
+                                                                <label class="form-check-label">None</label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="consequences.FirstAidReceived == auditForm.consequences">
+                                                                <label class="form-check-label">First Aid Received
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="consequences.SentToHospital == auditForm.consequences">
+                                                                <label class="form-check-label">Sent To Hospital
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="consequences.Other == auditForm.consequences">
+                                                                <label class="form-check-label">Other (Please Specify)
+                                                                </label>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="care-infotable d-inline-block w-96 mb-3 py-2">
+                                                <table class="table w-100 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group form-check mb-0 pl-0">
+                                                                    {{auditForm.consequencesOtherSpecify}}
+
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <h4>
+                                                Please specify below who was informed e.g. next of kin, parents etc.
+                                            </h4>
+                                            <div class="care-infotable d-inline-block w-96 mb-3 py-2">
+                                                <table class="table w-100 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group form-check mb-0 pl-0">
+                                                                    {{auditForm.specifyInformedPerson}}
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--section 8-->
+                                            <h4>
+                                                8. Medication Error: Details of Medication involved in the Incident
+                                            </h4>
+                                            <div class="care-infotable w-96 mb-0">
+                                                <table class="table w-75 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0">
+                                                                Name of Drug
+                                                            </th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0 border-top-0 namedrug">
+                                                                    {{auditForm.nameOfDrug}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" class="border-top-0">
+                                                                <p class="mb-0">
+                                                                    At what stage during the medication process did
+                                                                    the
+                                                                    incident occur? (Please tick one box only)
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-0 pb-0 d-flex">
+                                                <div class="row m-0">
+                                                    <div class="border-top-0 col-sm-12">
+
+                                                        <div class="form-group form-check mb-0">
+                                                            <ng-container
+                                                                *ngIf="incidentOccurStage.Prescribing == auditForm.incidentOccurStage">
+                                                                <label class="form-check-label">Prescribing
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="incidentOccurStage.Administration == auditForm.incidentOccurStage">
+                                                                <label class="form-check-label">Administration
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="incidentOccurStage.Monitoring == auditForm.incidentOccurStage">
+                                                                <label class="form-check-label">Monitoring
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="incidentOccurStage.Advice == auditForm.incidentOccurStage">
+                                                                <label class="form-check-label">Advice
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="incidentOccurStage.Preparation == auditForm.incidentOccurStage">
+                                                                <label class="form-check-label">Preparation
+                                                                </label>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="incidentOccurStage.Other == auditForm.incidentOccurStage">
+                                                                <label class="form-check-label">Other (Please Specify)
+                                                                </label>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="care-infotable d-inline-block w-96 mb-3 pb-2">
+                                                <table class="table w-100 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group form-check mb-0 pl-0">
+                                                                    {{auditForm.incidentOccurOtherSpecify}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <h4>Choose medication incident codes from list below (tick one box only)
+                                            </h4>
+                                            <div class="care-infotable w-96 mb-0 overflow-auto scrollthin">
+                                                <div class="innerwhite-table p-3 d-flex">
+                                                    <div class="row m-0">
+                                                        <div class="border-top-0 col-sm-12">
+                                                            <div class="form-group form-check mb-0">
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.AdverseDrugReaction == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Adverse drug
+                                                                        reaction
+                                                                        when used as intended
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.OmittedMedicine == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Omitted
+                                                                        medicine /
+                                                                        ingredient
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.ServiceUserRefused == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Service User
+                                                                        refused/failed to take/discontinued
+                                                                        medication
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongVerbalService == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Wrong/omitted
+                                                                        verbal
+                                                                        Service user directions
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongFrequency == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Wrong frequency
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.Contra == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Contra-indication
+                                                                        to
+                                                                        the use of the medicine
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.ServiceUserAllergic == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Service User
+                                                                        allergic
+                                                                        to medicine
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongServiceUserInformation == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Wrong/omitted
+                                                                        Service
+                                                                        User information leaflet
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongDrugMedicine == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Wrong
+                                                                        drug/medicine
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongMethodOfPreparation == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Wrong method of
+                                                                        preparation /supply
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.MismatchingBetweenServiceUserAndMedicine == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Mismatching
+                                                                        between
+                                                                        Service User and medicine
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongExpiryDate == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Wrong/omitted/passed
+                                                                        expiry date
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongMedicineLabel == auditForm.medicationIncidentCodes">
+                                                                    <label
+                                                                        class="form-check-label">Wrong/transposed/omitted
+                                                                        medicine label
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongDoseStrength == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Wrong/unclear
+                                                                        dose
+                                                                        or
+                                                                        strength
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.WrongQuantity == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Wrong quantity
+
+                                                                    </label>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="incidentCodes.Other == auditForm.medicationIncidentCodes">
+                                                                    <label class="form-check-label">Other (Please
+                                                                        Specify)
+                                                                    </label>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="care-infotable d-inline-block w-96 mb-3 pb-2">
+                                                <table class="table w-100 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group form-check mb-0 pl-0">
+                                                                    {{auditForm.medicationIncidentOtherSpecify}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+
+                                                <button type="button" (click)="onTabChange(2)"
+                                                    class="btn btn-sm btn-info btn-next rounded-pill">
+                                                    Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane" [ngClass]="{ 'active':active ==2}" id="tab2">
+
+                                        <div class="d-inline-block p-3 w-100">
+                                            <h4>11. Incidents reportable to CQC (Please ensure that notification to CQC
+                                                is
+                                                cc’d to (name of company) inbox)
+                                            </h4>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0">Does Regulation 33 form need to be
+                                                                completed?
+                                                            </th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0 mt-2">
+                                                                    {{(auditForm.doesRegulation)?"Yes":"No"}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">CMHT Informed</th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0 mt-2">
+                                                                    {{(auditForm.cmhtInformed)?"Yes":"No"}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">CCG Informed </th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0 mt-2">
+                                                                    {{(auditForm.ccgInformed)?"Yes":"No"}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Safeguarding Authorities Notified
+                                                            </th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0 mt-2">
+                                                                    {{(auditForm.safeguardingAuthoritiesNotified)?"Yes":"No"}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Police involved</th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0 mt-2">
+                                                                    {{(auditForm.policeinvolved)?"Yes":"No"}}
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Attach document here</th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0">
+                                                                    <span *ngIf="auditForm.incidentDocument"><a
+                                                                            target="_blank"
+                                                                            href="https://carehomesstorageuk.blob.core.windows.net/docs/{{auditForm.incidentDocument}}"><i
+                                                                                class="mdi mdi-download-circle"
+                                                                                style="font-size: 30px;"></i>
+                                                                        </a></span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-3 p-2">
+                                                <div class="table-matrix bg-white">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="bg-primary text-white" colspan="8">
+                                                                    12. Risk Assessment
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="8">
+                                                                    Use this matrix to determine the incident risk score
+                                                                    &
+                                                                    recommended management action
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="bg-success text-white" colspan="3">
+                                                                    0 – 5 = Low Risk
+                                                                </th>
+                                                                <th colspan="5">
+                                                                    Impact x Likelihood = Risk Score (Please circle on
+                                                                    grid)
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="bg-warning text-white" colspan="3">
+                                                                    6 – 10 = Moderate Risk
+                                                                </th>
+                                                                <th colspan="5" class="text-center">
+                                                                    Impact
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="bg-danger text-white" colspan="3">
+                                                                    11 – 15 = High Risk
+                                                                </th>
+                                                                <td class="text-center">
+                                                                    None
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    Minor
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    Moderate
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    Major
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    Severe
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="bg-darkred text-white" colspan="3">
+                                                                    16 – 25 = Extremely High Risk
+                                                                </th>
+                                                                <td class="text-center">
+                                                                    1
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    2
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    3
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    4
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    5
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th rowspan="5">
+                                                                    Likelihood
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    Rare
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    1
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    1
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    2
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    3
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    4
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    5
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-center">
+                                                                    Unlikely
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    2
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    2
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    4
+                                                                </th>
+                                                                <th class="bg-warning text-center">
+                                                                    6
+                                                                </th>
+                                                                <th class="bg-warning text-center">
+                                                                    8
+                                                                </th>
+                                                                <th class="bg-warning text-center">
+                                                                    10
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-center">
+                                                                    Possible
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    3
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    3
+                                                                </th>
+                                                                <th class="bg-warning text-center">
+                                                                    6
+                                                                </th>
+                                                                <th class="bg-warning text-center">
+                                                                    9
+                                                                </th>
+                                                                <th class="bg-danger text-center text-white">
+                                                                    12
+                                                                </th>
+                                                                <th class="bg-danger text-center text-white">
+                                                                    15
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-center">
+                                                                    Likely
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    4
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    4
+                                                                </th>
+                                                                <th class="bg-warning text-center">
+                                                                    8
+                                                                </th>
+                                                                <th class="bg-danger text-center text-white">
+                                                                    12
+                                                                </th>
+                                                                <th class="bg-darkred text-center text-white">
+                                                                    16
+                                                                </th>
+                                                                <th class="bg-darkred text-center text-white">
+                                                                    20
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-center">
+                                                                    Very Likely
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    5
+                                                                </th>
+                                                                <th class="bg-success text-center text-white">
+                                                                    5
+                                                                </th>
+                                                                <th class="bg-warning text-center">
+                                                                    10
+                                                                </th>
+                                                                <th class="bg-danger text-center text-white">
+                                                                    15
+                                                                </th>
+                                                                <th class="bg-darkred text-center text-white">
+                                                                    20
+                                                                </th>
+                                                                <th class="bg-darkred text-center text-white">
+                                                                    25
+                                                                </th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="care-infotable d-inline-block w-96 mb-3 pb-2">
+                                                    <table class="table w-50 mb-0">
+                                                        <tbody>
+
+                                                            <tr>
+                                                                <th class="border-top-0">
+                                                                    Risk Assessment
+                                                                </th>
+                                                                <td class="border-top-0">
+                                                                    <div class="form-group form-check mb-0">
+                                                                        <label>{{auditForm.riskScore}}</label>
+                                                                    </div>
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                                <button type="button" (click)="onTabChange(1)"
+                                                    class="btn btn-sm btn-secondary rounded-pill">
+                                                    <i class="mdi mdi-arrow-left mr-2"></i>
+                                                    Back
+                                                </button>
+                                                <button type="button" (click)="onTabChange(3)"
+                                                    class="btn btn-sm btn-info btn-next rounded-pill">
+                                                    Next <i class="mdi mdi-arrow-right ml-2"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" [ngClass]="{ 'active':active ==3}" id="tab3">
+
+                                        <div class="d-inline-block p-3 w-100">
+                                            <h4>13. Manager / Team Actions</h4>
+                                            <div class="care-infotable w-96 mb-3">
+                                                <table class="table mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Please summarise immediate actions taken and planned
+                                                                future
+                                                                actions, including actions taken to prevent recurrence
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pb-0">Immediate Actions Taken</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group">
+                                                                    {{auditForm.immediateActionsTaken}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pb-0">Planned future actions (including those
+                                                                taken
+                                                                to prevent reoccurrence)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group">
+                                                                    {{auditForm.plannedFutureActions}}
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable d-inline-block w-96 mb-3 pb-2">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0">Attach Action Plan here:
+                                                            </th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0">
+                                                                    <span *ngIf="auditForm.actionPlanDocument"><a
+                                                                            target="_blank"
+                                                                            href="https://carehomesstorageuk.blob.core.windows.net/docs/{{auditForm.actionPlanDocument}}"><i
+                                                                                class="mdi mdi-download-circle"
+                                                                                style="font-size: 30px;"></i>
+                                                                        </a></span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <h4>14. External Reporting</h4>
+                                            <div class="care-infotable w-96 mb-3 d-flex">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="border-top-0">Is this RIDDOR reportable? </th>
+                                                            <td>
+                                                                <div class="form-group form-check mb-0">
+                                                                    {{(auditForm.isRIDDORReportable?"Yes":"No")}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="care-infotable w-96 mb-0 d-flex" *ngIf="auditForm.isRIDDORReportable">
+                                                <table class="table w-50 mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                If yes, Manager must telephone Risk Manager immediately
+                                                                who will report the incident to the HSE.
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="border-top-0">Date Risk Manager Telephoned</th>
+                                                            <td class="border-top-0">
+                                                                <div class="form-group mb-0 input-txtbox">
+                                                                    {{(auditForm.dateManagerCalled?(auditForm.dateManagerCalled|date:'dd-MM-yyyy'):"-")}}
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12 d-inline-block text-center mt-3 w-100">
+                                                <button type="button" (click)="onTabChange(2)"
+                                                    class="btn btn-sm btn-secondary rounded-pill">
+                                                    <i class="mdi mdi-arrow-left mr-2"></i>
+                                                    Back
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+</div>

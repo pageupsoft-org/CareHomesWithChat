@@ -1,0 +1,54 @@
+<div class="sv-tab-panel info_tab_container">
+    <h3 class="zoning-head-com">Alerts<span>
+            <button data-toggle="modal" data-target="#add-alert" (click)="addAlert()"
+                class="btn btn-sm btn-info rounded-pill mb-2 mr-4 crt-user-btn pull-right">
+                <i class="mdi mdi-plus mr-1"></i> Add Alert</button>
+        </span></h3>
+    <div class="care-infotable traing-course-table w-96 m-0 d-inline-block">
+        <ng-container *ngIf="isBusy">
+            <div class="loader">
+                <mat-spinner diameter="40" strokeWidth="5" style="stroke: #00a1ff;display:inline"></mat-spinner>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!isBusy && alertList">
+            <table class="table table-bordered table-hover bg-white mb-0 zoning_table">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="w-25">Alert Id</th>
+                        <th class="w-50">Alert Name</th>
+                        <th class="w-25">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="alertList.length >0">
+                        <ng-container *ngFor="let alert of alertList">
+
+                            <tr>
+                                <td class="w-25">Alert000{{alert.id}}</td>
+                                <td class="w-50">{{alert.name}}</td>
+                                <td class="w-25">
+                                    <div class="actionbox">
+                                        <i class="mdi text-primary mdi-pencil mr-2" title="Edit" (click)="editAlert(alert)"></i>
+                                        <i class="mdi text-danger mdi-delete mr-2" title="Remove" (click)="remove(alert.id)"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="alertList.length <=0">
+                        <tr>
+                            <td class="p-0" colspan="3">
+                                <div class="alert alert-danger text-center mb-0">No Record Found</div>
+                            </td>
+                        </tr>
+
+                    </ng-container>
+
+                </tbody>
+            </table>
+        </ng-container>
+    </div>
+</div>
+
+<app-add-alert-modal #locationAlertModal></app-add-alert-modal>
