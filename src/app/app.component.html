@@ -16,13 +16,21 @@
         <app-login></app-login>
     </ng-container>
 
-    <div *ngIf="isShowChat" class="main-chat">
-        <ng-message-kit [env]="env"></ng-message-kit>
-    </div>
-
     @if (isShowChatToggleOption) {
     <div class="chat-box" (click)="toggleChatBox()">
         <img src="../assets/images/chat.png" alt="">
     </div>
     }
 </div>
+
+
+@if (isShowChat) {
+<div style="display: block;" class="modal bd-example-modal-lg" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <ng-message-kit [env]="env"></ng-message-kit>
+        </div>
+    </div>
+</div>
+}
