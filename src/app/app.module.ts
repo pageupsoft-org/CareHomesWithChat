@@ -1,6 +1,5 @@
 import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -10,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SiteHeaderComponent } from './components/portal/static/site-header/site-header.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { ZonePipePipe } from './shared/pipes/zone-pipe.pipe';
+import { ColorSetterPipe } from './shared/pipes/color-setter.pipe';
 import { SiteFooterComponent } from './components/portal/static/site-footer/site-footer.component';
 import { ContentAreaComponent } from './components/portal/static/content-area/content-area.component';
 import { DashboardComponent } from './components/portal/ui/dashboard/dashboard.component';
@@ -29,7 +29,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocationIndexComponent } from './components/portal/ui/user-master/location/location-index/location-index.component';
 import { CourseIndexComponent } from './components/portal/ui/user-master/course/course-index/course-index.component';
 import { AddCourseModalComponent } from './components/portal/ui/user-master/course/add-course-modal/add-course-modal.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { ChangePasswordComponent } from './components/portal/ui/change-password/change-password.component';
 import { EditUserComponent } from './components/portal/ui/user-form/edit-user/edit-user.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -122,6 +121,12 @@ import { AdminStatsComponent } from './components/portal/ui/dashboard-master/adm
 import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './AuthGuards/auth.guard';
 import { AngularFireModule } from '@angular/fire/compat';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
+import {NgMessageKitModule} from 'ng-message-kit';
+
+
 
 @NgModule({
   declarations: [
@@ -216,7 +221,8 @@ import { AngularFireModule } from '@angular/fire/compat';
     ServiceUserStatsComponent,
     UsersOverviewComponent,
     UsersStatsComponent,
-    AdminStatsComponent
+    AdminStatsComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -226,14 +232,18 @@ import { AngularFireModule } from '@angular/fire/compat';
     DragDropModule,
     BrowserAnimationsModule,
     HammerModule,
-    SharedModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule,
     AngularFireMessagingModule,
     FormsModule,
+    ReactiveFormsModule ,
     NgMultiSelectDropDownModule.forRoot(),
+    ModalModule.forRoot(),
+    PaginationModule.forRoot(),
+    SharedModule,
+    NgMessageKitModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

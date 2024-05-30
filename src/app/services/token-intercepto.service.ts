@@ -21,11 +21,11 @@ export class TokenInterceptorService implements HttpInterceptor {
     })
     return next.handle(tokenizeReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          localStorage.clear();
-          window.location.pathname = "/login";
-        }
-        return throwError(error);
+        // if (error.status === 401) {
+        //   localStorage.clear();
+        //   window.location.pathname = "/login";
+        // }
+        return throwError(()=>error);
       }));
   }
 }

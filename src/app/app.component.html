@@ -1,16 +1,25 @@
-<div class="supported"></div>
-<div class="notSupported">
-    Device not supported.
+<div class="main-content">
+    <div class="supported"></div>
+    <div class="notSupported">
+        Device not supported.
+    </div>
+
+    <ng-container *ngIf="isAuthenticated">
+        <app-site-header (toggleSidebar)="sidebarToggle($event)"></app-site-header>
+        <div class="com-container-list" [ngClass]="{'com-container-broad':toggleSidebar}">
+            <router-outlet></router-outlet>
+        </div>
+        <app-site-footer></app-site-footer>
+    </ng-container>
+    <ng-container *ngIf="!isAuthenticated">
+
+        <app-login></app-login>
+    </ng-container>
 </div>
 
-<ng-container *ngIf="isAuthenticated">
-    <app-site-header (toggleSidebar)="sidebarToggle($event)"></app-site-header>
-    <div class="com-container-list" [ngClass]="{'com-container-broad':toggleSidebar}">
-        <router-outlet ></router-outlet>
-    </div>
-    <app-site-footer></app-site-footer>
-</ng-container>
-<ng-container *ngIf="!isAuthenticated">
-
-    <app-login></app-login>
-</ng-container>
+<div [ngStyle]="{'display':(isShowChat)? 'block':'none'}">
+    <ng-message-kit [env]="env"></ng-message-kit>
+</div>
+<div class="chat-box" (click)="toggleChatBox()">
+    <img src="../assets/chat.png" alt="">
+</div>
