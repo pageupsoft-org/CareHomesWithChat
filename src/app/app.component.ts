@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker'
 import { BaseComponent } from './shared/components/base/base.component';
 import { EnvironmentConfig } from 'ng-message-kit';
+import { UtilService } from './services/util.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,10 +11,13 @@ import { EnvironmentConfig } from 'ng-message-kit';
 export class AppComponent extends BaseComponent implements OnInit {
   title = 'care-homes';
   public toggleSidebar: boolean = false;
-  public env: EnvironmentConfig = {
-    loggedInUserId:4,
+  public isShowChat: boolean = false;
+  public isShowChatToggleOption: boolean = false;
 
-    loggedInUserName:"Om",
+  public env: EnvironmentConfig = {
+    loggedInUserId:-1,
+
+    loggedInUserName:"",
 
     getAllUser: "/Users/GetChatUsers",
 
@@ -38,15 +42,22 @@ export class AppComponent extends BaseComponent implements OnInit {
       secretKey: "b578230c76f95d0f4e07"
     }
   }
-  public isShowChat: boolean = false;
 
-  constructor(private updates: SwUpdate) {
+  constructor(private updates: SwUpdate, private _utilService: UtilService) {
     super();
     this.updates.versionUpdates.subscribe(event => {
       this.updates.activateUpdate().then(() => document.location.reload());
     });
   }
   ngOnInit(): void {
+    
+    let user = JSON.parse(localStorage.getItem('_identity'));
+    this._utilService.loggedInUserId = user.id;
+    this._utilService.loggedInUserName = user.originalUserName;
+    this.isShowChatToggleOption = true;
+    this.env.loggedInUserId = this._utilService.loggedInUserId;
+    this.env.loggedInUserName = this._utilService.loggedInUserName;
+
     if (localStorage.getItem('_identity')) {
       this.isAuthenticated = true;
     }
