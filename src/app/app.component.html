@@ -15,11 +15,11 @@
 
         <app-login></app-login>
     </ng-container>
-</div>
-
-<div [ngStyle]="{'display':(isShowChat)? 'block':'none'}">
-    <ng-message-kit [env]="env"></ng-message-kit>
-</div>
-<div class="chat-box" (click)="toggleChatBox()">
-    <img src="../assets/chat.png" alt="">
+    
+    <div *ngIf="isShowChat" class="main-chat">
+        <ng-message-kit [env]="env"></ng-message-kit>
+    </div>
+    <div class="chat-box" (click)="toggleChatBox()">
+        <img src="../assets/images/chat.png" alt="">
+    </div>
 </div>

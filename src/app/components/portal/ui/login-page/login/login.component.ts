@@ -31,7 +31,8 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   public onSubmit() {
     this.SetLoading(true);
-    this.loginService.login(this.loginForm.save()).subscribe(res => {
+    this.loginService.login(this.loginForm.save()).subscribe(res=> {
+      console.log(res);
 
       localStorage.setItem('_identity', JSON.stringify(res));
       localStorage.setItem('_accessToken', res.accessToken);
